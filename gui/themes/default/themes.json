@@ -1,0 +1,24 @@
+{
+    "theme_name" : "default",
+    "app_color" :{
+        "dark_one" : "#000000",
+        "dark_two" : "#282c34",
+        "dark_three" : "#3c4248",
+        "dark_four" : "#60656c",
+
+        "bg_one" : "#fafbf9",
+        "bg_two" : "#f5f6f4",
+        "bg_three" : "#dadcdc",
+        "bg_four" : "#bbbdbf",
+
+        "color_one" : "#23354d",
+        "color_two" : "#09346d",
+        "color_three" : "#abbfd8",
+        "color_four" : "#87b3ee",
+
+        "pink" : "##f4adff",
+        "light_yellow" : "#fffead",
+        "light_green" : "#bcffad",
+        "light_red" : "#ffadad"
+    }
+}
