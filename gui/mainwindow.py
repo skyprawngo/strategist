@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'mainwindowjMVMsu.ui'
-##
-## Created by: Qt User Interface Compiler version 6.2.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
 
 from gui.module_import import *
 
@@ -18,7 +11,7 @@ from gui.themes.theme_switch import ThemeSwitch
 
 from gui.widgets.left_menu_column.ui_menu_bar import Ui_menu_bar_Form
 
-from gui.widgets.title_bar.title_bar import Ui_title_bar_form
+from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 
 
 class Ui_MainWindow(object):
@@ -58,7 +51,7 @@ class Ui_MainWindow(object):
         # /////////////////////////////////////////////////////////////////////
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.title_bar = Ui_title_bar_form(
+        self.title_bar = Ui_Title_Bar_Widget(
                         UiMainWindow,
                         app_name = self.settings["app_name"],
                         custom_title_bar = self.settings["custom_title_bar"],

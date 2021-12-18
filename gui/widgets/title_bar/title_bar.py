@@ -12,7 +12,7 @@ from gui.module_import import *
 
 
 
-class Ui_title_bar_form(object):
+class Ui_Title_Bar_Widget(object):
     def __init__(
             self,
             UiMainWindow,
@@ -31,22 +31,22 @@ class Ui_title_bar_form(object):
         self.font_size = font_size
         
     
-    def setupUi(self, title_bar_form):
-        if not title_bar_form.objectName():
-            title_bar_form.setObjectName(u"title_bar_form")
-        title_bar_form.resize(1168, 24)
+    def setupUi(self, title_bar_widget):
+        if not title_bar_widget.objectName():
+            title_bar_widget.setObjectName(u"title_bar_form")
+        title_bar_widget.resize(1168, 24)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(title_bar_form.sizePolicy().hasHeightForWidth())
-        title_bar_form.setSizePolicy(sizePolicy)
-        title_bar_form.setMinimumSize(QSize(0, 24))
-        title_bar_form.setMaximumSize(QSize(16777215, 24))
-        self.horizontalLayout = QHBoxLayout(title_bar_form)
+        sizePolicy.setHeightForWidth(title_bar_widget.sizePolicy().hasHeightForWidth())
+        title_bar_widget.setSizePolicy(sizePolicy)
+        title_bar_widget.setMinimumSize(QSize(0, 24))
+        title_bar_widget.setMaximumSize(QSize(16777215, 24))
+        self.horizontalLayout = QHBoxLayout(title_bar_widget)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.title_bar_frame = QFrame(title_bar_form)
+        self.title_bar_frame = QFrame(title_bar_widget)
         self.title_bar_frame.setObjectName(u"title_bar_frame")
         self.title_bar_frame.setMaximumSize(QSize(16777215, 24))
         self.title_bar_frame.setStyleSheet(u"background-color: rgb(245, 251, 255)")
@@ -163,9 +163,9 @@ class Ui_title_bar_form(object):
         self.horizontalLayout.addWidget(self.title_bar_frame)
 
 
-        self.retranslateUi(title_bar_form)
+        self.retranslateUi(title_bar_widget)
 
-        QMetaObject.connectSlotsByName(title_bar_form)
+        QMetaObject.connectSlotsByName(title_bar_widget)
     # setupUi
 
     def retranslateUi(self, title_bar_form):

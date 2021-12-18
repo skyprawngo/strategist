@@ -12,7 +12,7 @@ from gui.module_import import *
 
 from gui.widgets.left_menu_column.ui_menu_bar import Ui_menu_bar_Form
 
-from gui.widgets.title_bar.title_bar import Ui_title_bar_form
+from gui.widgets.title_bar.title_bar import Ui_title_bar_widget
 
 
 class Ui_MainWindow(object):
@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
         # /////////////////////////////////////////////////////////////////////
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.title_bar = Ui_title_bar_form()
+        self.title_bar = Ui_title_bar_widget()
         self.title_bar.setupUi(self.title_bar_frame)
         self.centralwidget_vlayout.addWidget(self.title_bar_frame)
         # /////////////////////////////////////////////////////////////////////
