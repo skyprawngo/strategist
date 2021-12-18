@@ -13,7 +13,23 @@ from gui.module_import import *
 
 
 class Ui_title_bar_form(object):
-    
+    def __init__(
+            self,
+            UiMainWindow,
+            app_name = "Strategist",
+            custom_title_bar = None,
+            time_animation = 500,
+            font_type = "Segoe_UI",
+            font_size = 10
+    ):
+        super().__init__()
+        
+        self.app_name = app_name
+        self.custom_tilte_bar = custom_title_bar
+        self.time_animation = time_animation
+        self.font_type = font_type
+        self.font_size = font_size
+        
     
     def setupUi(self, title_bar_form):
         if not title_bar_form.objectName():

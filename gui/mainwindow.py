@@ -59,9 +59,14 @@ class Ui_MainWindow(object):
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.title_bar = Ui_title_bar_form(
-
+                        UiMainWindow,
+                        app_name = self.settings["app_name"],
+                        custom_title_bar = self.settings["custom_title_bar"],
+                        time_animation = self.settings["time_animation"],
+                        font_type = self.settings["font"]["family"],
+                        font_size = self.settings["font"]["title_size"]
         )
-                        # app_name = self.settings["app_name"],
+
                 
         self.title_bar.setupUi(self.title_bar_frame)
         self.centralwidget_vlayout.addWidget(self.title_bar_frame)
