@@ -5,19 +5,19 @@ import os
 
 # APP SETTINGS
 # ///////////////////////////////////////////////////////////////
-class ThemeSwitch(object):
+class Theme_Switch(object):
     # APP PATH
     # ///////////////////////////////////////////////////////////////
     
     cwd_path = os.path.abspath(os.getcwd())
     app_path = "gui/themes"
-    json_switch_path = os.path.normpath(os.path.join(cwd_path,app_path,"switch.json"))
+    json_switch_path = os.path.normpath(os.path.join(cwd_path, app_path, "switch.json"))
 
     
     # INIT SETTINGS
     # ///////////////////////////////////////////////////////////////
     def __init__(self):
-        super(ThemeSwitch, self).__init__()
+        super(Theme_Switch, self).__init__()
         self.switch = {}
         self.deserialize_switch()
 

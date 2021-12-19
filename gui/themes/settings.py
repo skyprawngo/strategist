@@ -3,7 +3,7 @@
 import json
 import os
 
-from .theme_switch import ThemeSwitch
+from .theme_switch import Theme_Switch
 
 # APP SETTINGS
 # ///////////////////////////////////////////////////////////////
@@ -12,7 +12,7 @@ class Settings(object):
     # ///////////////////////////////////////////////////////////////
     cwd_path = os.path.abspath(os.getcwd())
     app_path = "gui/themes"
-    switch = ThemeSwitch().switch["switch_theme"]
+    switch = Theme_Switch().switch["switch_theme"]
     settings_json_file = "settings.json"
     
     

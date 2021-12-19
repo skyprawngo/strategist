@@ -13,6 +13,9 @@
         960,
         540
     ],
+    "title_bar_size": {
+        "height": 30
+    },
     "left_menu_size" : {
         "minimum" : 50,
         "maximum" : 240
