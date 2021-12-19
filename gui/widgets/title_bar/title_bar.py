@@ -46,7 +46,6 @@ class Ui_Title_Bar_Widget(QWidget):
             self.title_bar_hlayout.setSpacing(0)
             
             self.top_logo_label = QLabel()
-            self.top_logo_vlayout = QVBoxLayout(self.top_logo_label)
-            self.top_logo_vlayout.setContentsMargins(0, 0, 0, 0)
+            
             
             
