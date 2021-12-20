@@ -3,20 +3,17 @@
 import json
 import os
 
-from .theme_switch import ThemeSwitch
-
 # APP SETTINGS
 # ///////////////////////////////////////////////////////////////
 class Settings(object):
     # APP PATH
     # ///////////////////////////////////////////////////////////////
     cwd_path = os.path.abspath(os.getcwd())
-    app_path = "gui/themes"
-    switch = ThemeSwitch().switch["switch_theme"]
+    app_path = "gui/themes/default"
     settings_json_file = "settings.json"
     
     
-    settings_path = os.path.normpath(os.path.join(cwd_path,app_path,switch,settings_json_file))
+    settings_path = os.path.normpath(os.path.join(cwd_path, app_path, settings_json_file))
 
     
     # INIT SETTINGS

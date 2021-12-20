@@ -10,168 +10,87 @@
 
 from gui.module_import import *
 
+from gui.themes.load_item_path import Load_Item_Path
 
-
-class Ui_Title_Bar_Widget(object):
+class Ui_Title_Bar_Widget(QWidget):
     def __init__(
             self,
             UiMainWindow,
             app_name = "Strategist",
+            logo_file_name = "logo_top.svg",
+            title_text = "",
             custom_title_bar = None,
+            title_bar_height = 30,
             time_animation = 500,
+            
             font_type = "Segoe_UI",
-            font_size = 10
+            font_size = 10,
     ):
         super().__init__()
         
         self.app_name = app_name
+        self.logo_file_name = logo_file_name
+        self.title_text = title_text
         self.custom_tilte_bar = custom_title_bar
+        self.title_bar_height = title_bar_height
         self.time_animation = time_animation
+        
         self.font_type = font_type
         self.font_size = font_size
         
+        self.setupUi()
+        
     
-    def setupUi(self, title_bar_widget):
-        if not title_bar_widget.objectName():
-            title_bar_widget.setObjectName(u"title_bar_form")
-        title_bar_widget.resize(1168, 24)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(title_bar_widget.sizePolicy().hasHeightForWidth())
-        title_bar_widget.setSizePolicy(sizePolicy)
-        title_bar_widget.setMinimumSize(QSize(0, 24))
-        title_bar_widget.setMaximumSize(QSize(16777215, 24))
-        self.horizontalLayout = QHBoxLayout(title_bar_widget)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.title_bar_frame = QFrame(title_bar_widget)
-        self.title_bar_frame.setObjectName(u"title_bar_frame")
-        self.title_bar_frame.setMaximumSize(QSize(16777215, 24))
-        self.title_bar_frame.setStyleSheet(u"background-color: rgb(245, 251, 255)")
-        self.title_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.title_bar_frame.setFrameShadow(QFrame.Raised)
+    def setupUi(self):
+        self.title_bar_widget_vlayout = QVBoxLayout(self)
+        self.title_bar_widget_vlayout.setContentsMargins(0, 0, 0, 0)
+        
+        # title_bar_frame(
+        self.title_bar_frame = QFrame()
         self.title_bar_hlayout = QHBoxLayout(self.title_bar_frame)
-        self.title_bar_hlayout.setSpacing(0)
-        self.title_bar_hlayout.setObjectName(u"title_bar_hlayout")
         self.title_bar_hlayout.setContentsMargins(0, 0, 0, 0)
-        self.logo_n_title_frame = QFrame(self.title_bar_frame)
-        self.logo_n_title_frame.setObjectName(u"logo_n_title_frame")
-        self.logo_n_title_frame.setFrameShape(QFrame.NoFrame)
-        self.logo_n_title_frame.setFrameShadow(QFrame.Raised)
-        self.logo_n_title_layout = QHBoxLayout(self.logo_n_title_frame)
-        self.logo_n_title_layout.setSpacing(0)
-        self.logo_n_title_layout.setObjectName(u"logo_n_title_layout")
-        self.logo_n_title_layout.setContentsMargins(0, 0, 0, 0)
-        self.logo_widget = QWidget(self.logo_n_title_frame)
-        self.logo_widget.setObjectName(u"logo_widget")
-        self.logo_widget.setMaximumSize(QSize(100, 16777215))
-        self.logo_widget.setStyleSheet(u"border-image: url(:/image/images/images/logo.png) 0 0 0 0 stretch stretch;\n"
-"background-position: center;\n"
-"background-repeat: no-repeat;\n"
-"\n"
-"\n"
-"")
+        self.title_bar_hlayout.setSpacing(0)
+        
+            # top_logo_label(
+        self.top_logo_label = QLabel()
+        self.top_logo_label.setMaximumSize(85, 30)
+        self.top_logo_label_vlayout = QVBoxLayout(self.top_logo_label)
+        self.top_logo_label_vlayout.setContentsMargins(8, 5, 0, 5)
+        
 
-        self.logo_n_title_layout.addWidget(self.logo_widget)
+                # top_logo_image(
+        self.top_logo_image = QSvgWidget()
+        self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self.logo_file_name)
+        self.top_logo_image.load(self.top_logo_image_path)
+                # )
+        self.top_logo_label_vlayout.addWidget(self.top_logo_image)
+            # )
+        self.title_bar_hlayout.addWidget(self.top_logo_label)
+        
+            # title_frame(
+        self.title_frame = QFrame()
+        self.title_hlayout = QHBoxLayout(self.title_frame)
+        self.title_hlayout.setContentsMargins(10, 0, 0, 0)
+        self.title_hlayout.setSpacing(0)
 
-        self.title_frame = QFrame(self.logo_n_title_frame)
-        self.title_frame.setObjectName(u"title_frame")
-        self.title_frame.setFrameShape(QFrame.StyledPanel)
-        self.title_frame.setFrameShadow(QFrame.Raised)
-
-        self.logo_n_title_layout.addWidget(self.title_frame)
-
-
-        self.title_bar_hlayout.addWidget(self.logo_n_title_frame)
-
-        self.btn_window_frame = QFrame(self.title_bar_frame)
-        self.btn_window_frame.setObjectName(u"btn_window_frame")
-        self.btn_window_frame.setMaximumSize(QSize(100, 16777215))
-        self.btn_window_frame.setStyleSheet(u"")
-        self.btn_window_frame.setFrameShape(QFrame.NoFrame)
-        self.btn_window_frame.setFrameShadow(QFrame.Raised)
-        self.btn_window_hlayout = QHBoxLayout(self.btn_window_frame)
-        self.btn_window_hlayout.setSpacing(0)
-        self.btn_window_hlayout.setObjectName(u"btn_window_hlayout")
-        self.btn_window_hlayout.setContentsMargins(0, 0, 0, 0)
-        self.btn_minimize = QPushButton(self.btn_window_frame)
-        self.btn_minimize.setObjectName(u"btn_minimize")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.btn_minimize.sizePolicy().hasHeightForWidth())
-        self.btn_minimize.setSizePolicy(sizePolicy1)
-        self.btn_minimize.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/icon/images/icons/icon_minimize.png);\n"
-"	background-position: center;\n"
-"	background-repeat: no-repeat;\n"
-"	border:none;	\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(215, 225, 244);\n"
-"}\n"
-"QPushButton:pressed {\n"
-"	background-color: rgb(187, 204, 236);\n"
-"}")
-
-        self.btn_window_hlayout.addWidget(self.btn_minimize)
-
-        self.btn_maxi_n_undo = QPushButton(self.btn_window_frame)
-        self.btn_maxi_n_undo.setObjectName(u"btn_maxi_n_undo")
-        sizePolicy1.setHeightForWidth(self.btn_maxi_n_undo.sizePolicy().hasHeightForWidth())
-        self.btn_maxi_n_undo.setSizePolicy(sizePolicy1)
-        self.btn_maxi_n_undo.setStyleSheet(u"QPushButton {\n"
-"	background-image: url(:/icon/images/icons/icon_restore.png);\n"
-"	background-position: center;\n"
-"	background-repeat: no-repeat;\n"
-"	border:none;	\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(215, 225, 244);\n"
-"}\n"
-"QPushButton:pressed {\n"
-"	background-color: rgb(187, 204, 236);\n"
-"}")
-
-        self.btn_window_hlayout.addWidget(self.btn_maxi_n_undo)
-
-        self.btn_close = QPushButton(self.btn_window_frame)
-        self.btn_close.setObjectName(u"btn_close")
-        sizePolicy1.setHeightForWidth(self.btn_close.sizePolicy().hasHeightForWidth())
-        self.btn_close.setSizePolicy(sizePolicy1)
-        self.btn_close.setStyleSheet(u"QPushButton {\n"
-"	background-image: url(:/icon/images/icons/icon_close.png);\n"
-"	background-position: center;\n"
-"	background-repeat: no-repeat;\n"
-"	border:none;	\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(245, 80, 72);\n"
-"}\n"
-"QPushButton:pressed {\n"
-"	background-color: rgb(245, 80, 72);\n"
-"}")
-
-        self.btn_window_hlayout.addWidget(self.btn_close)
-
-
-        self.title_bar_hlayout.addWidget(self.btn_window_frame)
-
-
-        self.horizontalLayout.addWidget(self.title_bar_frame)
-
-
-        self.retranslateUi(title_bar_widget)
-
-        QMetaObject.connectSlotsByName(title_bar_widget)
-    # setupUi
-
-    def retranslateUi(self, title_bar_form):
-        title_bar_form.setWindowTitle(QCoreApplication.translate("title_bar_form", u"Form", None))
-        self.btn_minimize.setText("")
-        self.btn_maxi_n_undo.setText("")
-        self.btn_close.setText("")
-    # retranslateUi
+                # title_label(
+        self.title_label = QLabel()
+        self.title_label.setStyleSheet("background-color: lightblue")
+        self.title_label.setText(self.title_text)
+        self.title_label.setFont(self.font_type)
+                # )
+        self.title_hlayout.addWidget(self.title_label)
+        
+                # title_buttons_frame(
+        self.title_buttons_frame = QFrame()
+        self.title_buttons_hlayout = QHBoxLayout(self.title_buttons_frame)
+        self.title_buttons_hlayout.setContentsMargins(0, 0, 0, 0)
+        self.title_buttons_hlayout.setSpacing(0)
+        
+                # )
+        self.title_hlayout.addWidget(self.title_buttons_frame)
+            # )
+        self.title_bar_hlayout.addWidget(self.title_frame)
+        # )
+        self.title_bar_widget_vlayout.addWidget(self.title_bar_frame)
 

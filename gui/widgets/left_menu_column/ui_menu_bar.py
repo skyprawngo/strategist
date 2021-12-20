@@ -10,7 +10,7 @@
 
 from gui.module_import import *
 
-class Ui_menu_bar_Form(object):
+class Ui_Menu_Bar_Widget(object):
     def setupUi(self, menu_bar_Form):
         if not menu_bar_Form.objectName():
             menu_bar_Form.setObjectName(u"menu_bar_Form")
