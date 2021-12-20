@@ -60,6 +60,7 @@ class Ui_MainWindow(object):
         self.title_bar = Ui_Title_Bar_Widget(
                         UiMainWindow,
                         app_name = self.settings["app_name"],
+                        title_file_name = self.settings["title_file_name"],
                         custom_title_bar = self.settings["custom_title_bar"],
                         title_bar_height = self.settings["title_bar_size"]["height"],
                         font_type = self.settings["font"]["family"],
