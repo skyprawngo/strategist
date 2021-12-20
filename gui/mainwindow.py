@@ -14,13 +14,14 @@ from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 
 class Ui_MainWindow(object):
     def setupUi(self, UiMainWindow):
+        # MainWindow(
         if not UiMainWindow.objectName():
             UiMainWindow.setObjectName(u"MainWindow")
         
-        # Load Settings
+            # Load Settings
         settings = Settings()
         self.settings = settings.settings
-        # Load Themes
+            # Load Themes
         themes = Themes()
         self.themes = themes.themes
         
@@ -35,7 +36,7 @@ class Ui_MainWindow(object):
                 self.settings["minimum_size"][1]
         )
         
-        
+            # Centralwidget(
         self.centralwidget = QWidget(UiMainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setFocusPolicy(Qt.NoFocus)
@@ -60,12 +61,14 @@ class Ui_MainWindow(object):
         self.title_bar = Ui_Title_Bar_Widget(
                         UiMainWindow,
                         app_name = self.settings["app_name"],
-                        title_file_name = self.settings["title_file_name"],
+                        logo_file_name = self.settings["logo_file_name"],
+                        title_text = self.settings["title_text"],
                         custom_title_bar = self.settings["custom_title_bar"],
                         title_bar_height = self.settings["title_bar_size"]["height"],
-                        font_type = self.settings["font"]["family"],
-                        font_size = self.settings["font"]["title_size"],
                         time_animation = self.settings["time_animation"],
+                        
+                        font_type = self.themes["font"]["family"],
+                        font_size = self.themes["font"]["title_size"],
         )
 
         self.title_bar_vlayout.addWidget(self.title_bar)
@@ -121,12 +124,15 @@ class Ui_MainWindow(object):
         self.centralwidget_vlayout.addWidget(self.not_title_bar_frame)
 
         UiMainWindow.setCentralWidget(self.centralwidget)
+            # )
+        
 
         self.retranslateUi(UiMainWindow)
 
         QMetaObject.connectSlotsByName(UiMainWindow)
+        # )    
     # setupUi
-
+    
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
     # retranslateUi

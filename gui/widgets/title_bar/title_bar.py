@@ -17,22 +17,26 @@ class Ui_Title_Bar_Widget(QWidget):
             self,
             UiMainWindow,
             app_name = "Strategist",
-            title_file_name = "logo_top.svg",
+            logo_file_name = "logo_top.svg",
+            title_text = "",
             custom_title_bar = None,
             title_bar_height = 30,
+            time_animation = 500,
+            
             font_type = "Segoe_UI",
             font_size = 10,
-            time_animation = 500
     ):
         super().__init__()
         
         self.app_name = app_name
-        self.title_file_name = title_file_name
+        self.logo_file_name = logo_file_name
+        self.title_text = title_text
         self.custom_tilte_bar = custom_title_bar
         self.title_bar_height = title_bar_height
+        self.time_animation = time_animation
+        
         self.font_type = font_type
         self.font_size = font_size
-        self.time_animation = time_animation
         
         self.setupUi()
         
@@ -49,13 +53,15 @@ class Ui_Title_Bar_Widget(QWidget):
         
             # top_logo_label(
         self.top_logo_label = QLabel()
+        self.top_logo_label.setMaximumSize(85, 30)
         self.top_logo_label_vlayout = QVBoxLayout(self.top_logo_label)
+        self.top_logo_label_vlayout.setContentsMargins(8, 5, 0, 5)
+        
 
-                #  top_logo_image(
+                # top_logo_image(
         self.top_logo_image = QSvgWidget()
-        self.top_logo_image_path = Load_Item_Path().set_essential_svg_image_path(self.title_file_name)
+        self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self.logo_file_name)
         self.top_logo_image.load(self.top_logo_image_path)
-        self.top_logo_image.setMaximumSize(80, 30)
                 # )
         self.top_logo_label_vlayout.addWidget(self.top_logo_image)
             # )
@@ -64,16 +70,25 @@ class Ui_Title_Bar_Widget(QWidget):
             # title_frame(
         self.title_frame = QFrame()
         self.title_hlayout = QHBoxLayout(self.title_frame)
-        self.title_hlayout.setContentsMargins(0, 0, 0, 0)
+        self.title_hlayout.setContentsMargins(10, 0, 0, 0)
         self.title_hlayout.setSpacing(0)
 
                 # title_label(
         self.title_label = QLabel()
-        
-        
-
+        self.title_label.setStyleSheet("background-color: lightblue")
+        self.title_label.setText(self.title_text)
+        self.title_label.setFont(self.font_type)
                 # )
         self.title_hlayout.addWidget(self.title_label)
+        
+                # title_buttons_frame(
+        self.title_buttons_frame = QFrame()
+        self.title_buttons_hlayout = QHBoxLayout(self.title_buttons_frame)
+        self.title_buttons_hlayout.setContentsMargins(0, 0, 0, 0)
+        self.title_buttons_hlayout.setSpacing(0)
+        
+                # )
+        self.title_hlayout.addWidget(self.title_buttons_frame)
             # )
         self.title_bar_hlayout.addWidget(self.title_frame)
         # )

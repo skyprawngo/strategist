@@ -1,6 +1,6 @@
 {
     "app_name": "Strategist",
-    "title_file_name": "logo_top_80_30.svg",
+    "logo_file_name": "logo_top_80_30.svg",
     "version" : "v0.0.1",
     "copyright" : "By: JeongYun Lee",
     "year" : 2021,
@@ -31,10 +31,5 @@
         "minimum" : 0,
         "maximum" : 240
     },
-    "time_animation" : 500,
-    "font" : {
-        "family" : "Segoe UI",
-        "title_size" : 10,
-        "text_size" : 9
-    }
+    "time_animation" : 500
 }
