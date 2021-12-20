@@ -45,7 +45,19 @@ class Ui_Title_Bar_Widget(QWidget):
             self.title_bar_hlayout.setContentsMargins(0, 0, 0, 0)
             self.title_bar_hlayout.setSpacing(0)
             
+            self.top_logo_image = QSvgWidget()
+            self.top_logo_image_path = Load_Item_Path().set_svg_image_path(image_name = "logo_top_100_30.svg")
+            self.top_logo_image.load(self.top_logo_image_path)
+            self.top_logo_image.setMaximumSize(80, 30)
+            
             self.top_logo_label = QLabel()
+            
+            self.top_logo_label_vlayout = QVBoxLayout(self.top_logo_label)
+            self.top_logo_label_vlayout.addWidget(self.top_logo_image)
+            
+            
+            self.title_bar_hlayout.addWidget(self.top_logo_label)
+            self.title_bar_widget_vlayout.addWidget(self.title_bar_frame)
             
             
             

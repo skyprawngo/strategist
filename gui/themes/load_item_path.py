@@ -2,15 +2,11 @@ import os
 
 from .theme_switch import Theme_Switch
 
-class Load_Item_Path(object):
+class Load_Item_Path():
     cwd_path = os.path.abspath(os.getcwd())
     app_path = "gui/themes"
     switch = Theme_Switch().switch["switch_theme"]
-    
-    def __init__(self, icon_name):
-        super().__init__()
-        self.icon_name = icon_name
-    
+
     def set_icon_path(self, icon_name):
         icon_path = os.path.normpath(
             os.path.join(self.cwd_path, self.app_path, self.switch, "images/icons", icon_name)

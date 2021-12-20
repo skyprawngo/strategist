@@ -54,6 +54,7 @@ class Ui_MainWindow(object):
         self.title_bar_frame.setMaximumHeight(self.settings["title_bar_size"]["height"])
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
         self.title_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+
         
             # Import Title Bar
         self.title_bar = Ui_Title_Bar_Widget(
@@ -66,6 +67,7 @@ class Ui_MainWindow(object):
                         time_animation = self.settings["time_animation"],
         )
 
+        self.title_bar_vlayout.addWidget(self.title_bar)
         self.centralwidget_vlayout.addWidget(self.title_bar_frame)
         # /////////////////////////////////////////////////////////////////////
 
