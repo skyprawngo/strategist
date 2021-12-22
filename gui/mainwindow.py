@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import platform
+
 from gui.module_import import *
 
 from gui.themes.settings import Settings
@@ -53,26 +55,37 @@ class Ui_MainWindow(object):
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.title_bar_frame.setMinimumHeight(self.settings["title_bar_size"]["height"])
         self.title_bar_frame.setMaximumHeight(self.settings["title_bar_size"]["height"])
+        self.title_bar_frame.setStyleSheet(f'background-color: {self.themes["app_color"]["bg_two"]}')
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
         self.title_bar_vlayout.setContentsMargins(0, 0, 0, 0)
-
         
             # Import Title Bar
         self.title_bar = Ui_Title_Bar_Widget(
-                        UiMainWindow,
-                        app_name = self.settings["app_name"],
-                        logo_file_name = self.settings["logo_file_name"],
-                        title_text = self.settings["title_text"],
-                        custom_title_bar = self.settings["custom_title_bar"],
-                        title_bar_height = self.settings["title_bar_size"]["height"],
-                        time_animation = self.settings["time_animation"],
-                        
-                        font_type = self.themes["font"]["family"],
-                        font_size = self.themes["font"]["title_size"],
+            UiMainWindow,
+            app_name = self.settings["app_name"],
+            logo_file_name = self.settings["logo_file_name"],
+            title_text = self.settings["title_text"],
+            custom_title_bar = self.settings["custom_title_bar"],
+            title_bar_height = self.settings["title_bar_size"]["height"],
+            time_animation = self.settings["time_animation"],
+            
+            font_type = self.themes["font"]["family"],
+            font_size = self.themes["font"]["title_size"],
+
+            title_bar_text_color = self.themes["app_color"]["dark_three"],
+            title_bar_text_color_hover = self.themes["app_color"]["dark_two"],
+            title_bar_text_color_pressed = self.themes["app_color"]["dark_one"],
+            
+            title_bar_bg_color = self.themes["app_color"]["bg_two"],
+            title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
+            title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
+        
+        
         )
 
         self.title_bar_vlayout.addWidget(self.title_bar)
         self.centralwidget_vlayout.addWidget(self.title_bar_frame)
+        
         # /////////////////////////////////////////////////////////////////////
 
         self.not_title_bar_frame = QFrame(self.centralwidget)
