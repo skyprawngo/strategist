@@ -48,20 +48,18 @@ class Ui_MainWindow(object):
         self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
         self.centralwidget_vlayout.setContentsMargins(0, 0, 0, 0)
         
-        # Set Title Bar
-        # /////////////////////////////////////////////////////////////////////
-            # Set Title Bar Frame
+                # Set Title Bar Frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.title_bar_frame.setMinimumHeight(self.settings["title_bar_size"]["height"])
         self.title_bar_frame.setMaximumHeight(self.settings["title_bar_size"]["height"])
-        self.title_bar_frame.setStyleSheet(f'background-color: {self.themes["app_color"]["bg_two"]}')
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
         self.title_bar_vlayout.setContentsMargins(0, 0, 0, 0)
         
-            # Import Title Bar
+                    # Import Title Bar(
         self.title_bar = Ui_Title_Bar_Widget(
-            UiMainWindow,
+            app_parent = self.centralwidget,
+            parent = self.title_bar_frame,
             app_name = self.settings["app_name"],
             logo_file_name = self.settings["logo_file_name"],
             title_text = self.settings["title_text"],
@@ -71,6 +69,8 @@ class Ui_MainWindow(object):
             
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["title_size"],
+
+            shape_radius = self.themes["bg_shape"]["top_bar_radius"],
 
             title_bar_text_color = self.themes["app_color"]["dark_three"],
             title_bar_text_color_hover = self.themes["app_color"]["dark_two"],
@@ -82,12 +82,12 @@ class Ui_MainWindow(object):
         
         
         )
-
+                    # )
         self.title_bar_vlayout.addWidget(self.title_bar)
+                # )
         self.centralwidget_vlayout.addWidget(self.title_bar_frame)
         
-        # /////////////////////////////////////////////////////////////////////
-
+                # not_title_bar_frame(
         self.not_title_bar_frame = QFrame(self.centralwidget)
         self.not_title_bar_frame.setObjectName(u"not_title_bar_frame")
         self.not_title_bar_frame.setFrameShape(QFrame.NoFrame)
@@ -97,14 +97,12 @@ class Ui_MainWindow(object):
         self.not_title_bar_hlayout.setObjectName(u"not_title_bar_hlayout")
         self.not_title_bar_hlayout.setContentsMargins(0, 0, 0, 0)
         
-        # Import Menu Bar
-        # /////////////////////////////////////////////////////////////////////
+                    # Import Menu Bar(
         self.menu_bar_frame = QFrame()
         self.menu_bar_frame.setFrameShape(QFrame.NoFrame)
         self.menu_bar = Ui_Menu_Bar_Widget()
         self.menu_bar.setupUi(self.menu_bar_frame)
         self.not_title_bar_hlayout.addWidget(self.menu_bar_frame)
-        # /////////////////////////////////////////////////////////////////////
         
         self.menu_bar_frame = QFrame(self.not_title_bar_frame)
         self.menu_bar_frame.setObjectName(u"menu_bar_frame")

@@ -8,7 +8,8 @@ from gui.themes.load_item_path import Load_Item_Path
 class Ui_Title_Bar_Widget(QWidget):
     def __init__(
             self,
-            UiMainWindow,
+            app_parent,
+            parent,
             app_name = "Strategist",
             logo_file_name = "logo_top.svg",
             title_text = "",
@@ -18,6 +19,8 @@ class Ui_Title_Bar_Widget(QWidget):
             
             font_type = "Segoe_UI",
             font_size = 10,
+
+            shape_radius = 10,
 
             title_bar_text_color = "#000000",
             title_bar_text_color_hover = "#000000",
@@ -30,7 +33,8 @@ class Ui_Title_Bar_Widget(QWidget):
     ):
         super().__init__()
         
-        self.UiMainWindow = UiMainWindow
+        self.app_parent = app_parent
+        self.parent = parent
         self.app_name = app_name
         self.logo_file_name = logo_file_name
         self.title_text = title_text
@@ -40,6 +44,8 @@ class Ui_Title_Bar_Widget(QWidget):
         
         self.font_type = font_type
         self.font_size = font_size
+
+        self.shape_radius = shape_radius
 
         self.title_bar_text_color = title_bar_text_color
         self.title_bar_text_color_hover = title_bar_text_color_hover
@@ -51,44 +57,38 @@ class Ui_Title_Bar_Widget(QWidget):
         
         
         self.setupUi()
-        # title_bar_frame(
-            # top_logo_label(
-        self.top_logo_label.setMaximumSize(85, 30)
-                # top_logo_image(
-        self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self.logo_file_name)
-        self.top_logo_image.load(self.top_logo_image_path)
-                # )
-            #)
-            # title_frame(
-                # title_label(
-        self.title_label.setText(self.title_text)
-                # )
-                # title_buttons_frame(
-        self.title_buttons_frame.setStyleSheet("background-color:lightblue")
-                    # minimize_button(
-                    #)
-                # )
 
         
     
     def setupUi(self):
+        
         self.title_bar_widget_vlayout = QVBoxLayout(self)
         self.title_bar_widget_vlayout.setContentsMargins(0, 0, 0, 0)
         
         # title_bar_frame(
         self.title_bar_frame = QFrame()
+        self.title_bar_frame.setStyleSheet(f'''
+            background-color: {self.title_bar_bg_color};
+        ''')
         self.title_bar_hlayout = QHBoxLayout(self.title_bar_frame)
-        self.title_bar_hlayout.setContentsMargins(0, 0, 0, 0)
+        self.title_bar_hlayout.setContentsMargins(5, 5, 5, 0)
         self.title_bar_hlayout.setSpacing(0)
         
             # top_logo_label(
         self.top_logo_label = QLabel()
+        self.top_logo_label.setStyleSheet(f'''
+            background-color: darkgray;
+            border-top-left-radius: 10px;
+        ''')
+        self.top_logo_label.setMaximumSize(85, 30)
         self.top_logo_label_vlayout = QVBoxLayout(self.top_logo_label)
-        self.top_logo_label_vlayout.setContentsMargins(8, 5, 0, 5)
+        self.top_logo_label_vlayout.setContentsMargins(0, 0, 0, 0)
         
 
                 # top_logo_image(
         self.top_logo_image = QSvgWidget()
+        self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self.logo_file_name)
+        self.top_logo_image.load(self.top_logo_image_path)
                 # )
         self.top_logo_label_vlayout.addWidget(self.top_logo_image)
             # )
@@ -96,27 +96,34 @@ class Ui_Title_Bar_Widget(QWidget):
         
             # title_frame(
         self.title_frame = QFrame()
+        self.title_frame.setStyleSheet(f'''
+            border-top-right-radius: {self.shape_radius};
+            border-bottom-right-radius: {self.shape_radius};
+        ''')
         self.title_hlayout = QHBoxLayout(self.title_frame)
         self.title_hlayout.setContentsMargins(10, 0, 0, 0)
         self.title_hlayout.setSpacing(0)
 
                 # title_label(
         self.title_label = QLabel()
+        self.title_label.setText(self.title_text)
                 # )
         self.title_hlayout.addWidget(self.title_label)
         
                 # title_buttons_frame(
         self.title_buttons_frame = QFrame()
+        self.title_buttons_frame.setStyleSheet("background-color:lightblue")
         self.title_buttons_hlayout = QHBoxLayout(self.title_buttons_frame)
         self.title_buttons_hlayout.setContentsMargins(0, 0, 0, 0)
         self.title_buttons_hlayout.setSpacing(0)
         
                     # minimize_button(
         self.title_btn_minimize = Title_Button(
-            self.UiMainWindow,
-            icon_file_name = "minus.svg",
-            tooltip_text = "",
-            heigth = self.title_bar_height,
+            self.parent,
+            self.app_parent,
+            icon_file_path = Load_Item_Path().set_svg_icon_path("minus.svg"),
+            tooltip_text = "Minimize",
+            btn_height = self.title_bar_height,
 
             btn_icon_color = self.title_bar_text_color,
             btn_icon_color_hover = self.title_bar_bg_color_hover,
@@ -127,8 +134,8 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_bg_color_pressed = self.title_bar_bg_color_pressed
 
         )
-
                         # )
+        self.title_buttons_hlayout.addWidget(self.title_btn_minimize)
                 # )
         self.title_hlayout.addWidget(self.title_buttons_frame)
             # )

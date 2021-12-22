@@ -16,7 +16,7 @@
         540
     ],
     "title_bar_size": {
-        "height": 30
+        "height": 34
     },
     "left_menu_size" : {
         "minimum" : 50,
@@ -31,5 +31,9 @@
         "minimum" : 0,
         "maximum" : 240
     },
-    "time_animation" : 500
+    "time_animation" : 500,
+    "bg_shape" : {
+        "top_bar_radius" : 10,
+        "menu_bar_radius" : 10
+    }
 }
