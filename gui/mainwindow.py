@@ -51,10 +51,10 @@ class Ui_MainWindow(object):
                 # Set Title Bar Frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.title_bar_frame.setMinimumHeight(self.settings["title_bar_size"]["height"])
-        self.title_bar_frame.setMaximumHeight(self.settings["title_bar_size"]["height"])
+        self.title_bar_frame.setMinimumHeight(self.themes["shape"]["title_bar"]["bg_height"])
+        self.title_bar_frame.setMaximumHeight(self.themes["shape"]["title_bar"]["bg_height"])
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
-        self.title_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.title_bar_vlayout.setContentsMargins(4, 4, 4, 0)
         
                     # Import Title Bar(
         self.title_bar = Ui_Title_Bar_Widget(
@@ -64,18 +64,20 @@ class Ui_MainWindow(object):
             logo_file_name = self.settings["logo_file_name"],
             title_text = self.settings["title_text"],
             custom_title_bar = self.settings["custom_title_bar"],
-            title_bar_height = self.settings["title_bar_size"]["height"],
             time_animation = self.settings["time_animation"],
             
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["title_size"],
 
-            shape_radius = self.themes["bg_shape"]["top_bar_radius"],
+            title_bar_btn_size = self.themes["shape"]["title_bar"]["btn_size"],
+            title_bar_btn_radius = self.themes["shape"]["title_bar"]["btn_radius"],
 
             title_bar_text_color = self.themes["app_color"]["dark_three"],
             title_bar_text_color_hover = self.themes["app_color"]["dark_two"],
             title_bar_text_color_pressed = self.themes["app_color"]["dark_one"],
             
+            title_bar_bg_height = self.themes["shape"]["title_bar"]["bg_height"],
+            title_bar_bg_radius = self.themes["shape"]["title_bar"]["bg_radius"],
             title_bar_bg_color = self.themes["app_color"]["bg_two"],
             title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]

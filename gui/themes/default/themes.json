@@ -5,9 +5,16 @@
         "title_size" : 10,
         "text_size" : 9
     },
-    "bg_shape" : {
-        "top_bar_radius" : 8,
-        "menu_bar_radius" : 8
+    "shape" : {
+        "title_bar" : {
+            "btn_size" : [25, 25],
+            "btn_radius" : 8,
+            "bg_height" : 34,
+            "bg_radius" : 8
+        },
+        "menu_bar" : {
+            "bg_radius" : 8
+        }
     },
     "app_color" : {
         "dark_one" : "#141a1f",

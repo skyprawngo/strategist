@@ -9,8 +9,9 @@ class Title_Button(QPushButton):
         app_parent,
         icon_file_path,
         tooltip_text = "",
-        btn_height = 30,
-        radius = 8,
+
+        btn_size = [25, 25],
+        btn_radius = 8,
 
         btn_bg_color = "#ffffff",
         btn_bg_color_hover = "#ffffff",
@@ -23,11 +24,14 @@ class Title_Button(QPushButton):
     ):
         super().__init__()
         
-        self.setFixedSize(btn_height,btn_height)
-        self.setCursor(Qt.PointingHandCursor)
+        
 
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
+
+        self.setFixedSize(btn_size[0], btn_size[1])
+        self.btn_radius = btn_radius
+        
         
         self.btn_bg_color = btn_bg_color
         self.btn_bg_color_hover = btn_bg_color_hover
@@ -39,6 +43,15 @@ class Title_Button(QPushButton):
 
 
         self.tooltip_text = tooltip_text
+
+
+        self.setCursor(Qt.PointingHandCursor)
+
+        self.btn_image = QIcon()
+        self.btn_image.addFile(self.icon_file_path)
+        self.setIcon(self.btn_image)
+        self.setIconSize(QSize(btn_size,btn_size))
+
         self.btn_tooltip = Btn_Tooltip(
             parent,
             tooltip_text = self.tooltip_text,
