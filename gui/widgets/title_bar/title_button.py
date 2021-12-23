@@ -51,21 +51,23 @@ class Title_Button(QPushButton):
         self.setIconSize(QSize(btn_size[0],btn_size[1]))
 
         self.label_tooltip = Btn_Tooltip(
-            parent,
+            app_parent,
             tooltip_text = self.tooltip_text,
             tooltip_text_color = self.btn_icon_color,
             tooltip_bg_color = self.btn_bg_color
         )
-        self.label_tooltip.hide()
+        # self.label_tooltip.hide()
 
     
     def enterEvent(self, event):
         self.move_tooltip()
         self.label_tooltip.show()
+        print("들어옴")
     
     def leaveEvent(self, event):
         self.move_tooltip()
         self.label_tooltip.hide()
+        print("나감")
 
     def move_tooltip(self):
         # GET MAIN WINDOW PARENT
