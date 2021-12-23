@@ -68,7 +68,7 @@ class Ui_Title_Bar_Widget(QWidget):
         # title_bar_frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setStyleSheet(f'''
-            background-color: darkgray;
+            background-color: {self.title_bar_bg_color};
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
@@ -110,15 +110,14 @@ class Ui_Title_Bar_Widget(QWidget):
                 # title_buttons_frame(
         self.title_buttons_frame = QFrame()
         self.title_buttons_frame.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        self.title_buttons_frame.setStyleSheet("background-color:lightblue;")
         self.title_buttons_hlayout = QHBoxLayout(self.title_buttons_frame)
         self.title_buttons_hlayout.setContentsMargins(8, 0, 8, 0)
         self.title_buttons_hlayout.setSpacing(7)
         
                     # minimize_button(
         self.title_btn_minimize = Title_Button(
-            self.parent,
-            self.app_parent,
+            parent = self.parent,
+            app_parent = self.app_parent,
             icon_file_path = Load_Item_Path().set_svg_icon_path("minus.svg"),
             tooltip_text = "Minimize",
             

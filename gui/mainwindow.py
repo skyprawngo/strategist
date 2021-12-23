@@ -58,7 +58,7 @@ class Ui_MainWindow(object):
         
                     # Import Title Bar(
         self.title_bar = Ui_Title_Bar_Widget(
-            app_parent = self.centralwidget,
+            app_parent = UiMainWindow,
             parent = self.title_bar_frame,
             app_name = self.settings["app_name"],
             logo_file_name = self.settings["logo_file_name"],

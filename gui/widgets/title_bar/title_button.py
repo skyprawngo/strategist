@@ -41,8 +41,7 @@ class Title_Button(QPushButton):
         self.btn_icon_color = btn_icon_color
         self.btn_icon_color_hover = btn_icon_color_hover
         self.btn_icon_color_pressed = btn_icon_color_pressed
-
-        
+    
         self.setCursor(Qt.PointingHandCursor)
 
         self.btn_image = QIcon()
@@ -50,24 +49,22 @@ class Title_Button(QPushButton):
         self.setIcon(self.btn_image)
         self.setIconSize(QSize(btn_size[0],btn_size[1]))
 
-        self.label_tooltip = Btn_Tooltip(
+        self.label_tooltip = Btn_ToolTip(
             app_parent,
-            tooltip_text = self.tooltip_text,
-            tooltip_text_color = self.btn_icon_color,
-            tooltip_bg_color = self.btn_bg_color
+            tooltip_text,
+            btn_icon_color,
+            btn_bg_color
         )
-        # self.label_tooltip.hide()
-
+        self.label_tooltip.hide()
+    
     
     def enterEvent(self, event):
         self.move_tooltip()
         self.label_tooltip.show()
-        print("들어옴")
     
     def leaveEvent(self, event):
         self.move_tooltip()
         self.label_tooltip.hide()
-        print("나감")
 
     def move_tooltip(self):
         # GET MAIN WINDOW PARENT
@@ -81,12 +78,11 @@ class Title_Button(QPushButton):
         # Adjust tooltip position with offset
         pos_x = (pos.x() - self.label_tooltip.width()) + self.width() + 5
         pos_y = pos.y() + self.height() + 6
-
         # SET POSITION TO WIDGET
         # Move tooltip position
         self.label_tooltip.move(pos_x, pos_y)
 
-class Btn_Tooltip(QLabel):
+class Btn_ToolTip(QLabel):
     style_tooltip = """ 
     QLabel {{		
         background-color: {tooltip_bg_color};	
@@ -117,6 +113,7 @@ class Btn_Tooltip(QLabel):
         self.setParent(app_parent)
         self.setText(tooltip_text)
         self.adjustSize()
+
 
         # SET DROP SHADOW
         self.shadow = QGraphicsDropShadowEffect(self)
