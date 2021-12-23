@@ -7,7 +7,7 @@
     },
     "shape" : {
         "title_bar" : {
-            "btn_size" : [25, 25],
+            "btn_size" : [20, 20],
             "btn_radius" : 8,
             "bg_height" : 34,
             "bg_radius" : 8
