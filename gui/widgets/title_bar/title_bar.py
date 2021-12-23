@@ -129,8 +129,10 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_icon_color_pressed = self.title_bar_bg_color_pressed,
             
             btn_bg_color = self.title_bar_bg_color,
-            btn_bg_color_hover = self.title_bar_bg_color_hover,
-            btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            # btn_bg_color_hover = self.title_bar_bg_color_hover,
+            # btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            btn_bg_color_hover = "#000fff",
+            btn_bg_color_pressed = "#fccf38"
 
         )
                     # )

@@ -30,7 +30,7 @@ class Title_Button(QPushButton):
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
 
-        self.setFixedSize(btn_size[0], btn_size[1])
+        self.btn_size = btn_size
         self.btn_radius = btn_radius
         
         
@@ -41,13 +41,17 @@ class Title_Button(QPushButton):
         self.btn_icon_color = btn_icon_color
         self.btn_icon_color_hover = btn_icon_color_hover
         self.btn_icon_color_pressed = btn_icon_color_pressed
-    
-        self.setCursor(Qt.PointingHandCursor)
 
-        self.btn_image = QIcon()
-        self.btn_image.addFile(self.icon_file_path)
-        self.setIcon(self.btn_image)
-        self.setIconSize(QSize(btn_size[0],btn_size[1]))
+
+        self.set_btn_bg_color = btn_bg_color
+        self.set_btn_bg_color_hover = btn_bg_color_hover
+        self.set_btn_bg_color_pressed = btn_bg_color_pressed
+
+        self.set_btn_icon_color = btn_icon_color
+        self.set_btn_icon_color_hover = btn_icon_color_hover
+        self.set_btn_icon_color_pressed = btn_icon_color_pressed
+    
+
 
         self.label_tooltip = Btn_ToolTip(
             app_parent,
@@ -56,15 +60,56 @@ class Title_Button(QPushButton):
             btn_bg_color
         )
         self.label_tooltip.hide()
+
+        self.setCursor(Qt.PointingHandCursor)
+        self.setFixedSize(self.btn_size[0], self.btn_size[1])
+
+        self.btn_image = QIcon()
+        self.btn_image.addFile(self.icon_file_path)
+        self.setIcon(self.btn_image)
+        self.setIconSize(QSize(self.btn_size[0],self.btn_size[1]))
+    # def paintEvent(self, event):
+        # self.setStyleSheet(f'''
+        #     QPushButton
+        # ''')
+
     
-    
+    def changeStyle(self, event):
+        if event == QEvent.Enter:
+            self.set_btn_bg_color = self.btn_bg_color_hover
+            print(self.set_btn_bg_color)
+        elif event == QEvent.Leave:
+            self.set_btn_bg_color = self.btn_bg_color
+            print(self.set_btn_bg_color)
+        elif event == QEvent.MouseButtonPress:
+            self.set_btn_bg_color = self.btn_bg_color_pressed
+            print(self.set_btn_bg_color)
+        elif event == QEvent.MouseButtonRelease:
+            self.set_btn_bg_color = self.btn_bg_color
+            print(self.set_btn_bg_color)
+
     def enterEvent(self, event):
+        self.changeStyle(QEvent.Enter)
         self.move_tooltip()
         self.label_tooltip.show()
     
     def leaveEvent(self, event):
+        self.changeStyle(QEvent.Leave)
         self.move_tooltip()
         self.label_tooltip.hide()
+    
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.changeStyle(QEvent.MouseButtonPress)
+            self.setFocus()
+            return self.clicked.emit()
+    
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.changeStyle(QEvent.MouseButtonRelease)
+            self.setFocus()
+            return self.released.emit()
+
 
     def move_tooltip(self):
         # GET MAIN WINDOW PARENT
