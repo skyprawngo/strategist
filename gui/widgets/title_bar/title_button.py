@@ -67,7 +67,7 @@ class Title_Button(QPushButton):
         self.btn_image = QIcon()
         self.btn_image.addFile(self.icon_file_path)
         self.setIcon(self.btn_image)
-        self.setIconSize(QSize(self.btn_size[0],self.btn_size[1]))
+        self.setIconSize(QSize(self.btn_size[0]-5,self.btn_size[1]-5))
     # def paintEvent(self, event):
         # self.setStyleSheet(f'''
         #     QPushButton
@@ -77,17 +77,23 @@ class Title_Button(QPushButton):
     def changeStyle(self, event):
         if event == QEvent.Enter:
             self.set_btn_bg_color = self.btn_bg_color_hover
-            print(self.set_btn_bg_color)
+            self.btnMouseEvent()
         elif event == QEvent.Leave:
             self.set_btn_bg_color = self.btn_bg_color
-            print(self.set_btn_bg_color)
+            self.btnMouseEvent()
         elif event == QEvent.MouseButtonPress:
             self.set_btn_bg_color = self.btn_bg_color_pressed
-            print(self.set_btn_bg_color)
+            self.btnMouseEvent()
         elif event == QEvent.MouseButtonRelease:
             self.set_btn_bg_color = self.btn_bg_color
-            print(self.set_btn_bg_color)
-
+            self.btnMouseEvent()
+    
+    def btnMouseEvent(self):
+        self.setContentsMargins(0, 0, 0, 0)
+        self.setStyleSheet(f'''
+            background-color: {self.set_btn_bg_color};
+            border-radius: 5px;
+        ''')
     def enterEvent(self, event):
         self.changeStyle(QEvent.Enter)
         self.move_tooltip()

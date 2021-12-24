@@ -111,8 +111,8 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_buttons_frame = QFrame()
         self.title_buttons_frame.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
         self.title_buttons_hlayout = QHBoxLayout(self.title_buttons_frame)
-        self.title_buttons_hlayout.setContentsMargins(8, 0, 8, 0)
-        self.title_buttons_hlayout.setSpacing(7)
+        self.title_buttons_hlayout.setContentsMargins(0, 0, 5, 0)
+        self.title_buttons_hlayout.setSpacing(0)
         
                     # minimize_button(
         self.title_btn_minimize = Title_Button(
@@ -129,10 +129,9 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_icon_color_pressed = self.title_bar_bg_color_pressed,
             
             btn_bg_color = self.title_bar_bg_color,
-            # btn_bg_color_hover = self.title_bar_bg_color_hover,
-            # btn_bg_color_pressed = self.title_bar_bg_color_pressed
-            btn_bg_color_hover = "#000fff",
-            btn_bg_color_pressed = "#fccf38"
+            btn_bg_color_hover = self.title_bar_bg_color_hover,
+            btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            
 
         )
                     # )
