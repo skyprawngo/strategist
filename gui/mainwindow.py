@@ -26,6 +26,8 @@ class Ui_MainWindow(object):
             # Load Themes
         themes = Themes()
         self.themes = themes.themes
+
+        # self.window = 
         
             
         UiMainWindow.resize(
@@ -55,7 +57,7 @@ class Ui_MainWindow(object):
         self.title_bar_frame.setMaximumHeight(self.themes["shape"]["title_bar"]["bg_height"])
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
         self.title_bar_vlayout.setContentsMargins(4, 4, 4, 0)
-        
+                    
                     # Import Title Bar(
         self.title_bar = Ui_Title_Bar_Widget(
             app_parent = UiMainWindow,

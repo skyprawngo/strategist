@@ -10,6 +10,8 @@ class Title_Button(QPushButton):
         icon_file_path,
         tooltip_text = "abcd",
 
+        btn_toggle = False,
+        btn_isactive = True,
         btn_size = [25, 25],
         btn_radius = 8,
 
@@ -30,9 +32,10 @@ class Title_Button(QPushButton):
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
 
+        self.btn_toggle = btn_toggle
+        self.btn_isactive = btn_isactive
         self.btn_size = btn_size
         self.btn_radius = btn_radius
-        
         
         self.btn_bg_color = btn_bg_color
         self.btn_bg_color_hover = btn_bg_color_hover
@@ -77,44 +80,87 @@ class Title_Button(QPushButton):
     def changeStyle(self, event):
         if event == QEvent.Enter:
             self.set_btn_bg_color = self.btn_bg_color_hover
-            self.btnMouseEvent()
+            self.btnStyle()
         elif event == QEvent.Leave:
             self.set_btn_bg_color = self.btn_bg_color
-            self.btnMouseEvent()
+            self.btnStyle()
         elif event == QEvent.MouseButtonPress:
             self.set_btn_bg_color = self.btn_bg_color_pressed
-            self.btnMouseEvent()
+            self.btnStyle()
         elif event == QEvent.MouseButtonRelease:
             self.set_btn_bg_color = self.btn_bg_color
-            self.btnMouseEvent()
+            self.btnStyle()
     
-    def btnMouseEvent(self):
+    def changetoggleStyle(self, event):
+        if event == QEvent.Enter:
+            if self.btn_isactive:
+                pass
+            elif not self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color_hover
+            self.btnStyle()
+        elif event == QEvent.Leave:
+            if self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color_pressed
+            elif not self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color
+            self.btnStyle()
+        elif event == QEvent.MouseButtonPress:
+            if self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color_hover
+                self.btn_isactive = False
+            elif not self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color_pressed
+                self.btn_isactive = True
+            self.btnStyle()
+        elif event == QEvent.MouseButtonRelease:
+            if self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color_pressed
+            elif not self.btn_isactive:
+                self.set_btn_bg_color = self.btn_bg_color_hover
+
+    def btnStyle(self):
         self.setContentsMargins(0, 0, 0, 0)
         self.setStyleSheet(f'''
             background-color: {self.set_btn_bg_color};
             border-radius: 5px;
         ''')
+
+
     def enterEvent(self, event):
-        self.changeStyle(QEvent.Enter)
+        if self.btn_toggle:
+            self.changetoggleStyle(QEvent.Enter)
+        else:
+            self.changeStyle(QEvent.Enter)
         self.move_tooltip()
         self.label_tooltip.show()
     
     def leaveEvent(self, event):
-        self.changeStyle(QEvent.Leave)
+        if self.btn_toggle:
+            self.changetoggleStyle(QEvent.Leave)
+        else:
+            self.changeStyle(QEvent.Leave)
         self.move_tooltip()
         self.label_tooltip.hide()
     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.changeStyle(QEvent.MouseButtonPress)
+            if self.btn_toggle:
+                self.changetoggleStyle(QEvent.MouseButtonPress)
+            else:
+                self.changeStyle(QEvent.MouseButtonPress)
             self.setFocus()
             return self.clicked.emit()
     
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.changeStyle(QEvent.MouseButtonRelease)
+            if self.btn_toggle:
+                self.changetoggleStyle(QEvent.MouseButtonRelease)
+            else:
+                self.changeStyle(QEvent.MouseButtonRelease)
             self.setFocus()
             return self.released.emit()
+    
+            
 
 
     def move_tooltip(self):
