@@ -14,6 +14,9 @@ class MainWindow(QMainWindow):
         
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.ui.setup_gui()
+        self.ui.resize_grips()
     
     def mousePressEvent(self, event):
         # SET DRAG POS WINDOW

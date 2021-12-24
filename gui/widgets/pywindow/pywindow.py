@@ -2,8 +2,6 @@ from gui.module_import import *
 
 from . styles import Styles
 
-from gui.widgets.pygrips.py_grips import PyGrips
-
 class PyWindow(QFrame):
     def __init__(
         self,
@@ -23,6 +21,7 @@ class PyWindow(QFrame):
     ):
         super().__init__()
 
+        self.app_parent = app_parent
         self.margin = margin
         self.spacing = spacing
         self.bg_color = bg_color
@@ -33,18 +32,6 @@ class PyWindow(QFrame):
         self.border_color = border_color
         self.custom_title_bar = custom_title_bar
         self.enable_shadow = enable_shadow
-
-        app_parent.resize(
-            startup_size[0],
-            startup_size[1]
-        )
-        
-        app_parent.setMinimumSize(
-            minimum_size[0],
-            minimum_size[1]
-        )
-        app_parent.setWindowFlags(Qt.FramelessWindowHint)
-        app_parent.setAttribute(Qt.WA_TranslucentBackground)
 
         self.setObjectName("pod_bg_app")
 

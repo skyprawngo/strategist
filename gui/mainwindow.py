@@ -6,6 +6,7 @@ from gui.themes.themes import Themes
 from gui.themes.theme_switch import Theme_Switch
 
 from gui.widgets.pywindow.pywindow import PyWindow
+from gui.widgets.pygrips.py_grips import PyGrips
 from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 from gui.widgets.left_menu_column.ui_menu_bar import Ui_Menu_Bar_Widget
 
@@ -24,8 +25,21 @@ class Ui_MainWindow(object):
         themes = Themes()
         self.themes = themes.themes
         
-
+        UiMainWindow.resize(
+            self.settings["startup_size"][0],
+            self.settings["startup_size"][1]
+        )
         
+        UiMainWindow.setMinimumSize(
+            self.settings["minimum_size"][0],
+            self.settings["minimum_size"][1]
+        )
+        UiMainWindow.setWindowFlags(Qt.FramelessWindowHint)
+        UiMainWindow.setAttribute(Qt.WA_TranslucentBackground)
+
+
+        self.app_parent = UiMainWindow
+
         self.window = PyWindow(
             app_parent = UiMainWindow,
             startup_size = self.settings["startup_size"],
@@ -41,6 +55,8 @@ class Ui_MainWindow(object):
             border_color = self.themes["app_color"]["bg_three"],
             custom_title_bar = self.settings["custom_title_bar"]
         )
+
+        
 
             # Centralwidget(
         self.centralwidget = QWidget(UiMainWindow)
@@ -146,7 +162,29 @@ class Ui_MainWindow(object):
 
         UiMainWindow.setCentralWidget(self.centralwidget)
             # )
-        # )    
-    # setupUi
+        # )
 
+    def resize_grips(self):
+        if self.settings["custom_title_bar"]:
+            print(self.window.height())
+            print(self.app_parent.height())
+            self.left_grip.setGeometry(0, 0, 10, self.height())
+            self.right_grip.setGeometry(self.width() - 15, 10, 10, self.height())
+            self.top_grip.setGeometry(5, 5, self.width() - 10, 10)
+            self.bottom_grip.setGeometry(5, self.height() - 15, self.width() - 10, 10)
+            self.top_right_grip.setGeometry(self.width() - 20, 5, 15, 15)
+            self.bottom_left_grip.setGeometry(5, self.height() - 20, 15, 15)
+            self.bottom_right_grip.setGeometry(self.width() - 20, self.height() - 20, 15, 15)
 
+    def setup_gui(self):
+        self.hide_grips = False
+        self.left_grip = PyGrips(self.app_parent, "left", self.hide_grips)
+        self.right_grip = PyGrips(self.app_parent, "right", self.hide_grips)
+        self.top_grip = PyGrips(self.app_parent, "top", self.hide_grips)
+        self.bottom_grip = PyGrips(self.app_parent, "bottom", self.hide_grips)
+        self.top_left_grip = PyGrips(self.app_parent, "top_left", self.hide_grips)
+        self.top_right_grip = PyGrips(self.app_parent, "top_right", self.hide_grips)
+        self.bottom_left_grip = PyGrips(self.app_parent, "bottom_left", self.hide_grips)
+        self.bottom_right_grip = PyGrips(self.app_parent, "bottom_right", self.hide_grips)
+
+        
