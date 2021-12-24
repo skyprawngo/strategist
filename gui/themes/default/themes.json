@@ -6,6 +6,12 @@
         "text_size" : 9
     },
     "shape" : {
+        "pywindow" : {
+            "radius" : 10,
+            "margin" : 2,
+            "border_radius" : 10,
+            "border_size" : 2
+        },
         "title_bar" : {
             "btn_size" : [30, 22],
             "btn_radius" : 8,

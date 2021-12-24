@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
-import platform
-
 from gui.module_import import *
 
 from gui.themes.settings import Settings
-
 from gui.themes.themes import Themes
-
 from gui.themes.theme_switch import Theme_Switch
 
+from gui.widgets.pywindow.pywindow import PyWindow
+from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 from gui.widgets.left_menu_column.ui_menu_bar import Ui_Menu_Bar_Widget
 
-from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 
 
 class Ui_MainWindow(object):
@@ -26,22 +23,25 @@ class Ui_MainWindow(object):
             # Load Themes
         themes = Themes()
         self.themes = themes.themes
+        
 
         
-        
-            
-        UiMainWindow.resize(
-                self.settings["startup_size"][0], 
-                self.settings["startup_size"][1]
+        self.window = PyWindow(
+            app_parent = UiMainWindow,
+            startup_size = self.settings["startup_size"],
+            minimum_size = self.settings["minimum_size"],
+
+            margin = self.themes["shape"]["pywindow"]["margin"],
+            spacing = self.themes["shape"]["pywindow"]["margin"],
+            bg_color = self.themes["app_color"]["bg_one"],
+            text_color = self.themes["app_color"]["dark_one"],
+            text_font = self.themes["font"]["text_size"],
+            border_radius = self.themes["shape"]["pywindow"]["border_radius"],
+            border_size = self.themes["shape"]["pywindow"]["border_size"],
+            border_color = self.themes["app_color"]["bg_three"],
+            custom_title_bar = self.settings["custom_title_bar"]
         )
-        
-        UiMainWindow.setMinimumSize(
-                self.settings["minimum_size"][0],
-                self.settings["minimum_size"][1]
-        )
-        UiMainWindow.setWindowFlags(Qt.FramelessWindowHint)
-        UiMainWindow.setAttribute(Qt.WA_TranslucentBackground)
-        
+
             # Centralwidget(
         self.centralwidget = QWidget(UiMainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -94,10 +94,9 @@ class Ui_MainWindow(object):
                     # )
         self.title_bar_vlayout.addWidget(self.title_bar)
                 # )
-        self.centralwidget_vlayout.addWidget(self.title_bar_frame)
-        
+
                 # not_title_bar_frame(
-        self.not_title_bar_frame = QFrame(self.centralwidget)
+        self.not_title_bar_frame = QFrame()
         self.not_title_bar_frame.setObjectName(u"not_title_bar_frame")
         self.not_title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.not_title_bar_frame.setFrameShadow(QFrame.Raised)
@@ -113,7 +112,7 @@ class Ui_MainWindow(object):
         self.menu_bar.setupUi(self.menu_bar_frame)
         self.not_title_bar_hlayout.addWidget(self.menu_bar_frame)
         
-        self.menu_bar_frame = QFrame(self.not_title_bar_frame)
+        self.menu_bar_frame = QFrame()
         self.menu_bar_frame.setObjectName(u"menu_bar_frame")
         
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
@@ -133,27 +132,21 @@ class Ui_MainWindow(object):
 
         self.not_title_bar_hlayout.addWidget(self.menu_bar_frame)
 
-        self.main_page_frame = QFrame(self.not_title_bar_frame)
+        self.main_page_frame = QFrame()
         self.main_page_frame.setObjectName(u"main_page_frame")
         self.main_page_frame.setFrameShape(QFrame.NoFrame)
         self.main_page_frame.setFrameShadow(QFrame.Raised)
 
         self.not_title_bar_hlayout.addWidget(self.main_page_frame)
 
-
-        self.centralwidget_vlayout.addWidget(self.not_title_bar_frame)
+        self.window.vlayout.addWidget(self.title_bar_frame)
+        self.window.vlayout.addWidget(self.not_title_bar_frame)
+        
+        self.centralwidget_vlayout.addWidget(self.window)
 
         UiMainWindow.setCentralWidget(self.centralwidget)
             # )
-        
-
-        self.retranslateUi(UiMainWindow)
-
-        QMetaObject.connectSlotsByName(UiMainWindow)
         # )    
     # setupUi
-    
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-    # retranslateUi
+
 
