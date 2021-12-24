@@ -6,6 +6,9 @@ from gui.widgets.title_bar.div import Div
 
 from gui.themes.load_item_path import Load_Item_Path
 
+window_isMaximised = False
+window_oldSize = QSize()
+
 class Ui_Title_Bar_Widget(QWidget):
     def __init__(
             self,
@@ -68,6 +71,51 @@ class Ui_Title_Bar_Widget(QWidget):
             border-bottom-right-radius: {self.title_bar_bg_radius}px;
         ''')
 
+        # Function(
+        self.title_btn_minimize.released.connect(lambda: app_parent.showMinimized())
+        self.title_btn_maximize.released.connect(lambda: self.func_maximize())
+        self.title_btn_close.released.connect(lambda: app_parent.close())
+
+        def moveWindow(event):
+            # IF MAXIMIZED CHANGE TO NORMAL
+            if app_parent.isMaximized():
+                self.func_maximize()
+                #self.resize(_old_size)
+                curso_x = app_parent.pos().x()
+                curso_y = event.globalPos().y() - QCursor.pos().y()
+                app_parent.move(curso_x, curso_y)
+            # MOVE WINDOW
+            if event.buttons() == Qt.LeftButton:
+                app_parent.move(app_parent.pos() + event.globalPos() - app_parent.dragPos)
+                app_parent.dragPos = event.globalPos()
+                event.accept()
+
+        if custom_title_bar:
+            self.div_1.mouseMoveEvent = moveWindow
+            self.title_label.mouseMoveEvent = moveWindow
+            self.top_logo_label.mouseMoveEvent = moveWindow
+
+            self.div_1.mouseDoubleClickEvent = self.func_maximize
+            self.title_label.mouseDoubleClickEvent = self.func_maximize
+            self.top_logo_label.mouseDoubleClickEvent = self.func_maximize
+        # )
+
+    def func_maximize(self):
+        global window_isMaximised
+        global window_oldSize
+
+        if self.app_parent.isMaximized():
+            window_isMaximised = False
+            self.app_parent.showNormal()
+            self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("square.svg"))
+            self.title_btn_maximize.set_label("Maximize")
+
+
+        elif not self.app_parent.isMaximized():
+            window_isMaximised = True
+            self.app_parent.showMaximized()
+            self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("copy.svg"))
+            self.title_btn_maximize.set_label("Return Size")
         
     def setupUi(self):
         
@@ -116,9 +164,7 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_buttons_hlayout = QHBoxLayout(self.title_buttons_frame)
         self.title_buttons_hlayout.setContentsMargins(0, 0, 5, 0)
         self.title_buttons_hlayout.setSpacing(0)
-                    # function(
-        
-                    # )
+
                     # Menu(
         self.menu = Title_Button(
             parent = self.parent,
@@ -126,7 +172,7 @@ class Ui_Title_Bar_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("settings.svg"),
             tooltip_text = "Settings",
             
-            btn_toggle = True,
+            btn_istoggle = True,
             btn_size = self.title_bar_btn_size,
             btn_radius  = self.title_bar_btn_radius,
 
@@ -153,7 +199,7 @@ class Ui_Title_Bar_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("minus.svg"),
             tooltip_text = "Minimize",
             
-            btn_toggle = False,
+            btn_istoggle = False,
             btn_size = self.title_bar_btn_size,
             btn_radius  = self.title_bar_btn_radius,
 
@@ -172,10 +218,10 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_btn_maximize = Title_Button(
             self.parent,
             self.app_parent,
-            icon_file_path = Load_Item_Path().set_svg_icon_path("copy.svg"),
+            icon_file_path = Load_Item_Path().set_svg_icon_path("square.svg"),
             tooltip_text = "Maximize",
 
-            btn_toggle = False,
+            btn_istoggle = False,
             btn_size = self.title_bar_btn_size,
             btn_radius  =self.title_bar_btn_radius,
 
@@ -198,7 +244,7 @@ class Ui_Title_Bar_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("cross.svg"),
             tooltip_text = "Close",
 
-            btn_toggle = False,
+            btn_istoggle = False,
             btn_size = self.title_bar_btn_size,
             btn_radius  =self.title_bar_btn_radius,
 

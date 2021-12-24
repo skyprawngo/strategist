@@ -14,7 +14,12 @@ class MainWindow(QMainWindow):
         
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
+    
+    def mousePressEvent(self, event):
+        # SET DRAG POS WINDOW
+        p = event.globalPosition()
+        globalPos = p.toPoint()
+        self.dragPos = globalPos
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)

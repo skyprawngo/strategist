@@ -10,8 +10,8 @@ class Title_Button(QPushButton):
         icon_file_path,
         tooltip_text = "abcd",
 
-        btn_toggle = False,
-        btn_isactive = True,
+        btn_istoggle = False,
+        btn_isactive = False,
         btn_size = [25, 25],
         btn_radius = 8,
 
@@ -32,7 +32,7 @@ class Title_Button(QPushButton):
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
 
-        self.btn_toggle = btn_toggle
+        self.btn_istoggle = btn_istoggle
         self.btn_isactive = btn_isactive
         self.btn_size = btn_size
         self.btn_radius = btn_radius
@@ -56,26 +56,33 @@ class Title_Button(QPushButton):
     
 
 
-        self.label_tooltip = Btn_ToolTip(
-            app_parent,
-            tooltip_text,
-            btn_icon_color,
-            btn_bg_color
-        )
-        self.label_tooltip.hide()
 
         self.setCursor(Qt.PointingHandCursor)
         self.setFixedSize(self.btn_size[0], self.btn_size[1])
 
-        self.btn_image = QIcon()
-        self.btn_image.addFile(self.icon_file_path)
-        self.setIcon(self.btn_image)
-        self.setIconSize(QSize(self.btn_size[0]-5,self.btn_size[1]-5))
-    # def paintEvent(self, event):
-        # self.setStyleSheet(f'''
-        #     QPushButton
-        # ''')
 
+        self.set_icon(icon_file_path)
+        self.set_label(tooltip_text)
+
+
+    def set_icon(self, icon_file_path):
+        self.btn_image = QIcon()
+        self.btn_image.addFile(icon_file_path)
+        self.setIconSize(QSize(self.btn_size[0]-5,self.btn_size[1]-5))
+        self.repaint()
+        self.setIcon(self.btn_image)
+    
+    def set_label(self, tooltip_text):
+        self.label_tooltip = Btn_ToolTip(
+            self.app_parent,
+            tooltip_text,
+            self.btn_icon_color,
+            self.btn_bg_color
+        )
+        self.label_tooltip.hide()
+
+
+    # def set_again(self):
     
     def changeStyle(self, event):
         if event == QEvent.Enter:
@@ -127,7 +134,7 @@ class Title_Button(QPushButton):
 
 
     def enterEvent(self, event):
-        if self.btn_toggle:
+        if self.btn_istoggle:
             self.changetoggleStyle(QEvent.Enter)
         else:
             self.changeStyle(QEvent.Enter)
@@ -135,7 +142,7 @@ class Title_Button(QPushButton):
         self.label_tooltip.show()
     
     def leaveEvent(self, event):
-        if self.btn_toggle:
+        if self.btn_istoggle:
             self.changetoggleStyle(QEvent.Leave)
         else:
             self.changeStyle(QEvent.Leave)
@@ -144,7 +151,7 @@ class Title_Button(QPushButton):
     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            if self.btn_toggle:
+            if self.btn_istoggle:
                 self.changetoggleStyle(QEvent.MouseButtonPress)
             else:
                 self.changeStyle(QEvent.MouseButtonPress)
@@ -153,10 +160,11 @@ class Title_Button(QPushButton):
     
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
-            if self.btn_toggle:
+            if self.btn_istoggle:
                 self.changetoggleStyle(QEvent.MouseButtonRelease)
             else:
                 self.changeStyle(QEvent.MouseButtonRelease)
+            self.label_tooltip.hide()
             self.setFocus()
             return self.released.emit()
     

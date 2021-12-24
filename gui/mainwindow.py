@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         themes = Themes()
         self.themes = themes.themes
 
-        # self.window = 
+        
         
             
         UiMainWindow.resize(
@@ -39,12 +39,17 @@ class Ui_MainWindow(object):
                 self.settings["minimum_size"][0],
                 self.settings["minimum_size"][1]
         )
+        UiMainWindow.setWindowFlags(Qt.FramelessWindowHint)
+        UiMainWindow.setAttribute(Qt.WA_TranslucentBackground)
         
             # Centralwidget(
         self.centralwidget = QWidget(UiMainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setFocusPolicy(Qt.NoFocus)
-        self.centralwidget.setStyleSheet(f'background-color: {self.themes["app_color"]["bg_one"]};')
+        self.centralwidget.setStyleSheet(f'''
+            background-color: {self.themes["app_color"]["bg_one"]};
+            border-radius: 10px
+        ''')
         self.centralwidget_vlayout = QVBoxLayout(self.centralwidget)
         self.centralwidget_vlayout.setSpacing(0)
         self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
