@@ -23,6 +23,6 @@ class Styles(object):
     }}
     QFrame {{ 
         color: {_text_color};
-        font: {_text_font};
+        font: {_text_font_size}px;
     }}
     """

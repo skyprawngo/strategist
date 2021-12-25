@@ -12,7 +12,7 @@ class PyWindow(QFrame):
         spacing = 0,
         bg_color = "#fff",
         text_color = "#000",
-        text_font = "9pt",
+        text_font_size = "9pt",
         border_radius = 10,
         border_size = 2,
         border_color = "#000",
@@ -26,7 +26,7 @@ class PyWindow(QFrame):
         self.spacing = spacing
         self.bg_color = bg_color
         self.text_color = text_color
-        self.text_font = text_font
+        self.text_font_size = text_font_size
         self.border_radius = border_radius
         self.border_size = border_size
         self.border_color = border_color
@@ -39,7 +39,7 @@ class PyWindow(QFrame):
 
         self.vlayout = QVBoxLayout(self)
         self.vlayout.setContentsMargins(margin, margin, margin, margin)
-        self.vlayout.setSpacing(spacing)
+        self.vlayout.setSpacing(0)
 
         if custom_title_bar:
             if enable_shadow:
@@ -57,7 +57,7 @@ class PyWindow(QFrame):
         border_size = None,
         border_color = None,
         text_color = None,
-        text_font = None
+        text_font_size = None
     ):
         # CHECK BG COLOR
         if bg_color != None: internal_bg_color = bg_color
@@ -80,8 +80,8 @@ class PyWindow(QFrame):
         else: internal_border_color = self.border_color
 
         # CHECK TEXT COLOR
-        if text_font != None: internal_text_font = text_font
-        else: internal_text_font = self.text_font
+        if text_font_size != None: internal_text_font_size = text_font_size
+        else: internal_text_font_size = self.text_font_size
 
         self.setStyleSheet(Styles.bg_style.format(
             _bg_color = internal_bg_color,
@@ -89,5 +89,5 @@ class PyWindow(QFrame):
             _border_size = internal_border_size,
             _border_color = internal_border_color,
             _text_color = internal_text_color,
-            _text_font = internal_text_font
+            _text_font_size = internal_text_font_size
         ))

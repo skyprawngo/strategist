@@ -2,7 +2,9 @@
 
 from gui.module_import import *
 
+
 class Left_Menu_Button(QPushButton):
+    toggled_name = ""
     def __init__(
         self,
         parent,
@@ -12,7 +14,7 @@ class Left_Menu_Button(QPushButton):
 
         btn_istoggle = False,
         btn_isactive = False,
-        btn_size = [25, 25],
+        btn_size = [30, 30],
         btn_radius = 8,
 
         btn_bg_color = "#ffffff",
@@ -58,7 +60,7 @@ class Left_Menu_Button(QPushButton):
 
 
         self.setCursor(Qt.PointingHandCursor)
-        self.setFixedSize(self.btn_size[0], self.btn_size[1])
+        self.setFixedSize(self.btn_size[0], self.btn_size[1]+12)
 
 
         self.set_icon(icon_file_path)
@@ -68,7 +70,7 @@ class Left_Menu_Button(QPushButton):
     def set_icon(self, icon_file_path):
         self.btn_image = QIcon()
         self.btn_image.addFile(icon_file_path)
-        self.setIconSize(QSize(self.btn_size[0]-5,self.btn_size[1]-5))
+        self.setIconSize(QSize(self.btn_size[0],self.btn_size[1]))
         self.repaint()
         self.setIcon(self.btn_image)
     
@@ -82,8 +84,6 @@ class Left_Menu_Button(QPushButton):
         self.label_tooltip.hide()
 
 
-    # def set_again(self):
-    
     def changeStyle(self, event):
         if event == QEvent.Enter:
             self.set_btn_bg_color = self.btn_bg_color_hover
@@ -181,8 +181,8 @@ class Left_Menu_Button(QPushButton):
 
         # FORMAT POSITION
         # Adjust tooltip position with offset
-        pos_x = (pos.x() - self.label_tooltip.width()) + self.width() + 5
-        pos_y = pos.y() + self.height() + 6
+        pos_x = pos.x() + self.width() + 13
+        pos_y = pos.y() + self.height() + 20
         # SET POSITION TO WIDGET
         # Move tooltip position
         self.label_tooltip.move(pos_x, pos_y)

@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
             spacing = self.themes["shape"]["pywindow"]["margin"],
             bg_color = self.themes["app_color"]["bg_one"],
             text_color = self.themes["app_color"]["dark_one"],
-            text_font = self.themes["font"]["text_size"],
+            text_font_size = self.themes["font"]["text_size"],
             border_radius = self.themes["shape"]["pywindow"]["border_radius"],
             border_size = self.themes["shape"]["pywindow"]["border_size"],
             border_color = self.themes["app_color"]["bg_three"],
@@ -116,25 +116,26 @@ class Ui_MainWindow(object):
         self.not_title_bar_frame.setFrameShadow(QFrame.Raised)
         self.not_title_bar_hlayout = QHBoxLayout(self.not_title_bar_frame)
         self.not_title_bar_hlayout.setObjectName(u"not_title_bar_hlayout")
-        self.not_title_bar_hlayout.setContentsMargins(5, 0, 5, 5)
+        self.not_title_bar_hlayout.setContentsMargins(5, 5, 5, 5)
         self.not_title_bar_hlayout.setSpacing(0)
         
                         # Set Left Menu Bar Frame(
         self.left_menu_bar_frame = QFrame()
-        self.left_menu_bar_frame.setStyleSheet("background-color: darkgray")
         self.left_menu_bar_frame.setFrameShape(QFrame.NoFrame)
         self.left_menu_bar_frame.setMinimumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
         self.left_menu_bar_frame.setMaximumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
         self.left_menu_bar_vlayout = QVBoxLayout(self.left_menu_bar_frame)
         self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.left_menu_bar_vlayout.setSpacing(0)
                             # Import Left Menu Bar(
         self.left_menu_bar_widget = Ui_Left_Menu_Column_Widget(
             app_parent = UiMainWindow,
-            parent = self.not_title_bar_frame,
+            parent = self.left_menu_bar_frame,
             time_animation = self.settings["time_animation"],
             
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["text_size"],
+            bg_color = self.themes["app_color"]["bg_one"],
 
             left_menu_bar_btn_size = self.themes["shape"]["left_menu_bar"]["btn_size"],
             left_menu_bar_btn_radius = self.themes["shape"]["left_menu_bar"]["btn_radius"],

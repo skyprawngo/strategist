@@ -66,9 +66,7 @@ class Ui_Title_Bar_Widget(QWidget):
 
         self.title_bar_frame.setStyleSheet(f'''
             background-color: {self.title_bar_bg_color};
-            border-top-left-radius: {self.title_bar_bg_radius}px;
-            border-top-right-radius: {self.title_bar_bg_radius}px;
-            border-bottom-right-radius: {self.title_bar_bg_radius}px;
+            border-bottom-left-radius: 0px;
         ''')
 
         # Function(
@@ -99,7 +97,7 @@ class Ui_Title_Bar_Widget(QWidget):
             self.title_label.mouseDoubleClickEvent = self.func_maximize
             self.top_logo_label.mouseDoubleClickEvent = self.func_maximize
 
-    def func_maximize(self):
+    def func_maximize(self, event):
         global window_isMaximised
         global window_oldSize
 
@@ -164,7 +162,7 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_buttons_hlayout.setSpacing(0)
 
                     # Menu(
-        self.menu = Title_Button(
+        self.setting = Title_Button(
             parent = self.parent,
             app_parent = self.app_parent,
             icon_file_path = Load_Item_Path().set_svg_icon_path("settings.svg"),
@@ -183,7 +181,7 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_bg_color_pressed = self.title_bar_bg_color_pressed
         )
                     # )Menu
-        self.title_buttons_hlayout.addWidget(self.menu)
+        self.title_buttons_hlayout.addWidget(self.setting)
 
                     # Import Div(
         self.div_1 = Div(self.title_bar_bg_color_pressed)

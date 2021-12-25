@@ -21,7 +21,7 @@
         "left_menu_bar" : {
             "btn_size" : [30, 22],
             "btn_radius" : 8,
-            "bg_width" : 34,
+            "bg_width" : 40,
             "bg_radius" : 8
         }
     },
