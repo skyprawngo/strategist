@@ -5,10 +5,10 @@ from gui.themes.settings import Settings
 from gui.themes.themes import Themes
 from gui.themes.theme_switch import Theme_Switch
 
+
 from gui.widgets.pywindow.pywindow import PyWindow
-from gui.widgets.pygrips.py_grips import PyGrips
 from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
-from gui.widgets.left_menu_column.ui_menu_bar import Ui_Menu_Bar_Widget
+from gui.widgets.left_menu_column.left_menu_bar import Ui_Left_Menu_Column_Widget
 
 
 
@@ -24,6 +24,8 @@ class Ui_MainWindow(object):
             # Load Themes
         themes = Themes()
         self.themes = themes.themes
+
+        self.app_parent = UiMainWindow
         
         UiMainWindow.resize(
             self.settings["startup_size"][0],
@@ -34,12 +36,25 @@ class Ui_MainWindow(object):
             self.settings["minimum_size"][0],
             self.settings["minimum_size"][1]
         )
-        UiMainWindow.setWindowFlags(Qt.FramelessWindowHint)
-        UiMainWindow.setAttribute(Qt.WA_TranslucentBackground)
+        
 
 
         self.app_parent = UiMainWindow
 
+
+            # Centralwidget(
+        self.centralwidget = QWidget(UiMainWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setFocusPolicy(Qt.NoFocus)
+        self.centralwidget.setStyleSheet(f'''
+            background-color: {self.themes["app_color"]["bg_one"]};
+            border-radius: 10px
+        ''')
+        self.centralwidget_vlayout = QVBoxLayout(self.centralwidget)
+        self.centralwidget_vlayout.setSpacing(0)
+        self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
+        self.centralwidget_vlayout.setContentsMargins(0, 0, 0, 0)
+                # PyWindow(
         self.window = PyWindow(
             app_parent = UiMainWindow,
             startup_size = self.settings["startup_size"],
@@ -56,31 +71,16 @@ class Ui_MainWindow(object):
             custom_title_bar = self.settings["custom_title_bar"]
         )
 
-        
-
-            # Centralwidget(
-        self.centralwidget = QWidget(UiMainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setFocusPolicy(Qt.NoFocus)
-        self.centralwidget.setStyleSheet(f'''
-            background-color: {self.themes["app_color"]["bg_one"]};
-            border-radius: 10px
-        ''')
-        self.centralwidget_vlayout = QVBoxLayout(self.centralwidget)
-        self.centralwidget_vlayout.setSpacing(0)
-        self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
-        self.centralwidget_vlayout.setContentsMargins(0, 0, 0, 0)
-        
-                # Set Title Bar Frame(
+                    # Set Title Bar Frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.title_bar_frame.setMinimumHeight(self.themes["shape"]["title_bar"]["bg_height"])
         self.title_bar_frame.setMaximumHeight(self.themes["shape"]["title_bar"]["bg_height"])
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
-        self.title_bar_vlayout.setContentsMargins(4, 4, 4, 0)
+        self.title_bar_vlayout.setContentsMargins(5, 5, 5, 0)
                     
-                    # Import Title Bar(
-        self.title_bar = Ui_Title_Bar_Widget(
+                        # Import Title Bar(
+        self.title_bar_widget = Ui_Title_Bar_Widget(
             app_parent = UiMainWindow,
             parent = self.title_bar_frame,
             app_name = self.settings["app_name"],
@@ -104,87 +104,69 @@ class Ui_MainWindow(object):
             title_bar_bg_color = self.themes["app_color"]["bg_two"],
             title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
-        
-        
         )
-                    # )
-        self.title_bar_vlayout.addWidget(self.title_bar)
-                # )
+                        # )Import Title Bar
+        self.title_bar_vlayout.addWidget(self.title_bar_widget)
+                    # )Set Title Bar Frame
 
-                # not_title_bar_frame(
+                    # not_title_bar_frame(
         self.not_title_bar_frame = QFrame()
         self.not_title_bar_frame.setObjectName(u"not_title_bar_frame")
         self.not_title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.not_title_bar_frame.setFrameShadow(QFrame.Raised)
         self.not_title_bar_hlayout = QHBoxLayout(self.not_title_bar_frame)
-        self.not_title_bar_hlayout.setSpacing(0)
         self.not_title_bar_hlayout.setObjectName(u"not_title_bar_hlayout")
-        self.not_title_bar_hlayout.setContentsMargins(0, 0, 0, 0)
+        self.not_title_bar_hlayout.setContentsMargins(5, 0, 5, 5)
+        self.not_title_bar_hlayout.setSpacing(0)
         
-                    # Import Menu Bar(
-        self.menu_bar_frame = QFrame()
-        self.menu_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.menu_bar = Ui_Menu_Bar_Widget()
-        self.menu_bar.setupUi(self.menu_bar_frame)
-        self.not_title_bar_hlayout.addWidget(self.menu_bar_frame)
-        
-        self.menu_bar_frame = QFrame()
-        self.menu_bar_frame.setObjectName(u"menu_bar_frame")
-        
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.menu_bar_frame.sizePolicy().hasHeightForWidth())
-        self.menu_bar_frame.setSizePolicy(sizePolicy)
-        self.menu_bar_frame.setMinimumSize(QSize(40, 0))
-        self.menu_bar_frame.setMaximumSize(QSize(40, 16777215))
-        self.menu_bar_frame.setStyleSheet(u"")
-        self.menu_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.menu_bar_frame.setFrameShadow(QFrame.Raised)
-        self.menu_bar_vlayout = QVBoxLayout(self.menu_bar_frame)
-        self.menu_bar_vlayout.setSpacing(0)
-        self.menu_bar_vlayout.setObjectName(u"menu_bar_vlayout")
-        self.menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+                        # Set Left Menu Bar Frame(
+        self.left_menu_bar_frame = QFrame()
+        self.left_menu_bar_frame.setStyleSheet("background-color: darkgray")
+        self.left_menu_bar_frame.setFrameShape(QFrame.NoFrame)
+        self.left_menu_bar_frame.setMinimumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
+        self.left_menu_bar_frame.setMaximumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
+        self.left_menu_bar_vlayout = QVBoxLayout(self.left_menu_bar_frame)
+        self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+                            # Import Left Menu Bar(
+        self.left_menu_bar_widget = Ui_Left_Menu_Column_Widget(
+            app_parent = UiMainWindow,
+            parent = self.not_title_bar_frame,
+            time_animation = self.settings["time_animation"],
+            
+            font_type = self.themes["font"]["family"],
+            font_size = self.themes["font"]["text_size"],
 
-        self.not_title_bar_hlayout.addWidget(self.menu_bar_frame)
+            left_menu_bar_btn_size = self.themes["shape"]["left_menu_bar"]["btn_size"],
+            left_menu_bar_btn_radius = self.themes["shape"]["left_menu_bar"]["btn_radius"],
 
+            left_menu_bar_text_color = self.themes["app_color"]["dark_three"],
+            left_menu_bar_text_color_hover = self.themes["app_color"]["dark_two"],
+            left_menu_bar_text_color_pressed = self.themes["app_color"]["dark_one"],
+            
+            left_menu_bar_bg_width = self.themes["shape"]["left_menu_bar"]["bg_width"],
+            left_menu_bar_bg_radius = self.themes["shape"]["left_menu_bar"]["bg_radius"],
+            left_menu_bar_bg_color = self.themes["app_color"]["bg_two"],
+            left_menu_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
+            left_menu_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
+        )
+                            # )Import Left Menu Bar
+        self.left_menu_bar_vlayout.addWidget(self.left_menu_bar_widget)
+                        # )Set Left Menu Bar Frame
+                        # Set Main Page Frame(
         self.main_page_frame = QFrame()
-        self.main_page_frame.setObjectName(u"main_page_frame")
-        self.main_page_frame.setFrameShape(QFrame.NoFrame)
-        self.main_page_frame.setFrameShadow(QFrame.Raised)
-
+        self.main_page_vlayout = QVBoxLayout(self.main_page_frame)
+                        # )Set Main Page Frame
+        self.not_title_bar_hlayout.addWidget(self.left_menu_bar_frame)
         self.not_title_bar_hlayout.addWidget(self.main_page_frame)
-
+                    # )not_title_bar_frame
         self.window.vlayout.addWidget(self.title_bar_frame)
         self.window.vlayout.addWidget(self.not_title_bar_frame)
-        
+                # )PyWindow
         self.centralwidget_vlayout.addWidget(self.window)
-
+            # )Centralwidget
         UiMainWindow.setCentralWidget(self.centralwidget)
-            # )
-        # )
+        # )MainWindow
 
-    def resize_grips(self):
-        if self.settings["custom_title_bar"]:
-            print(self.window.height())
-            print(self.app_parent.height())
-            self.left_grip.setGeometry(0, 0, 10, self.height())
-            self.right_grip.setGeometry(self.width() - 15, 10, 10, self.height())
-            self.top_grip.setGeometry(5, 5, self.width() - 10, 10)
-            self.bottom_grip.setGeometry(5, self.height() - 15, self.width() - 10, 10)
-            self.top_right_grip.setGeometry(self.width() - 20, 5, 15, 15)
-            self.bottom_left_grip.setGeometry(5, self.height() - 20, 15, 15)
-            self.bottom_right_grip.setGeometry(self.width() - 20, self.height() - 20, 15, 15)
-
-    def setup_gui(self):
-        self.hide_grips = False
-        self.left_grip = PyGrips(self.app_parent, "left", self.hide_grips)
-        self.right_grip = PyGrips(self.app_parent, "right", self.hide_grips)
-        self.top_grip = PyGrips(self.app_parent, "top", self.hide_grips)
-        self.bottom_grip = PyGrips(self.app_parent, "bottom", self.hide_grips)
-        self.top_left_grip = PyGrips(self.app_parent, "top_left", self.hide_grips)
-        self.top_right_grip = PyGrips(self.app_parent, "top_right", self.hide_grips)
-        self.bottom_left_grip = PyGrips(self.app_parent, "bottom_left", self.hide_grips)
-        self.bottom_right_grip = PyGrips(self.app_parent, "bottom_right", self.hide_grips)
+    
 
         

@@ -98,7 +98,6 @@ class Ui_Title_Bar_Widget(QWidget):
             self.div_1.mouseDoubleClickEvent = self.func_maximize
             self.title_label.mouseDoubleClickEvent = self.func_maximize
             self.top_logo_label.mouseDoubleClickEvent = self.func_maximize
-        # )
 
     def func_maximize(self):
         global window_isMaximised
@@ -109,7 +108,6 @@ class Ui_Title_Bar_Widget(QWidget):
             self.app_parent.showNormal()
             self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("square.svg"))
             self.title_btn_maximize.set_label("Maximize")
-
 
         elif not self.app_parent.isMaximized():
             window_isMaximised = True
@@ -140,9 +138,9 @@ class Ui_Title_Bar_Widget(QWidget):
         self.top_logo_image = QSvgWidget()
         self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self.logo_file_name)
         self.top_logo_image.load(self.top_logo_image_path)
-                # )
+                # )top_logo_image
         self.top_logo_label_vlayout.addWidget(self.top_logo_image)
-            # )
+            # )top_logo_label
         self.title_bar_hlayout.addWidget(self.top_logo_label)
         
             # title_frame(
@@ -155,7 +153,7 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_label = QLabel()
         self.title_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.title_label.setText(self.title_text)
-                # )
+                # )title_label
         self.title_hlayout.addWidget(self.title_label)
         
                 # title_buttons_frame(
@@ -184,12 +182,12 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_bg_color_hover = self.title_bar_bg_color_hover,
             btn_bg_color_pressed = self.title_bar_bg_color_pressed
         )
-                    # )
+                    # )Menu
         self.title_buttons_hlayout.addWidget(self.menu)
 
                     # Import Div(
         self.div_1 = Div(self.title_bar_bg_color_pressed)
-                    # )
+                    # )Import Div
         self.title_buttons_hlayout.addWidget(self.div_1)
 
                     # minimize_button(
@@ -211,7 +209,7 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_bg_color_hover = self.title_bar_bg_color_hover,
             btn_bg_color_pressed = self.title_bar_bg_color_pressed
         )
-                    # )
+                    # )minimize_button
         self.title_buttons_hlayout.addWidget(self.title_btn_minimize)
 
                     # maximize_button(
@@ -232,9 +230,8 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_bg_color = self.title_bar_bg_color,
             btn_bg_color_hover = self.title_bar_bg_color_hover,
             btn_bg_color_pressed = self.title_bar_bg_color_pressed
-
         )
-                    # )
+                    # )maximize_button
         self.title_buttons_hlayout.addWidget(self.title_btn_maximize)
 
                     # close_button(
@@ -255,14 +252,13 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_bg_color = self.title_bar_bg_color,
             btn_bg_color_hover = self.title_bar_bg_color_hover,
             btn_bg_color_pressed = self.title_bar_bg_color_pressed
-
         )
-                    # )
+                    # )close_button
         self.title_buttons_hlayout.addWidget(self.title_btn_close)
-                # )
+                # )title_buttons_frame
         self.title_hlayout.addWidget(self.title_buttons_frame)
-            # )
+            # )title_frame
         self.title_bar_hlayout.addWidget(self.title_frame)
-        # )
+        # )title_bar_frame
         self.title_bar_widget_vlayout.addWidget(self.title_bar_frame)
 

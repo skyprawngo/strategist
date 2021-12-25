@@ -4,6 +4,7 @@ import sys
 from gui.module_import import *
 
 from gui.mainwindow import Ui_MainWindow
+from gui.setup_mainwindow import Setup_MainWindow
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -15,9 +16,11 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.setup_gui()
-        self.ui.resize_grips()
+        Setup_MainWindow.setup_gui(self)
     
+    def resizeEvent(self, event):
+        Setup_MainWindow.resize_grips(self)
+
     def mousePressEvent(self, event):
         # SET DRAG POS WINDOW
         p = event.globalPosition()
