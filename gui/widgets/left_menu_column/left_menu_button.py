@@ -60,7 +60,7 @@ class Left_Menu_Button(QPushButton):
 
 
         self.setCursor(Qt.PointingHandCursor)
-        self.setFixedSize(self.btn_size[0], self.btn_size[1]+12)
+        self.setMinimumSize(self.btn_size[0], self.btn_size[1]+12)
 
 
         self.set_icon(icon_file_path)
