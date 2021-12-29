@@ -4,7 +4,10 @@ from module.pyside6_module_import import *
 
 
 class Left_Menu_Button(QPushButton):
+    clicked = QEvent
+    released = QEvent
     toggled_name = ""
+    
     def __init__(
         self,
         parent,
@@ -82,21 +85,6 @@ class Left_Menu_Button(QPushButton):
             self.btn_bg_color
         )
         self.label_tooltip.hide()
-
-
-    def changeStyle(self, event):
-        if event == QEvent.Enter:
-            self.set_btn_bg_color = self.btn_bg_color_hover
-            self.btnStyle()
-        elif event == QEvent.Leave:
-            self.set_btn_bg_color = self.btn_bg_color
-            self.btnStyle()
-        elif event == QEvent.MouseButtonPress:
-            self.set_btn_bg_color = self.btn_bg_color_pressed
-            self.btnStyle()
-        elif event == QEvent.MouseButtonRelease:
-            self.set_btn_bg_color = self.btn_bg_color
-            self.btnStyle()
     
     def changetoggleStyle(self, event):
         if event == QEvent.Enter:
@@ -134,36 +122,21 @@ class Left_Menu_Button(QPushButton):
 
 
     def enterEvent(self, event):
-        if self.btn_istoggle:
-            self.changetoggleStyle(QEvent.Enter)
-        else:
-            self.changeStyle(QEvent.Enter)
-        self.move_tooltip()
+        self.changetoggleStyle(QEvent.Enter)
         self.label_tooltip.show()
     
     def leaveEvent(self, event):
-        if self.btn_istoggle:
-            self.changetoggleStyle(QEvent.Leave)
-        else:
-            self.changeStyle(QEvent.Leave)
-        self.move_tooltip()
+        self.changetoggleStyle(QEvent.Leave)
         self.label_tooltip.hide()
     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            if self.btn_istoggle:
-                self.changetoggleStyle(QEvent.MouseButtonPress)
-            else:
-                self.changeStyle(QEvent.MouseButtonPress)
-            self.setFocus()
+            self.changetoggleStyle(QEvent.MouseButtonPress)
             return self.clicked.emit()
     
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
-            if self.btn_istoggle:
-                self.changetoggleStyle(QEvent.MouseButtonRelease)
-            else:
-                self.changeStyle(QEvent.MouseButtonRelease)
+            self.changetoggleStyle(QEvent.MouseButtonRelease)
             self.label_tooltip.hide()
             self.setFocus()
             return self.released.emit()

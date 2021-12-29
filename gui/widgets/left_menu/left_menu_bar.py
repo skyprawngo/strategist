@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from module.pyside6_module_import import *
 
-from gui.widgets.left_menu_column.left_menu_button import Left_Menu_Button
-from gui.widgets.left_menu_column.div import Div
+from gui.widgets.left_menu.left_menu_button import Left_Menu_Button
+from gui.widgets.left_menu.div import Div
 
 from gui.themes.load_item_path import Load_Item_Path
 
@@ -125,6 +125,26 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             btn_bg_color_pressed = self.left_menu_bar_bg_color_pressed
         )
         self.btn_menu_vlayout.addWidget(self.btn_home_toggle)
+        
+        self.btn_chart_toggle = Left_Menu_Button(
+            parent = self.parent,
+            app_parent = self.app_parent,
+            icon_file_path = Load_Item_Path().set_svg_icon_path("chat-arrow-grow.svg"),
+            tooltip_text = "Chart",
+            
+            btn_istoggle = True,
+            btn_size = self.left_menu_bar_btn_size,
+            btn_radius  = self.left_menu_bar_btn_radius,
+
+            btn_icon_color = self.left_menu_bar_text_color,
+            btn_icon_color_hover = self.left_menu_bar_bg_color_hover,
+            btn_icon_color_pressed = self.left_menu_bar_bg_color_pressed,
+            
+            btn_bg_color = self.left_menu_bar_bg_color,
+            btn_bg_color_hover = self.left_menu_bar_bg_color_hover,
+            btn_bg_color_pressed = self.left_menu_bar_bg_color_pressed
+        )
+        self.btn_menu_vlayout.addWidget(self.btn_chart_toggle)
 
 
         self.left_menu_bottom_frame = QFrame()

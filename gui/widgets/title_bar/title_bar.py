@@ -97,7 +97,7 @@ class Ui_Title_Bar_Widget(QWidget):
             self.title_label.mouseDoubleClickEvent = self.func_maximize
             self.top_logo_label.mouseDoubleClickEvent = self.func_maximize
 
-    def func_maximize(self, event):
+    def func_maximize(self):
         global window_isMaximised
         global window_oldSize
 

@@ -8,7 +8,7 @@ from gui.themes.theme_switch import Theme_Switch
 
 from gui.widgets.pywindow.pywindow import PyWindow
 from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
-from gui.widgets.left_menu_column.left_menu_bar import Ui_Left_Menu_Column_Widget
+from gui.widgets.left_menu.left_menu_bar import Ui_Left_Menu_Column_Widget
 
 
 
@@ -71,7 +71,7 @@ class Ui_MainWindow(object):
             custom_title_bar = self.settings["custom_title_bar"]
         )
 
-                    # Set Title Bar Frame(
+                    # title_bar_frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
         self.title_bar_frame.setMinimumHeight(self.themes["shape"]["title_bar"]["bg_height"])
@@ -79,7 +79,7 @@ class Ui_MainWindow(object):
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
         self.title_bar_vlayout.setContentsMargins(5, 5, 5, 0)
                     
-                        # Import Title Bar(
+                        # Title_Bar_Widget(
         self.title_bar_widget = Ui_Title_Bar_Widget(
             app_parent = UiMainWindow,
             parent = self.title_bar_frame,
@@ -105,9 +105,9 @@ class Ui_MainWindow(object):
             title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
         )
-                        # )Import Title Bar
+                        # )Title_Bar_Widget
         self.title_bar_vlayout.addWidget(self.title_bar_widget)
-                    # )Set Title Bar Frame
+                    # )title_bar_frame
 
                     # not_title_bar_frame(
         self.not_title_bar_frame = QFrame()
@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
         self.not_title_bar_hlayout.setContentsMargins(5, 5, 5, 5)
         self.not_title_bar_hlayout.setSpacing(0)
         
-                        # Set Left Menu Bar Frame(
+                        # left_menu_bar_frame(
         self.left_menu_bar_frame = QFrame()
         self.left_menu_bar_frame.setFrameShape(QFrame.NoFrame)
         self.left_menu_bar_frame.setMinimumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
@@ -127,7 +127,7 @@ class Ui_MainWindow(object):
         self.left_menu_bar_vlayout = QVBoxLayout(self.left_menu_bar_frame)
         self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
         self.left_menu_bar_vlayout.setSpacing(0)
-                            # Import Left Menu Bar(
+                            # Left_Menu_Bar_Widget(
         self.left_menu_bar_widget = Ui_Left_Menu_Column_Widget(
             app_parent = UiMainWindow,
             parent = self.left_menu_bar_frame,
@@ -150,15 +150,30 @@ class Ui_MainWindow(object):
             left_menu_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             left_menu_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
         )
-                            # )Import Left Menu Bar
+                            # )Left_Menu_Bar_Widget
         self.left_menu_bar_vlayout.addWidget(self.left_menu_bar_widget)
-                        # )Set Left Menu Bar Frame
-                        # Set Main Page Frame(
+                        # )left_menu_bar_frame
+                        # left_column_frame(
+        self.left_column_frame = QFrame()
+        self.left_column_frame.setMinimumWidth(self.settings["left_column_size"]["minimum"])
+        self.left_column_frame.setMaximumWidth(self.settings["left_column_size"]["minimum"])
+        self.left_column_hlayout = QHBoxLayout(self.left_column_frame)
+                        # )left_column_frame
+                        # main_page_frame(
         self.main_page_frame = QFrame()
         self.main_page_vlayout = QVBoxLayout(self.main_page_frame)
-                        # )Set Main Page Frame
+                        # )main_page_frame
+                        # right_settings_column_Frame(
+        self.right_column_frame = QFrame()
+        self.right_column_frame.setMinimumWidth(self.settings["right_column_size"]["minimum"])
+        self.right_column_frame.setMaximumWidth(self.settings["right_column_size"]["minimum"])
+        self.right_column_frame.setStyleSheet("background-color: lightblue")
+        self.right_column_hlayout = QHBoxLayout(self.right_column_frame)
+        
+                        # )right_settings_column_Frame
         self.not_title_bar_hlayout.addWidget(self.left_menu_bar_frame)
         self.not_title_bar_hlayout.addWidget(self.main_page_frame)
+        self.not_title_bar_hlayout.addWidget(self.right_column_frame)
                     # )not_title_bar_frame
         self.window.vlayout.addWidget(self.title_bar_frame)
         self.window.vlayout.addWidget(self.not_title_bar_frame)
