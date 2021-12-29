@@ -1,4 +1,4 @@
-from gui.module_import import *
+from module.pyside6_module_import import *
 # CUSTOM LEFT MENU
 class Div(QWidget):
     def __init__(self, color):

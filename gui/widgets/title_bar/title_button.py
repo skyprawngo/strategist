@@ -1,6 +1,6 @@
 
 
-from gui.module_import import *
+from module.pyside6_module_import import *
 
 class Title_Button(QPushButton):
     def __init__(

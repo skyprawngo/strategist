@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from gui.module_import import *
+from module.pyside6_module_import import *
 
 from gui.themes.settings import Settings
 from gui.themes.themes import Themes

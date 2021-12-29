@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from gui.module_import import *
+from module.pyside6_module_import import *
 
 from gui.widgets.title_bar.title_button import Title_Button
 from gui.widgets.title_bar.div import Div

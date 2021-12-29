@@ -1,6 +1,6 @@
-from gui.module_import import *
+from module.pyside6_module_import import *
 
-from gui.ui_mainwindow import Ui_MainWindow
+from gui.mainwindow import Ui_MainWindow
 
 from gui.widgets.pygrips.py_grips import PyGrips
 

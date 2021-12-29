@@ -1,7 +1,7 @@
 # PySide6 module import
 import sys
 
-from gui.module_import import *
+from module.pyside6_module_import import *
 
 from gui.mainwindow import Ui_MainWindow
 from gui.setup_mainwindow import Setup_MainWindow

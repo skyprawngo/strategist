@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from gui.module_import import *
+from module.pyside6_module_import import *
 
 from gui.widgets.left_menu_column.left_menu_button import Left_Menu_Button
 from gui.widgets.left_menu_column.div import Div

@@ -8,7 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from gui.module_import import *
+from module.pyside6_module_import import *
 
 class Ui_Menu_Bar_Widget(object):
     def setupUi(self, menu_bar_Form):
