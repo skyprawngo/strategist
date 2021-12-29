@@ -132,6 +132,8 @@ class Ui_MainWindow(object):
             app_parent = UiMainWindow,
             parent = self.left_menu_bar_frame,
             time_animation = self.settings["time_animation"],
+            minimum_width = self.settings["left_menu_size"]["minimum"],
+            maximum_width = self.settings["left_menu_size"]["maximum"],
             
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["text_size"],
