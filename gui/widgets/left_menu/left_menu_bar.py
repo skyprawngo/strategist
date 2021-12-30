@@ -42,6 +42,8 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self._app_parent = app_parent
         self._parent = parent
         self._time_animation = time_animation
+        self.minimum_width = minimum_width
+        self.maximum_width = maximum_width
         
         self._font_type = font_type
         self._font_size = font_size
@@ -65,6 +67,7 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self.btn_menu_toggle = Left_Menu_Button(
             parent = self._parent,
             app_parent = self._app_parent,
+            btn_id = "btn_menu",
             icon_file_path = Load_Item_Path().set_svg_icon_path("menu-burger.svg"),
             tooltip_text = "Menu Toggle",
             
@@ -88,58 +91,25 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self.left_menu_bar_vlayout.addWidget(self.btn_toggle_frame)
         self.btn_toggle_vlayout.addWidget(self.btn_menu_frame)
     
-    def btn_clicked(self):
-        pass
-        
-    def btn_released(self):
-        pass
-    
-    def select_only_one_tab(self, btn_name):
-        print(btn_name)
-        for btn in self.btn_menu_frame.findChildren(QPushButton):
-            if btn.objectName() == btn_name:
-                btn.set_active(True)
-            else:
-                btn.set_active(False)
-    
-    
-    def setupUi(self):
-        self.left_menu_bar_vlayout = QVBoxLayout(self)
-        self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
-        self.left_menu_bar_vlayout.setSpacing(0)
-
-        self.btn_toggle_frame = QFrame()
-        self.btn_toggle_frame.setStyleSheet(f'''
-            background-color: {self._left_menu_bar_bg_color};
-            border-top-left-radius: 0px;
-        ''')
-        self.btn_toggle_vlayout = QVBoxLayout(self.btn_toggle_frame)
-        self.btn_toggle_vlayout.setContentsMargins(0, 5, 0, 0)
-        self.btn_toggle_vlayout.setSpacing(0)
-        self.btn_toggle_vlayout.setAlignment(Qt.AlignHCenter)
-
-        self.btn_menu_frame = QFrame()
-        self.btn_menu_vlayout = QVBoxLayout(self.btn_menu_frame)
-        self.btn_menu_vlayout.setAlignment(Qt.AlignTop)
-        self.btn_menu_vlayout.setContentsMargins(0, 0, 0, 0)
-        self.btn_menu_vlayout.setSpacing(5)
-
-        
     def add_menus(self, parameters):
         if parameters != None:
             for parameter in parameters:
+                _btn_id = parameter["btn_id"]
                 _icon_file_name = parameter["icon_file_name"]
                 _tooltip_text = parameter["tooltip_text"]
                 _btn_istoggle = parameter["btn_istoggle"]
+                _btn_istoggle_active = parameter["btn_istoggle_active"]
                 _btn_isactive = parameter["btn_isactive"]
                 
                 self.menu = Left_Menu_Button(
                     parent = self._parent,
                     app_parent = self._app_parent,
+                    btn_id = _btn_id,
                     icon_file_path = Load_Item_Path().set_svg_icon_path(_icon_file_name),
                     tooltip_text = _tooltip_text,
                     
                     btn_istoggle = _btn_istoggle,
+                    btn_istoggle_active = _btn_istoggle_active,
                     btn_isactive = _btn_isactive,
                     btn_size = self._left_menu_bar_btn_size,
                     btn_radius  = self._left_menu_bar_btn_radius,
@@ -154,8 +124,16 @@ class Ui_Left_Menu_Column_Widget(QWidget):
                 )
                 self.menu.clicked.connect(self.btn_clicked)
                 self.menu.released.connect(self.btn_released)
+                self.menu.clicked.connect(self.select_only_one)
                 
                 self.btn_menu_vlayout.addWidget(self.menu)
+                
+    def select_only_one(self):
+        self.btn= self.sender()
+        for self.left_menu_btn in self.btn_menu_frame.findChildren(QPushButton):
+            self.left_menu_btn.set_switch_toggle(False)
+            if self.left_menu_btn.objectName() == self.btn.objectName():
+                self.left_menu_btn.set_switch_toggle(True)
                 
     def btn_clicked(self):
         self.clicked.emit(self.menu)
@@ -181,3 +159,23 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self.animation.setDuration(self._duration_time)
         self.animation.start()
 
+    def setupUi(self):
+        self.left_menu_bar_vlayout = QVBoxLayout(self)
+        self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.left_menu_bar_vlayout.setSpacing(0)
+
+        self.btn_toggle_frame = QFrame()
+        self.btn_toggle_frame.setStyleSheet(f'''
+            background-color: {self._left_menu_bar_bg_color};
+            border-top-left-radius: 0px;
+        ''')
+        self.btn_toggle_vlayout = QVBoxLayout(self.btn_toggle_frame)
+        self.btn_toggle_vlayout.setContentsMargins(0, 5, 0, 0)
+        self.btn_toggle_vlayout.setSpacing(0)
+        self.btn_toggle_vlayout.setAlignment(Qt.AlignHCenter)
+
+        self.btn_menu_frame = QFrame()
+        self.btn_menu_vlayout = QVBoxLayout(self.btn_menu_frame)
+        self.btn_menu_vlayout.setAlignment(Qt.AlignTop)
+        self.btn_menu_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.btn_menu_vlayout.setSpacing(5)

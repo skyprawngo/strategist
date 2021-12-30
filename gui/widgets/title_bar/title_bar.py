@@ -38,34 +38,34 @@ class Ui_Title_Bar_Widget(QWidget):
     ):
         super().__init__()
         
-        self.app_parent = app_parent
-        self.parent = parent
-        self.app_name = app_name
-        self.logo_file_name = logo_file_name
-        self.title_text = title_text
-        self.custom_tilte_bar = custom_title_bar
-        self.time_animation = time_animation
+        self._app_parent = app_parent
+        self._parent = parent
+        self._app_name = app_name
+        self._logo_file_name = logo_file_name
+        self._title_text = title_text
+        self._custom_tilte_bar = custom_title_bar
+        self._time_animation = time_animation
         
-        self.font_type = font_type
-        self.font_size = font_size
+        self._font_type = font_type
+        self._font_size = font_size
 
-        self.title_bar_btn_size = title_bar_btn_size
-        self.title_bar_btn_radius = title_bar_btn_radius
+        self._title_bar_btn_size = title_bar_btn_size
+        self._title_bar_btn_radius = title_bar_btn_radius
 
-        self.title_bar_text_color = title_bar_text_color
-        self.title_bar_text_color_hover = title_bar_text_color_hover
-        self.title_bar_text_color_pressed = title_bar_text_color_pressed
+        self._title_bar_text_color = title_bar_text_color
+        self._title_bar_text_color_hover = title_bar_text_color_hover
+        self._title_bar_text_color_pressed = title_bar_text_color_pressed
 
-        self.title_bar_bg_height = title_bar_bg_height
-        self.title_bar_bg_radius = title_bar_bg_radius
-        self.title_bar_bg_color = title_bar_bg_color
-        self.title_bar_bg_color_hover = title_bar_bg_color_hover
-        self.title_bar_bg_color_pressed = title_bar_bg_color_pressed
+        self._title_bar_bg_height = title_bar_bg_height
+        self._title_bar_bg_radius = title_bar_bg_radius
+        self._title_bar_bg_color = title_bar_bg_color
+        self._title_bar_bg_color_hover = title_bar_bg_color_hover
+        self._title_bar_bg_color_pressed = title_bar_bg_color_pressed
         
         self.setupUi()
 
         self.title_bar_frame.setStyleSheet(f'''
-            background-color: {self.title_bar_bg_color};
+            background-color: {self._title_bar_bg_color};
             border-bottom-left-radius: 0px;
         ''')
 
@@ -101,15 +101,15 @@ class Ui_Title_Bar_Widget(QWidget):
         global window_isMaximised
         global window_oldSize
 
-        if self.app_parent.isMaximized():
+        if self._app_parent.isMaximized():
             window_isMaximised = False
-            self.app_parent.showNormal()
+            self._app_parent.showNormal()
             self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("square.svg"))
             self.title_btn_maximize.set_label("Maximize")
 
-        elif not self.app_parent.isMaximized():
+        elif not self._app_parent.isMaximized():
             window_isMaximised = True
-            self.app_parent.showMaximized()
+            self._app_parent.showMaximized()
             self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("copy.svg"))
             self.title_btn_maximize.set_label("Return Size")
         
@@ -134,7 +134,7 @@ class Ui_Title_Bar_Widget(QWidget):
 
                 # top_logo_image(
         self.top_logo_image = QSvgWidget()
-        self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self.logo_file_name)
+        self.top_logo_image_path = Load_Item_Path().set_svg_image_path(self._logo_file_name)
         self.top_logo_image.load(self.top_logo_image_path)
                 # )top_logo_image
         self.top_logo_label_vlayout.addWidget(self.top_logo_image)
@@ -150,7 +150,7 @@ class Ui_Title_Bar_Widget(QWidget):
                 # title_label(
         self.title_label = QLabel()
         self.title_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        self.title_label.setText(self.title_text)
+        self.title_label.setText(self._title_text)
                 # )title_label
         self.title_hlayout.addWidget(self.title_label)
         
@@ -161,95 +161,105 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_buttons_hlayout.setContentsMargins(0, 0, 5, 0)
         self.title_buttons_hlayout.setSpacing(0)
 
-                    # Menu(
-        self.setting = Title_Button(
-            parent = self.parent,
-            app_parent = self.app_parent,
+                    # settings(
+        self.settings = Title_Button(
+            parent = self._parent,
+            app_parent = self._app_parent,
+            btn_id = "btn_settings",
             icon_file_path = Load_Item_Path().set_svg_icon_path("settings.svg"),
             tooltip_text = "Settings",
             
             btn_istoggle = True,
-            btn_size = self.title_bar_btn_size,
-            btn_radius  = self.title_bar_btn_radius,
+            btn_istoggle_active = False,
+            btn_isactive = False,
+            btn_size = self._title_bar_btn_size,
+            btn_radius  = self._title_bar_btn_radius,
 
-            btn_icon_color = self.title_bar_text_color,
-            btn_icon_color_hover = self.title_bar_bg_color_hover,
-            btn_icon_color_pressed = self.title_bar_bg_color_pressed,
+            btn_icon_color = self._title_bar_text_color,
+            btn_icon_color_hover = self._title_bar_bg_color_hover,
+            btn_icon_color_pressed = self._title_bar_bg_color_pressed,
             
-            btn_bg_color = self.title_bar_bg_color,
-            btn_bg_color_hover = self.title_bar_bg_color_hover,
-            btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            btn_bg_color = self._title_bar_bg_color,
+            btn_bg_color_hover = self._title_bar_bg_color_hover,
+            btn_bg_color_pressed = self._title_bar_bg_color_pressed
         )
                     # )Menu
-        self.title_buttons_hlayout.addWidget(self.setting)
+        self.title_buttons_hlayout.addWidget(self.settings)
 
                     # Import Div(
-        self.div_1 = Div(self.title_bar_bg_color_pressed)
+        self.div_1 = Div(self._title_bar_bg_color_pressed)
                     # )Import Div
         self.title_buttons_hlayout.addWidget(self.div_1)
 
                     # minimize_button(
         self.title_btn_minimize = Title_Button(
-            parent = self.parent,
-            app_parent = self.app_parent,
+            parent = self._parent,
+            app_parent = self._app_parent,
+            btn_id = "btn_minimize",
             icon_file_path = Load_Item_Path().set_svg_icon_path("minus.svg"),
             tooltip_text = "Minimize",
             
             btn_istoggle = False,
-            btn_size = self.title_bar_btn_size,
-            btn_radius  = self.title_bar_btn_radius,
+            btn_istoggle_active = False,
+            btn_isactive = False,
+            btn_size = self._title_bar_btn_size,
+            btn_radius  = self._title_bar_btn_radius,
 
-            btn_icon_color = self.title_bar_text_color,
-            btn_icon_color_hover = self.title_bar_bg_color_hover,
-            btn_icon_color_pressed = self.title_bar_bg_color_pressed,
+            btn_icon_color = self._title_bar_text_color,
+            btn_icon_color_hover = self._title_bar_bg_color_hover,
+            btn_icon_color_pressed = self._title_bar_bg_color_pressed,
             
-            btn_bg_color = self.title_bar_bg_color,
-            btn_bg_color_hover = self.title_bar_bg_color_hover,
-            btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            btn_bg_color = self._title_bar_bg_color,
+            btn_bg_color_hover = self._title_bar_bg_color_hover,
+            btn_bg_color_pressed = self._title_bar_bg_color_pressed
         )
                     # )minimize_button
         self.title_buttons_hlayout.addWidget(self.title_btn_minimize)
 
                     # maximize_button(
         self.title_btn_maximize = Title_Button(
-            self.parent,
-            self.app_parent,
+            parent = self._parent,
+            app_parent = self._app_parent,
+            btn_id = "btn_maximize",
             icon_file_path = Load_Item_Path().set_svg_icon_path("square.svg"),
             tooltip_text = "Maximize",
 
             btn_istoggle = False,
-            btn_size = self.title_bar_btn_size,
-            btn_radius  =self.title_bar_btn_radius,
+            btn_size = self._title_bar_btn_size,
+            btn_radius  =self._title_bar_btn_radius,
 
-            btn_icon_color = self.title_bar_text_color,
-            btn_icon_color_hover = self.title_bar_bg_color_hover,
-            btn_icon_color_pressed = self.title_bar_bg_color_pressed,
+            btn_icon_color = self._title_bar_text_color,
+            btn_icon_color_hover = self._title_bar_bg_color_hover,
+            btn_icon_color_pressed = self._title_bar_bg_color_pressed,
             
-            btn_bg_color = self.title_bar_bg_color,
-            btn_bg_color_hover = self.title_bar_bg_color_hover,
-            btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            btn_bg_color = self._title_bar_bg_color,
+            btn_bg_color_hover = self._title_bar_bg_color_hover,
+            btn_bg_color_pressed = self._title_bar_bg_color_pressed
         )
                     # )maximize_button
         self.title_buttons_hlayout.addWidget(self.title_btn_maximize)
 
                     # close_button(
         self.title_btn_close = Title_Button(
-            self.parent,
-            self.app_parent,
+            parent = self._parent,
+            app_parent = self._app_parent,
+            btn_id = "btn_close",
             icon_file_path = Load_Item_Path().set_svg_icon_path("cross.svg"),
             tooltip_text = "Close",
 
             btn_istoggle = False,
-            btn_size = self.title_bar_btn_size,
-            btn_radius  =self.title_bar_btn_radius,
+            btn_istoggle_active = False,
+            btn_isactive = False,
+            btn_size = self._title_bar_btn_size,
+            btn_radius  =self._title_bar_btn_radius,
 
-            btn_icon_color = self.title_bar_text_color,
-            btn_icon_color_hover = self.title_bar_bg_color_hover,
-            btn_icon_color_pressed = self.title_bar_bg_color_pressed,
+            btn_icon_color = self._title_bar_text_color,
+            btn_icon_color_hover = self._title_bar_bg_color_hover,
+            btn_icon_color_pressed = self._title_bar_bg_color_pressed,
             
-            btn_bg_color = self.title_bar_bg_color,
-            btn_bg_color_hover = self.title_bar_bg_color_hover,
-            btn_bg_color_pressed = self.title_bar_bg_color_pressed
+            btn_bg_color = self._title_bar_bg_color,
+            btn_bg_color_hover = self._title_bar_bg_color_hover,
+            btn_bg_color_pressed = self._title_bar_bg_color_pressed
         )
                     # )close_button
         self.title_buttons_hlayout.addWidget(self.title_btn_close)

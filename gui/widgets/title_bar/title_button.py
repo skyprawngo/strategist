@@ -7,10 +7,12 @@ class Title_Button(QPushButton):
         self,
         parent,
         app_parent,
+        btn_id,
         icon_file_path,
-        tooltip_text = "abcd",
+        tooltip_text,
 
         btn_istoggle = False,
+        btn_istoggle_active = False,
         btn_isactive = False,
         btn_size = [25, 25],
         btn_radius = 8,
@@ -26,13 +28,14 @@ class Title_Button(QPushButton):
     ):
         super().__init__()
         
-        self.parent = parent
+        self._parent = parent
         self.app_parent = app_parent
-
+        self.btn_id = btn_id
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
 
         self.btn_istoggle = btn_istoggle
+        self.btn_istoggle_active = btn_istoggle_active
         self.btn_isactive = btn_isactive
         self.btn_size = btn_size
         self.btn_radius = btn_radius
@@ -80,10 +83,7 @@ class Title_Button(QPushButton):
             self.btn_bg_color
         )
         self.label_tooltip.hide()
-
-
-    # def set_again(self):
-    
+        
     def changeStyle(self, event):
         if event == QEvent.Enter:
             self.set_btn_bg_color = self.btn_bg_color_hover
@@ -100,30 +100,23 @@ class Title_Button(QPushButton):
     
     def changetoggleStyle(self, event):
         if event == QEvent.Enter:
-            if self.btn_isactive:
-                pass
-            elif not self.btn_isactive:
+            if not self.btn_istoggle_active:
                 self.set_btn_bg_color = self.btn_bg_color_hover
             self.btnStyle()
         elif event == QEvent.Leave:
-            if self.btn_isactive:
-                self.set_btn_bg_color = self.btn_bg_color_pressed
-            elif not self.btn_isactive:
+            if not self.btn_istoggle_active:
                 self.set_btn_bg_color = self.btn_bg_color
             self.btnStyle()
         elif event == QEvent.MouseButtonPress:
-            if self.btn_isactive:
+            if self.btn_istoggle_active:
                 self.set_btn_bg_color = self.btn_bg_color_hover
-                self.btn_isactive = False
-            elif not self.btn_isactive:
+                self.btn_istoggle_active = False
+            elif not self.btn_istoggle_active:
                 self.set_btn_bg_color = self.btn_bg_color_pressed
-                self.btn_isactive = True
+                self.btn_istoggle_active = True
             self.btnStyle()
         elif event == QEvent.MouseButtonRelease:
-            if self.btn_isactive:
-                self.set_btn_bg_color = self.btn_bg_color_pressed
-            elif not self.btn_isactive:
-                self.set_btn_bg_color = self.btn_bg_color_hover
+            pass
 
     def btnStyle(self):
         self.setContentsMargins(0, 0, 0, 0)
@@ -177,7 +170,7 @@ class Title_Button(QPushButton):
 
         # SET WIDGET TO GET POSTION
         # Return absolute position of widget inside app
-        pos = self.parent.mapFromGlobal(gp)
+        pos = self._parent.mapFromGlobal(gp)
 
         # FORMAT POSITION
         # Adjust tooltip position with offset
