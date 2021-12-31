@@ -1,4 +1,4 @@
-from gui.mainwindow import *
+from gui.widgets.mainwindow.mainwindow import *
 
 class MainFunctions():
     def __init__(self):

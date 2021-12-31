@@ -3,8 +3,8 @@ import sys
 
 from module.pyside6_module_import import *
 
-from gui.mainwindow import Ui_MainWindow
-from gui.setup_mainwindow import Setup_MainWindow
+from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
+from gui.widgets.mainwindow.setup_mainwindow import Setup_MainWindow
 
 class MainWindow(QMainWindow):
     def __init__(self):
