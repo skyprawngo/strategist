@@ -18,7 +18,7 @@ class Left_Menu_Button(QPushButton):
         btn_istoggle = False,
         btn_istoggle_active = False,
         btn_istooltip = True,
-        btn_istooltip_active = True,
+        btn_istooltip_active = False,
         btn_isactive = False,
         btn_size = [30, 30],
         btn_radius = 8,
@@ -56,8 +56,7 @@ class Left_Menu_Button(QPushButton):
         self.btn_icon_color = btn_icon_color
         self.btn_icon_color_hover = btn_icon_color_hover
         self.btn_icon_color_pressed = btn_icon_color_pressed
-
-
+        
         self.set_btn_bg_color = btn_bg_color
         self.set_btn_bg_color_hover = btn_bg_color_hover
         self.set_btn_bg_color_pressed = btn_bg_color_pressed
@@ -65,32 +64,40 @@ class Left_Menu_Button(QPushButton):
         self.set_btn_icon_color = btn_icon_color
         self.set_btn_icon_color_hover = btn_icon_color_hover
         self.set_btn_icon_color_pressed = btn_icon_color_pressed
-    
-
-
+        
         self.setObjectName(self.btn_id)
         self.setCursor(Qt.PointingHandCursor)
         self.setMinimumHeight(self.btn_size[1]+12)
-
-
-        self.set_icon(icon_file_path)
-        self.set_tooltip(tooltip_text)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        
+        self.setup_btn(self.icon_file_path)
         
         if self.btn_istoggle_active:
             self.set_switch_toggle(True)
 
+    def setup_btn(self, new_icon_file_path):
+        self.icon_file_path = new_icon_file_path
 
-    def set_icon(self, icon_file_path):
-        self.btn_image = QIcon()
-        self.btn_image.addFile(icon_file_path)
-        self.setIconSize(QSize(self.btn_size[0],self.btn_size[1]))
-        self.setIcon(self.btn_image)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.btn_hlayout = QHBoxLayout(self)
+        self.btn_hlayout.setContentsMargins(6, 6, 0, 6)
+        self.btn_hlayout.setSpacing(0)
+        self.btn_image = QSvgWidget()
+        self.btn_image.setFixedSize(self.btn_size[0]-5, self.btn_size[1])
+        self.set_icon(self.icon_file_path)
+        self.btn_hlayout.addWidget(self.btn_image)
+        
+        self.btn_text = QLabel()
+        self.btn_text.setText(self.tooltip_text)
+        self.btn_hlayout.addWidget(self.btn_text, alignment=Qt.AlignHCenter)
+        
+        self.set_tooltip(self.tooltip_text)
     
+    def set_icon(self, icon_file_path):
+        self.btn_image.load(icon_file_path)
+        
     def set_text(self):
-        if not self.btn_istooltip_active:
-            self.setText(self.tooltip_text)
-        else:
-            self.setText("")
+        pass
     
     def is_active(self):
         return self.btn_isactive
@@ -134,15 +141,18 @@ class Left_Menu_Button(QPushButton):
         )
         self.label_tooltip.hide()
     
-    def set_switch_tooltip(self, istooltip):
+    def set_tooltip_active(self, istooltip):
         self.btn_istooltip = istooltip
+        if not self.btn_istooltip:
+            self.label_tooltip.hide()
+    
+    def set_tooltip_switch(self, istooltip_switch):
+        self.btn_istooltip_active = istooltip_switch
         if self.btn_istooltip:
             if self.btn_istooltip_active:
                 self.label_tooltip.show()
             elif not self.btn_istooltip_active:
-                self.label_tooltip.hide()   
-        else:
-            pass
+                self.label_tooltip.hide()
                 
     def changetoggleStyle(self, event):
         if event == QEvent.Enter:
@@ -174,12 +184,11 @@ class Left_Menu_Button(QPushButton):
     def enterEvent(self, event):
         self.changetoggleStyle(QEvent.Enter)
         self.move_tooltip()
-        self.set_switch_tooltip(True)
-        print(self.btn_istooltip)
-    
+        self.set_tooltip_switch(True)
+
     def leaveEvent(self, event):
         self.changetoggleStyle(QEvent.Leave)
-        self.set_switch_tooltip(False)
+        self.set_tooltip_switch(False)
     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -189,7 +198,7 @@ class Left_Menu_Button(QPushButton):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.changetoggleStyle(QEvent.MouseButtonRelease)
-            self.set_switch_tooltip(False)
+            self.set_tooltip_switch(False)
             self.setFocus()
             return self.released.emit()
 

@@ -153,16 +153,16 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             self.animation.setEndValue(self._maximum_width)
             self.btn_menu_toggle.set_switch_toggle(True)
             self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("angle-left.svg"))
-            self.btn_menu_toggle.set_switch_tooltip(True)
             for btn_left_menu in self.btn_toggle_frame.findChildren(QPushButton):
+                btn_left_menu.set_tooltip_active(False)
                 btn_left_menu.set_text()
         else:
             self.animation.setStartValue(self.width())
             self.animation.setEndValue(self._minimum_width)
             self.btn_menu_toggle.set_switch_toggle(False)
             self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("menu-burger.svg"))
-            self.btn_menu_toggle.set_switch_tooltip(True)
             for btn_left_menu in self.btn_toggle_frame.findChildren(QPushButton):
+                btn_left_menu.set_tooltip_active(True)
                 btn_left_menu.set_text()
             
         self.animation.setEasingCurve(QEasingCurve.InOutCubic)
