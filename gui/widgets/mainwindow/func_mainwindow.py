@@ -7,7 +7,9 @@ class MainFunctions():
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
-
+    def set_page(self, page):
+        self.ui.load_pages.pages.setCurrentWidget(page)
+        
     # RETURN IF LEFT COLUMN IS VISIBLE
     # ///////////////////////////////////////////////////////////////
     def left_column_is_visible(self):

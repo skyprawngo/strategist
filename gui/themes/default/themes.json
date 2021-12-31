@@ -2,8 +2,9 @@
     "theme_name" : "default",
     "font" : {
         "family" : "Segoe UI",
-        "title_size" : 10,
-        "text_size" : 9
+        "title_size" : 11,
+        "text_size" : 10,
+        "left_menu_text_size" : 12
     },
     "shape" : {
         "pywindow" : {
@@ -25,15 +26,15 @@
         "dark_three" : "#434b51",
         "dark_four" : "#5c6770",
 
-        "bg_one" : "#f7fafd",
-        "bg_two" : "#e4e8ec",
-        "bg_three" : "#c1c6cd",
-        "bg_four" : "#a2aab4",
+        "bg_one" : "#fff",
+        "bg_two" : "#eaebec",
+        "bg_three" : "#d8d9da",
+        "bg_four" : "#c3c4c6",
 
-        "color_one" : "#cfe9fc",
-        "color_two" : "#add0eb",
-        "color_three" : "#8ba9c1",
-        "color_four" : "#758d9f",
+        "color_one" : "#eee9e7",
+        "color_two" : "#e3dbd7",
+        "color_three" : "#d1cac7",
+        "color_four" : "#c0b8b5",
 
         "pink" : "#edadff",
         "light_orange" : "##ffe1ad",

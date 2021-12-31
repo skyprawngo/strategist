@@ -15,13 +15,10 @@ class Left_Menu_Button(QPushButton):
         icon_file_path,
         tooltip_text,
 
-        btn_istoggle = False,
-        btn_istoggle_active = False,
-        btn_istooltip = True,
-        btn_istooltip_active = False,
-        btn_isactive = False,
         btn_size = [30, 30],
         btn_radius = 8,
+        
+        btn_font_size = 10,
 
         btn_bg_color = "#ffffff",
         btn_bg_color_hover = "#ffffff",
@@ -31,6 +28,11 @@ class Left_Menu_Button(QPushButton):
         btn_icon_color_hover = "#000000",
         btn_icon_color_pressed = "#000000",
 
+        btn_isactive = False,
+        btn_istoggle = False,
+        btn_istoggle_active = False,
+        btn_istooltip = True,
+        btn_istooltip_active = False,
     ):
         super().__init__()
         
@@ -41,13 +43,10 @@ class Left_Menu_Button(QPushButton):
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
 
-        self.btn_istoggle = btn_istoggle
-        self.btn_istoggle_active = btn_istoggle_active
-        self.btn_istooltip = btn_istooltip
-        self.btn_istooltip_active = btn_istooltip_active
-        self.btn_isactive = btn_isactive
         self.btn_size = btn_size
         self.btn_radius = btn_radius
+        
+        self.btn_font_size = btn_font_size
         
         self.btn_bg_color = btn_bg_color
         self.btn_bg_color_hover = btn_bg_color_hover
@@ -64,6 +63,12 @@ class Left_Menu_Button(QPushButton):
         self.set_btn_icon_color = btn_icon_color
         self.set_btn_icon_color_hover = btn_icon_color_hover
         self.set_btn_icon_color_pressed = btn_icon_color_pressed
+
+        self.btn_isactive = btn_isactive
+        self.btn_istoggle = btn_istoggle
+        self.btn_istoggle_active = btn_istoggle_active
+        self.btn_istooltip = btn_istooltip
+        self.btn_istooltip_active = btn_istooltip_active
         
         self.setObjectName(self.btn_id)
         self.setCursor(Qt.PointingHandCursor)
@@ -80,24 +85,33 @@ class Left_Menu_Button(QPushButton):
 
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.btn_hlayout = QHBoxLayout(self)
-        self.btn_hlayout.setContentsMargins(6, 6, 0, 6)
+        self.btn_hlayout.setContentsMargins(4, 6, 4, 6)
         self.btn_hlayout.setSpacing(0)
         self.btn_image = QSvgWidget()
         self.btn_image.setFixedSize(self.btn_size[0]-5, self.btn_size[1])
         self.set_icon(self.icon_file_path)
         self.btn_hlayout.addWidget(self.btn_image)
         
-        self.btn_text = QLabel()
+        self.btn_text = QLabel(self)
         self.btn_text.setText(self.tooltip_text)
-        self.btn_hlayout.addWidget(self.btn_text, alignment=Qt.AlignHCenter)
+        self.btn_text.setStyleSheet(f"font-size:{self.btn_font_size}px;")
+        self.btn_text.move(QPoint(self.btn_size[0]+10, (self.btn_size[1]-self.btn_font_size)/4))
+        
+        self.btn_space_frame = QFrame()
+        self.btn_space_frame.setAttribute(Qt.WA_TranslucentBackground)
+        self.btn_hlayout.addWidget(self.btn_space_frame)
+        
         
         self.set_tooltip(self.tooltip_text)
     
     def set_icon(self, icon_file_path):
         self.btn_image.load(icon_file_path)
         
-    def set_text(self):
-        pass
+    def set_text(self, text_appear):
+        if text_appear:
+            self.btn_text.show()
+        else:
+            self.btn_text.hide()
     
     def is_active(self):
         return self.btn_isactive
@@ -258,3 +272,4 @@ class Btn_ToolTip(QLabel):
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 80))
         self.setGraphicsEffect(self.shadow)
+

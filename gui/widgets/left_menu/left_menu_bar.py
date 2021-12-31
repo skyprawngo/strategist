@@ -6,8 +6,6 @@ from gui.widgets.left_menu.div import Div
 
 from gui.themes.load_item_path import Load_Item_Path
 
-button_streched = False
-
 class Ui_Left_Menu_Column_Widget(QWidget):
     clicked = Signal(object)
     released = Signal(object)
@@ -73,9 +71,10 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("menu-burger.svg"),
             tooltip_text = "Menu Toggle",
             
-            btn_istoggle = True,
             btn_size = self._left_menu_bar_btn_size,
             btn_radius  = self._left_menu_bar_btn_radius,
+            
+            btn_font_size = self._font_size,
 
             btn_icon_color = self._left_menu_bar_text_color,
             btn_icon_color_hover = self._left_menu_bar_bg_color_hover,
@@ -83,7 +82,9 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             
             btn_bg_color = self._left_menu_bar_bg_color,
             btn_bg_color_hover = self._left_menu_bar_bg_color_hover,
-            btn_bg_color_pressed = self._left_menu_bar_bg_color_pressed
+            btn_bg_color_pressed = self._left_menu_bar_bg_color_pressed,
+
+            btn_istoggle = True
         )
         self.btn_menu_toggle.clicked.connect(self.toggle_animation)
         self.btn_toggle_vlayout.addWidget(self.btn_menu_toggle)
@@ -111,11 +112,10 @@ class Ui_Left_Menu_Column_Widget(QWidget):
                     icon_file_path = Load_Item_Path().set_svg_icon_path(_icon_file_name),
                     tooltip_text = _tooltip_text,
                     
-                    btn_istoggle = _btn_istoggle,
-                    btn_istoggle_active = _btn_istoggle_active,
-                    btn_isactive = _btn_isactive,
                     btn_size = self._left_menu_bar_btn_size,
                     btn_radius  = self._left_menu_bar_btn_radius,
+                    
+                    btn_font_size = self._font_size,
 
                     btn_icon_color = self._left_menu_bar_text_color,
                     btn_icon_color_hover = self._left_menu_bar_bg_color_hover,
@@ -123,7 +123,11 @@ class Ui_Left_Menu_Column_Widget(QWidget):
                     
                     btn_bg_color = self._left_menu_bar_bg_color,
                     btn_bg_color_hover = self._left_menu_bar_bg_color_hover,
-                    btn_bg_color_pressed = self._left_menu_bar_bg_color_pressed
+                    btn_bg_color_pressed = self._left_menu_bar_bg_color_pressed,
+                    
+                    btn_isactive = _btn_isactive,
+                    btn_istoggle = _btn_istoggle,
+                    btn_istoggle_active = _btn_istoggle_active,
                 )
                 self.menu.clicked.connect(self.btn_clicked)
                 self.menu.released.connect(self.btn_released)
@@ -132,7 +136,7 @@ class Ui_Left_Menu_Column_Widget(QWidget):
                 self.btn_menu_vlayout.addWidget(self.menu)
                 
     def select_only_one(self):
-        self.btn= self.sender()
+        self.btn = self.sender()
         for self.left_menu_btn in self.btn_menu_frame.findChildren(QPushButton):
             self.left_menu_btn.set_switch_toggle(False)
             if self.left_menu_btn.objectName() == self.btn.objectName():
@@ -155,7 +159,7 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("angle-left.svg"))
             for btn_left_menu in self.btn_toggle_frame.findChildren(QPushButton):
                 btn_left_menu.set_tooltip_active(False)
-                btn_left_menu.set_text()
+                
         else:
             self.animation.setStartValue(self.width())
             self.animation.setEndValue(self._minimum_width)
@@ -163,7 +167,7 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("menu-burger.svg"))
             for btn_left_menu in self.btn_toggle_frame.findChildren(QPushButton):
                 btn_left_menu.set_tooltip_active(True)
-                btn_left_menu.set_text()
+                
             
         self.animation.setEasingCurve(QEasingCurve.InOutCubic)
         self.animation.setDuration(self._time_animation)

@@ -12,9 +12,10 @@ class MainWindow(QMainWindow):
         
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
 
         Setup_MainWindow.setup_gui(self)
-    
+
     def resizeEvent(self, event):
         Setup_MainWindow.resize_grips(self)
 

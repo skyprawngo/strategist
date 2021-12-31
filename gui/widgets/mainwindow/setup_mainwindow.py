@@ -1,7 +1,10 @@
 from module.pyside6_module_import import *
 
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
+from gui.widgets.pages.mainpages import MainPages
 
+from gui.widgets.pages.page_0 import Page_0
+from gui.widgets.pages.page_1 import Page_1
 from gui.widgets.pygrips.py_grips import PyGrips
 
 class Setup_MainWindow:
@@ -46,6 +49,12 @@ class Setup_MainWindow:
             "btn_isactive" : False
         }
     ]
+    def setup_pages(self):
+        self.main_pages = MainPages(
+            self.add_left_menus
+        )
+        self.ui.main_page_vlayout.addWidget(self.main_pages)
+        
     
     def setup_gui(self):
 
@@ -67,11 +76,11 @@ class Setup_MainWindow:
         
         
     def resize_grips(self):
-            self.left_grip.setGeometry(0, 15, 10, self.height()-10)
-            self.right_grip.setGeometry(self.width() - 10, 15, 10, self.height()-10)
-            self.top_grip.setGeometry(15, 0, self.width() - 10, 10)
-            self.bottom_grip.setGeometry(15, self.height() - 10, self.width() - 30, 10)
-            self.top_left_grip.setGeometry(0, 0, 15, 15)
-            self.top_right_grip.setGeometry(self.width() - 15, 0, 15, 15)
-            self.bottom_left_grip.setGeometry(0, self.height() - 15, 15, 15)
-            self.bottom_right_grip.setGeometry(self.width() - 15, self.height() - 15, 15, 15)
+        self.left_grip.setGeometry(0, 15, 10, self.height()-10)
+        self.right_grip.setGeometry(self.width() - 10, 15, 10, self.height()-10)
+        self.top_grip.setGeometry(15, 0, self.width() - 10, 10)
+        self.bottom_grip.setGeometry(15, self.height() - 10, self.width() - 30, 10)
+        self.top_left_grip.setGeometry(0, 0, 15, 15)
+        self.top_right_grip.setGeometry(self.width() - 15, 0, 15, 15)
+        self.bottom_left_grip.setGeometry(0, self.height() - 15, 15, 15)
+        self.bottom_right_grip.setGeometry(self.width() - 15, self.height() - 15, 15, 15)

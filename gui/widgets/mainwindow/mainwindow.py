@@ -9,6 +9,7 @@ from gui.themes.theme_switch import Theme_Switch
 from gui.widgets.pywindow.pywindow import PyWindow
 from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 from gui.widgets.left_menu.left_menu_bar import Ui_Left_Menu_Column_Widget
+from gui.widgets.pages.mainpages import MainPages
 
 
 
@@ -136,7 +137,7 @@ class Ui_MainWindow(object):
             maximum_width = self.theme_settings["left_menu_size"]["bg_width_maximum"],
             
             font_type = self.themes["font"]["family"],
-            font_size = self.themes["font"]["text_size"],
+            font_size = self.themes["font"]["left_menu_text_size"],
             bg_color = self.themes["app_color"]["bg_one"],
 
             left_menu_bar_btn_size = self.theme_settings["left_menu_size"]["btn_size"],
@@ -165,6 +166,8 @@ class Ui_MainWindow(object):
                         # main_page_frame(
         self.main_page_frame = QFrame()
         self.main_page_vlayout = QVBoxLayout(self.main_page_frame)
+        self.load_pages = MainPages()
+        self.load_pages.setupUi(self.main_page_frame)
                         # )main_page_frame
                         # right_settings_column_Frame(
         self.right_column_frame = QFrame()
