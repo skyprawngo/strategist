@@ -134,7 +134,7 @@ class Left_Menu_Button(QPushButton):
         )
         self.label_tooltip.hide()
     
-    def set_switch_tooltip_active(self, istooltip):
+    def set_switch_tooltip(self, istooltip):
         self.btn_istooltip = istooltip
         if self.btn_istooltip:
             if self.btn_istooltip_active:
@@ -174,12 +174,12 @@ class Left_Menu_Button(QPushButton):
     def enterEvent(self, event):
         self.changetoggleStyle(QEvent.Enter)
         self.move_tooltip()
-        self.set_switch_tooltip_active(True)
+        self.set_switch_tooltip(True)
         print(self.btn_istooltip)
     
     def leaveEvent(self, event):
         self.changetoggleStyle(QEvent.Leave)
-        self.set_switch_tooltip_active(False)
+        self.set_switch_tooltip(False)
     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -189,7 +189,7 @@ class Left_Menu_Button(QPushButton):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.changetoggleStyle(QEvent.MouseButtonRelease)
-            self.set_switch_tooltip_active(False)
+            self.set_switch_tooltip(False)
             self.setFocus()
             return self.released.emit()
 
