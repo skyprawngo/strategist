@@ -10,7 +10,7 @@ class Settings(object):
     # ///////////////////////////////////////////////////////////////
     cwd_path = os.path.abspath(os.getcwd())
     app_path = "gui/themes/default"
-    settings_json_file = "settings.json"
+    settings_json_file = "theme_settings.json"
     
     
     settings_path = os.path.normpath(os.path.join(cwd_path, app_path, settings_json_file))

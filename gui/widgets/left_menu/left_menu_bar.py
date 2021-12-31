@@ -31,7 +31,8 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         left_menu_bar_text_color_hover = "#000",
         left_menu_bar_text_color_pressed = "#000",
         
-        left_menu_bar_bg_width = 30,
+        left_menu_bar_bg_width_minimum = 40,
+        left_menu_bar_bg_width_maximum = 240,
         left_menu_bar_bg_radius = 10,
         left_menu_bar_bg_color = "#fff",
         left_menu_bar_bg_color_hover = "#fff",
@@ -42,8 +43,8 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self._app_parent = app_parent
         self._parent = parent
         self._time_animation = time_animation
-        self.minimum_width = minimum_width
-        self.maximum_width = maximum_width
+        self._minimum_width = minimum_width
+        self._maximum_width = maximum_width
         
         self._font_type = font_type
         self._font_size = font_size
@@ -56,7 +57,8 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self._left_menu_bar_text_color_hover = left_menu_bar_text_color_hover
         self._left_menu_bar_text_color_pressed = left_menu_bar_text_color_pressed
 
-        self._left_menu_bar_bg_width = left_menu_bar_bg_width
+        self._left_menu_bar_bg_width_minimum = left_menu_bar_bg_width_minimum
+        self._left_menu_bar_bg_width_maximum = left_menu_bar_bg_width_maximum
         self._left_menu_bar_bg_radius = left_menu_bar_bg_radius
         self._left_menu_bar_bg_color = left_menu_bar_bg_color
         self._left_menu_bar_bg_color_hover = left_menu_bar_bg_color_hover
@@ -83,6 +85,7 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             btn_bg_color_hover = self._left_menu_bar_bg_color_hover,
             btn_bg_color_pressed = self._left_menu_bar_bg_color_pressed
         )
+        self.btn_menu_toggle.clicked.connect(self.toggle_animation)
         self.btn_toggle_vlayout.addWidget(self.btn_menu_toggle)
         
         self.div_1 = Div(self._left_menu_bar_bg_color_pressed)
@@ -148,15 +151,18 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         if self.width() == self._minimum_width:
             self.animation.setStartValue(self.width())
             self.animation.setEndValue(self._maximum_width)
-            self.toggle_button.set_active_toggle(True)
-            self.toggle_button.set_icon(self._icon_path_close)
+            self.btn_menu_toggle.set_switch_toggle(True)
+            self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("angle-left.svg"))
+            self.btn_menu_toggle.set_switch_tooltip(True)
         else:
             self.animation.setStartValue(self.width())
             self.animation.setEndValue(self._minimum_width)
-            self.toggle_button.set_active_toggle(False)
-            self.toggle_button.set_icon(self._icon_path)
+            self.btn_menu_toggle.set_switch_toggle(False)
+            self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("menu-burger.svg"))
+            self.btn_menu_toggle.set_switch_tooltip(False)
+            
         self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-        self.animation.setDuration(self._duration_time)
+        self.animation.setDuration(self._time_animation)
         self.animation.start()
 
     def setupUi(self):

@@ -45,11 +45,11 @@ class MainFunctions():
     def start_frame_animation(self, left_frame_width, right_frame_width, direction):
         right_width = 0
         left_width = 0
-        time_animation = self.ui.settings["time_animation"]
-        minimum_left = self.ui.settings["left_menu_size"]["minimum"]
-        maximum_left = self.ui.settings["left_menu_size"]["maximum"]
-        minimum_right = self.ui.settings["right_column_size"]["minimum"]
-        maximum_right = self.ui.settings["right_column_size"]["maximum"]
+        time_animation = self.ui.theme_settings["time_animation"]
+        minimum_left = self.ui.theme_settings["left_menu_size"]["minimum"]
+        maximum_left = self.ui.theme_settings["left_menu_size"]["maximum"]
+        minimum_right = self.ui.theme_settings["right_column_size"]["minimum"]
+        maximum_right = self.ui.theme_settings["right_column_size"]["maximum"]
 
         # Check Left Values        
         if left_frame_width == minimum_left and direction == "left":

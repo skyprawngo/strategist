@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from module.pyside6_module_import import *
 
-from gui.themes.settings import Settings
+from gui.themes.theme_settings import Settings
 from gui.themes.themes import Themes
 from gui.themes.theme_switch import Theme_Switch
 
@@ -19,8 +19,8 @@ class Ui_MainWindow(object):
             UiMainWindow.setObjectName(u"MainWindow")
         
             # Load Settings
-        settings = Settings()
-        self.settings = settings.settings
+        theme_settings = Settings()
+        self.theme_settings = theme_settings.settings
             # Load Themes
         themes = Themes()
         self.themes = themes.themes
@@ -28,13 +28,13 @@ class Ui_MainWindow(object):
         self.app_parent = UiMainWindow
         
         UiMainWindow.resize(
-            self.settings["startup_size"][0],
-            self.settings["startup_size"][1]
+            self.theme_settings["startup_size"][0],
+            self.theme_settings["startup_size"][1]
         )
         
         UiMainWindow.setMinimumSize(
-            self.settings["minimum_size"][0],
-            self.settings["minimum_size"][1]
+            self.theme_settings["minimum_size"][0],
+            self.theme_settings["minimum_size"][1]
         )
         
 
@@ -57,8 +57,8 @@ class Ui_MainWindow(object):
                 # PyWindow(
         self.window = PyWindow(
             app_parent = UiMainWindow,
-            startup_size = self.settings["startup_size"],
-            minimum_size = self.settings["minimum_size"],
+            startup_size = self.theme_settings["startup_size"],
+            minimum_size = self.theme_settings["minimum_size"],
 
             margin = self.themes["shape"]["pywindow"]["margin"],
             spacing = self.themes["shape"]["pywindow"]["margin"],
@@ -68,7 +68,7 @@ class Ui_MainWindow(object):
             border_radius = self.themes["shape"]["pywindow"]["border_radius"],
             border_size = self.themes["shape"]["pywindow"]["border_size"],
             border_color = self.themes["app_color"]["bg_three"],
-            custom_title_bar = self.settings["custom_title_bar"]
+            custom_title_bar = self.theme_settings["custom_title_bar"]
         )
 
                     # title_bar_frame(
@@ -83,11 +83,11 @@ class Ui_MainWindow(object):
         self.title_bar_widget = Ui_Title_Bar_Widget(
             app_parent = UiMainWindow,
             parent = self.title_bar_frame,
-            app_name = self.settings["app_name"],
-            logo_file_name = self.settings["logo_file_name"],
-            title_text = self.settings["title_text"],
-            custom_title_bar = self.settings["custom_title_bar"],
-            time_animation = self.settings["time_animation"],
+            app_name = self.theme_settings["app_name"],
+            logo_file_name = self.theme_settings["logo_file_name"],
+            title_text = self.theme_settings["title_text"],
+            custom_title_bar = self.theme_settings["custom_title_bar"],
+            time_animation = self.theme_settings["time_animation"],
             
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["title_size"],
@@ -122,8 +122,8 @@ class Ui_MainWindow(object):
                         # left_menu_bar_frame(
         self.left_menu_bar_frame = QFrame()
         self.left_menu_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.left_menu_bar_frame.setMinimumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
-        self.left_menu_bar_frame.setMaximumWidth(self.themes["shape"]["left_menu_bar"]["bg_width"])
+        self.left_menu_bar_frame.setMinimumWidth(self.theme_settings["left_menu_size"]["bg_width_minimum"])
+        self.left_menu_bar_frame.setMaximumWidth(self.theme_settings["left_menu_size"]["bg_width_minimum"])
         self.left_menu_bar_vlayout = QVBoxLayout(self.left_menu_bar_frame)
         self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
         self.left_menu_bar_vlayout.setSpacing(0)
@@ -131,23 +131,24 @@ class Ui_MainWindow(object):
         self.left_menu_bar_widget = Ui_Left_Menu_Column_Widget(
             app_parent = UiMainWindow,
             parent = self.left_menu_bar_frame,
-            time_animation = self.settings["time_animation"],
-            minimum_width = self.settings["left_menu_size"]["minimum"],
-            maximum_width = self.settings["left_menu_size"]["maximum"],
+            time_animation = self.theme_settings["time_animation"],
+            minimum_width = self.theme_settings["left_menu_size"]["bg_width_minimum"],
+            maximum_width = self.theme_settings["left_menu_size"]["bg_width_maximum"],
             
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["text_size"],
             bg_color = self.themes["app_color"]["bg_one"],
 
-            left_menu_bar_btn_size = self.themes["shape"]["left_menu_bar"]["btn_size"],
-            left_menu_bar_btn_radius = self.themes["shape"]["left_menu_bar"]["btn_radius"],
+            left_menu_bar_btn_size = self.theme_settings["left_menu_size"]["btn_size"],
+            left_menu_bar_btn_radius = self.theme_settings["left_menu_size"]["btn_radius"],
 
             left_menu_bar_text_color = self.themes["app_color"]["dark_three"],
             left_menu_bar_text_color_hover = self.themes["app_color"]["dark_two"],
             left_menu_bar_text_color_pressed = self.themes["app_color"]["dark_one"],
             
-            left_menu_bar_bg_width = self.themes["shape"]["left_menu_bar"]["bg_width"],
-            left_menu_bar_bg_radius = self.themes["shape"]["left_menu_bar"]["bg_radius"],
+            left_menu_bar_bg_width_minimum = self.theme_settings["left_menu_size"]["bg_width_minimum"],
+            left_menu_bar_bg_width_maximum = self.theme_settings["left_menu_size"]["bg_width_maximum"],
+            left_menu_bar_bg_radius = self.theme_settings["left_menu_size"]["bg_radius"],
             left_menu_bar_bg_color = self.themes["app_color"]["bg_two"],
             left_menu_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             left_menu_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
@@ -157,8 +158,8 @@ class Ui_MainWindow(object):
                         # )left_menu_bar_frame
                         # left_column_frame(
         self.left_column_frame = QFrame()
-        self.left_column_frame.setMinimumWidth(self.settings["left_column_size"]["minimum"])
-        self.left_column_frame.setMaximumWidth(self.settings["left_column_size"]["minimum"])
+        self.left_column_frame.setMinimumWidth(self.theme_settings["left_column_size"]["minimum"])
+        self.left_column_frame.setMaximumWidth(self.theme_settings["left_column_size"]["minimum"])
         self.left_column_hlayout = QHBoxLayout(self.left_column_frame)
                         # )left_column_frame
                         # main_page_frame(
@@ -167,8 +168,8 @@ class Ui_MainWindow(object):
                         # )main_page_frame
                         # right_settings_column_Frame(
         self.right_column_frame = QFrame()
-        self.right_column_frame.setMinimumWidth(self.settings["right_column_size"]["minimum"])
-        self.right_column_frame.setMaximumWidth(self.settings["right_column_size"]["minimum"])
+        self.right_column_frame.setMinimumWidth(self.theme_settings["right_column_size"]["minimum"])
+        self.right_column_frame.setMaximumWidth(self.theme_settings["right_column_size"]["minimum"])
         self.right_column_frame.setStyleSheet("background-color: lightblue")
         self.right_column_hlayout = QHBoxLayout(self.right_column_frame)
         

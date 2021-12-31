@@ -16,8 +16,11 @@
         540
     ],
     "left_menu_size" : {
-        "minimum" : 50,
-        "maximum" : 240
+        "btn_size" : [30, 22],
+        "btn_radius" : 8,
+        "bg_width_minimum" : 40,
+        "bg_width_maximum" : 240,
+        "bg_radius" : 8
     },
     "left_menu_content_margins" : 3,
     "left_column_size" : {
