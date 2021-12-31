@@ -70,11 +70,11 @@ class Left_Menu_Button(QPushButton):
 
         self.setObjectName(self.btn_id)
         self.setCursor(Qt.PointingHandCursor)
-        self.setMinimumSize(self.btn_size[0], self.btn_size[1]+12)
+        self.setMinimumHeight(self.btn_size[1]+12)
 
 
         self.set_icon(icon_file_path)
-        self.set_label(tooltip_text)
+        self.set_tooltip(tooltip_text)
         
         if self.btn_istoggle_active:
             self.set_switch_toggle(True)
@@ -84,17 +84,16 @@ class Left_Menu_Button(QPushButton):
         self.btn_image = QIcon()
         self.btn_image.addFile(icon_file_path)
         self.setIconSize(QSize(self.btn_size[0],self.btn_size[1]))
-        self.repaint()
         self.setIcon(self.btn_image)
     
-    def set_label(self, tooltip_text):
-        self.label_tooltip = Btn_ToolTip(
-            self.app_parent,
-            tooltip_text,
-            self.btn_icon_color,
-            self.btn_bg_color
-        )
-        self.label_tooltip.hide()
+    def set_text(self):
+        if not self.btn_istooltip_active:
+            self.setText(self.tooltip_text)
+        else:
+            self.setText("")
+    
+    def is_active(self):
+        return self.btn_isactive
     
     def set_active(self, is_active):
         self.btn_isactive = is_active
@@ -103,7 +102,7 @@ class Left_Menu_Button(QPushButton):
             self.btn_isactive = True
         self.btnStyle()
     
-    def is_active(self):
+    def is_active_tab(self):
         return self.btn_isactive
     
     def set_active_tab(self, is_active):
@@ -111,9 +110,6 @@ class Left_Menu_Button(QPushButton):
         if not self.btn_isactive:
             self.set_btn_bg_color = self.btn_bg_color
             self.btn_isactive = True
-            
-    def is_active_tab(self):
-        return self.btn_isactive
     
     def is_active_toggle(self):
         return self.btn_istoggle_active
@@ -129,12 +125,24 @@ class Left_Menu_Button(QPushButton):
     def is_active_tooltip(self):
         return self.btn_istooltip_active
     
-    def set_switch_tooltip(self, istooltip):
+    def set_tooltip(self, tooltip_text):
+        self.label_tooltip = Btn_ToolTip(
+            self.app_parent,
+            tooltip_text,
+            self.btn_icon_color,
+            self.btn_bg_color
+        )
+        self.label_tooltip.hide()
+    
+    def set_switch_tooltip_active(self, istooltip):
         self.btn_istooltip = istooltip
         if self.btn_istooltip:
-            self.label_tooltip.show()
-        elif not self.btn_istooltip:
-            self.label_tooltip.hide()
+            if self.btn_istooltip_active:
+                self.label_tooltip.show()
+            elif not self.btn_istooltip_active:
+                self.label_tooltip.hide()   
+        else:
+            pass
                 
     def changetoggleStyle(self, event):
         if event == QEvent.Enter:
@@ -166,12 +174,12 @@ class Left_Menu_Button(QPushButton):
     def enterEvent(self, event):
         self.changetoggleStyle(QEvent.Enter)
         self.move_tooltip()
-        self.set_switch_tooltip(True)
+        self.set_switch_tooltip_active(True)
         print(self.btn_istooltip)
     
     def leaveEvent(self, event):
         self.changetoggleStyle(QEvent.Leave)
-        self.set_switch_tooltip(False)
+        self.set_switch_tooltip_active(False)
     
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -181,7 +189,7 @@ class Left_Menu_Button(QPushButton):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.changetoggleStyle(QEvent.MouseButtonRelease)
-            self.set_switch_tooltip(False)
+            self.set_switch_tooltip_active(False)
             self.setFocus()
             return self.released.emit()
 

@@ -12,4 +12,3 @@ class Div(QWidget):
         self.frame_line.setMinimumHeight(1)
         self.layout.addWidget(self.frame_line)
         self.setMaximumHeight(10)
-        self.setMinimumHeight(10)
