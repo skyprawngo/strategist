@@ -32,25 +32,29 @@ class MainWindow(QMainWindow):
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load Page 1
-            MainFunctions.set_page(self, self.ui.load_pages.page_0)
+            MainFunctions.set_page(self, self.ui.load_pages.page_0_frame)
         
         if btn.objectName() == "btn_chart":
             # Select Menu
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load Page 2
-            MainFunctions.set_page(self, self.ui.load_pages.page_1)
+            MainFunctions.set_page(self, self.ui.load_pages.page_1_frame)
         
         if btn.objectName() == "btn_purchased":
             # Select Menu
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load Page 2
-            MainFunctions.set_page(self, self.ui.load_pages.page_2)
+            MainFunctions.set_page(self, self.ui.load_pages.page_2_frame)
         
-        
+        if btn.objectName() == "btn_shop":
+            # Select Menu
+            self.ui.left_menu.select_only_one(btn.objectName())
+
+            # Load Page 2
+            MainFunctions.set_page(self, self.ui.load_pages.page_3_frame)
             
-        pass
     
     def resizeEvent(self, event):
         Setup_MainWindow.resize_grips(self)

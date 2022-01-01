@@ -38,10 +38,7 @@ class Ui_MainWindow(object):
             self.theme_settings["minimum_size"][1]
         )
         
-
-
         self.app_parent = UiMainWindow
-
 
             # Centralwidget(
         self.centralwidget = QWidget(UiMainWindow)
@@ -165,10 +162,13 @@ class Ui_MainWindow(object):
                         # )left_column_frame
                         # main_page_frame(
         self.main_page_frame = QFrame()
+        self.main_page_vlayout = QVBoxLayout(self.main_page_frame)
+        self.main_page_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.main_page_vlayout.setSpacing(0)
                             # load_page(
         self.load_pages = MainPages()
-        self.load_pages.setupUi(self.main_page_frame)
                             # )load_page
+        self.main_page_vlayout.addWidget(self.load_pages)
                         # )main_page_frame
                         # right_settings_column_Frame(
         self.right_column_frame = QFrame()

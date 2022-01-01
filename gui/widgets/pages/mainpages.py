@@ -1,39 +1,50 @@
 from module.pyside6_module_import import *
 
-class MainPages(object):
-    def setupUi(self, MainPages):
-        if not MainPages.objectName():
-            MainPages.setObjectName(u"Form")
-        self.verticalLayout = QVBoxLayout(MainPages)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.pages = QStackedWidget(MainPages)
-        self.pages.setObjectName(u"stackedWidget")
+from gui.widgets.pages.page_0 import Page_0
+from gui.widgets.pages.page_1 import Page_1
+from gui.widgets.pages.page_2 import Page_2
+from gui.widgets.pages.page_3 import Page_3
+
+class MainPages(QStackedWidget):
+    def __init__(
+        self
+
+    ):
+        super().__init__()
         
-        self.page_0 = QWidget()
-        self.page_0.setStyleSheet("background-color: lightblue")
-        self.page_0.setObjectName(u"page_1")
-        self.pages.addWidget(self.page_0)
         
-        self.page_1 = QWidget()
-        self.page_1.setStyleSheet("background-color: orange")
-        self.page_1.setObjectName(u"page_1")
-        self.pages.addWidget(self.page_1)
-        self.verticalLayout.addWidget(self.pages)
-
-        self.page_2 = QWidget()
-        self.page_2.setStyleSheet("background-color: lightgreen")
-        self.page_2.setObjectName(u"page_2")
-        self.pages.addWidget(self.page_2)
-        self.verticalLayout.addWidget(self.pages)
-
-        self.retranslateUi(MainPages)
-
-        QMetaObject.connectSlotsByName(MainPages)
-    # setupUi
-
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-    # retranslateUi
-
+        self.setupUi()
+        
+    def setupUi(self):
+        self.setObjectName("mainPages")
+        self.setContentsMargins(0, 0, 0, 0)
+        
+        self.page_0_frame = QFrame()
+        self.page_0_vlayout = QVBoxLayout(self.page_0_frame)
+        self.page_0_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.page_0 = Page_0()
+        self.page_0_vlayout.addWidget(self.page_0)
+        self.addWidget(self.page_0_frame)
+        
+        self.page_1_frame = QFrame()
+        self.page_1_frame.setStyleSheet("background-color: lightblue")
+        self.page_1_vlayout = QVBoxLayout(self.page_1_frame)
+        self.page_1 = Page_1()
+        self.page_1_vlayout.addWidget(self.page_1)
+        self.addWidget(self.page_1_frame)
+        
+        self.page_2_frame = QFrame()
+        self.page_2_frame.setStyleSheet("background-color: lightblue")
+        self.page_2_vlayout = QVBoxLayout(self.page_2_frame)
+        self.page_2 = Page_2()
+        self.page_2_vlayout.addWidget(self.page_2)
+        self.addWidget(self.page_2_frame)
+        
+        self.page_3_frame = QFrame()
+        self.page_3_frame.setStyleSheet("background-color: lightblue")
+        self.page_3_vlayout = QVBoxLayout(self.page_3_frame)
+        self.page_3 = Page_3()
+        self.page_3_vlayout.addWidget(self.page_3)
+        self.addWidget(self.page_3_frame)
+        
+        QMetaObject.connectSlotsByName(self)

@@ -1,6 +1,6 @@
 from module.pyside6_module_import import *
 
-class Page_1(QWidget):
+class Page_2(QWidget):
     def __init__(
         self
     ):
@@ -9,4 +9,4 @@ class Page_1(QWidget):
         
     def setupUi(self):
         self.setObjectName("Page_0")
-        self.setStyleSheet("background-color: darkgrey")
+        self.setStyleSheet("background-color: darkgray")

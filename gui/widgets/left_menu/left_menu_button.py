@@ -76,7 +76,7 @@ class Left_Menu_Button(QPushButton):
         self.setup_btn(self.icon_file_path)
         
         if self.btn_istoggle_active:
-            self.set_switch_toggle(True)
+            self.set_active(True)
 
     def setup_btn(self, new_icon_file_path):
         self.icon_file_path = new_icon_file_path
@@ -115,8 +115,9 @@ class Left_Menu_Button(QPushButton):
         return self.btn_istooltip_active
     
     def set_active(self, is_active):
-        print(self.objectName())
         self.btn_istoggle_active = is_active
+        if self.btn_istoggle_active:
+            self.set_btn_bg_color = self.btn_bg_color_pressed
         if not self.btn_istoggle_active:
             self.set_btn_bg_color = self.btn_bg_color
             self.btn_istoggle_active = False
@@ -127,14 +128,6 @@ class Left_Menu_Button(QPushButton):
         if not self.btn_isactive:
             self.set_btn_bg_color = self.btn_bg_color
             self.btn_isactive = True
-    
-    def set_switch_toggle(self, istoggle_active):
-        self.btn_istoggle_active = istoggle_active
-        if self.btn_istoggle_active:
-            self.set_btn_bg_color = self.btn_bg_color_pressed
-        if not self.btn_istoggle_active:
-            self.set_btn_bg_color = self.btn_bg_color
-        self.btnStyle()
     
     def set_tooltip(self, tooltip_text):
         self.label_tooltip = Btn_ToolTip(
@@ -202,7 +195,6 @@ class Left_Menu_Button(QPushButton):
             pass
 
     def btnStyle(self):
-        print(self.set_btn_bg_color)
         self.setContentsMargins(0, 0, 0, 0)
         self.setStyleSheet(f'''
             background-color: {self.set_btn_bg_color};

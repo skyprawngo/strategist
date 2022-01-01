@@ -55,14 +55,7 @@ class Setup_MainWindow:
         elif self.ui.left_menu.sender() != None:
             return self.ui.left_menu.sender()
         elif self.ui.left_column.sender() != None:
-            return self.ui.left_column.sender()
-        
-    def setup_pages(self):
-        self.main_pages = MainPages(
-            self.add_left_menus
-        )
-        self.ui.main_page_vlayout.addWidget(self.main_pages)
-        
+            return self.ui.left_column.sender()      
     
     def setup_gui(self):
 

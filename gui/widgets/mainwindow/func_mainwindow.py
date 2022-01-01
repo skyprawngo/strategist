@@ -8,7 +8,7 @@ class MainFunctions():
         self.ui.setupUi(self)
         
     def set_page(self, page):
-        self.ui.load_pages.pages.setCurrentWidget(page)
+        self.ui.load_pages.setCurrentWidget(page)
         
     def get_title_bar_btn(self, object_name):
         return self.ui.title_bar_frame.findChild(QPushButton, object_name)
