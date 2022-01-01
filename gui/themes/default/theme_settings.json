@@ -15,6 +15,10 @@
         960,
         540
     ],
+    "login_size": [
+        480,
+        700
+    ],
     "left_menu_size" : {
         "btn_size" : [30, 22],
         "btn_radius" : 8,

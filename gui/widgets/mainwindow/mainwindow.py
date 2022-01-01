@@ -11,8 +11,6 @@ from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 from gui.widgets.left_menu.left_menu_bar import Ui_Left_Menu_Column_Widget
 from gui.widgets.pages.mainpages import MainPages
 
-
-
 class Ui_MainWindow(object):
     def setupUi(self, UiMainWindow):
         # MainWindow(
@@ -37,8 +35,6 @@ class Ui_MainWindow(object):
             self.theme_settings["minimum_size"][0],
             self.theme_settings["minimum_size"][1]
         )
-        
-        self.app_parent = UiMainWindow
 
             # Centralwidget(
         self.centralwidget = QWidget(UiMainWindow)
