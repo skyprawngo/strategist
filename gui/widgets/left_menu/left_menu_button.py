@@ -102,17 +102,17 @@ class Left_Menu_Button(QPushButton):
         
         self.set_tooltip(self.tooltip_text)
     
-    def set_icon(self, icon_file_path):
-        self.btn_image.load(icon_file_path)
-        
-    def set_text(self, text_appear):
-        if text_appear:
-            self.btn_text.show()
-        else:
-            self.btn_text.hide()
-    
     def is_active(self):
         return self.btn_isactive
+    
+    def is_active_tab(self):
+        return self.btn_isactive
+    
+    def is_active_toggle(self):
+        return self.btn_istoggle_active
+    
+    def is_active_tooltip(self):
+        return self.btn_istooltip_active
     
     def set_active(self, is_active):
         print(self.objectName())
@@ -122,17 +122,11 @@ class Left_Menu_Button(QPushButton):
             self.btn_istoggle_active = False
         self.btnStyle()
     
-    def is_active_tab(self):
-        return self.btn_isactive
-    
     def set_active_tab(self, is_active):
         self.btn_isactive = is_active
         if not self.btn_isactive:
             self.set_btn_bg_color = self.btn_bg_color
             self.btn_isactive = True
-    
-    def is_active_toggle(self):
-        return self.btn_istoggle_active
     
     def set_switch_toggle(self, istoggle_active):
         self.btn_istoggle_active = istoggle_active
@@ -141,9 +135,6 @@ class Left_Menu_Button(QPushButton):
         if not self.btn_istoggle_active:
             self.set_btn_bg_color = self.btn_bg_color
         self.btnStyle()
-    
-    def is_active_tooltip(self):
-        return self.btn_istooltip_active
     
     def set_tooltip(self, tooltip_text):
         self.label_tooltip = Btn_ToolTip(
@@ -167,6 +158,15 @@ class Left_Menu_Button(QPushButton):
             elif not self.btn_istooltip_active:
                 self.label_tooltip.hide()
                 
+    def set_icon(self, icon_file_path):
+        self.btn_image.load(icon_file_path)
+        
+    def set_text(self, text_appear):
+        if text_appear:
+            self.btn_text.show()
+        else:
+            self.btn_text.hide()
+            
     def changeStyle(self, event):
         if event == QEvent.Enter:
             self.set_btn_bg_color = self.btn_bg_color_hover
