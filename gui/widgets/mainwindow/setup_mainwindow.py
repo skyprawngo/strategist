@@ -49,6 +49,14 @@ class Setup_MainWindow:
             "btn_isactive" : False
         }
     ]
+    def setup_btns(self):
+        if self.ui.title_bar.sender() != None:
+            return self.ui.title_bar.sender()
+        elif self.ui.left_menu.sender() != None:
+            return self.ui.left_menu.sender()
+        elif self.ui.left_column.sender() != None:
+            return self.ui.left_column.sender()
+        
     def setup_pages(self):
         self.main_pages = MainPages(
             self.add_left_menus
@@ -71,7 +79,9 @@ class Setup_MainWindow:
         self.bottom_left_grip = PyGrips(self, "bottom_left", self.hide_grips)
         self.bottom_right_grip = PyGrips(self, "bottom_right", self.hide_grips)
     
-        self.ui.left_menu_bar_widget.add_menus(Setup_MainWindow.add_left_menus)
+        self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
+        
+        self.ui.left_menu.clicked.connect(self.btn_clicked)
         
         
         

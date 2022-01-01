@@ -11,12 +11,11 @@ class Title_Button(QPushButton):
         icon_file_path,
         tooltip_text,
 
-        btn_istoggle = False,
-        btn_istoggle_active = False,
-        btn_isactive = False,
         btn_size = [25, 25],
         btn_radius = 8,
 
+        btn_font_size = 10,
+        
         btn_bg_color = "#ffffff",
         btn_bg_color_hover = "#ffffff",
         btn_bg_color_pressed = "#ffffff",
@@ -25,20 +24,23 @@ class Title_Button(QPushButton):
         btn_icon_color_hover = "#000000",
         btn_icon_color_pressed = "#000000",
 
+        btn_isactive = False,
+        btn_istoggle = False,
+        btn_istoggle_active = False
+
     ):
         super().__init__()
         
         self._parent = parent
         self.app_parent = app_parent
-        self.btn_id = btn_id
+        self.setObjectName(btn_id)
         self.icon_file_path = icon_file_path
         self.tooltip_text = tooltip_text
 
-        self.btn_istoggle = btn_istoggle
-        self.btn_istoggle_active = btn_istoggle_active
-        self.btn_isactive = btn_isactive
         self.btn_size = btn_size
         self.btn_radius = btn_radius
+        
+        self.btn_font_size = btn_font_size
         
         self.btn_bg_color = btn_bg_color
         self.btn_bg_color_hover = btn_bg_color_hover
@@ -48,24 +50,24 @@ class Title_Button(QPushButton):
         self.btn_icon_color_hover = btn_icon_color_hover
         self.btn_icon_color_pressed = btn_icon_color_pressed
 
-
         self.set_btn_bg_color = btn_bg_color
         self.set_btn_bg_color_hover = btn_bg_color_hover
         self.set_btn_bg_color_pressed = btn_bg_color_pressed
+
+        self.btn_isactive = btn_isactive
+        self.btn_istoggle = btn_istoggle
+        self.btn_istoggle_active = btn_istoggle_active
 
         self.set_btn_icon_color = btn_icon_color
         self.set_btn_icon_color_hover = btn_icon_color_hover
         self.set_btn_icon_color_pressed = btn_icon_color_pressed
     
-
-
-
         self.setCursor(Qt.PointingHandCursor)
         self.setFixedSize(self.btn_size[0], self.btn_size[1])
 
 
         self.set_icon(icon_file_path)
-        self.set_label(tooltip_text)
+        self.set_tooltip(tooltip_text)
 
 
     def set_icon(self, icon_file_path):
@@ -74,8 +76,41 @@ class Title_Button(QPushButton):
         self.setIconSize(QSize(self.btn_size[0]-5,self.btn_size[1]-5))
         self.repaint()
         self.setIcon(self.btn_image)
+        
+    def is_active(self):
+        return self.btn_isactive
     
-    def set_label(self, tooltip_text):
+    def set_active(self, is_active):
+        self.btn_isactive = is_active
+        if not self.btn_isactive:
+            self.set_btn_bg_color = self.btn_bg_color
+            self.btn_isactive = True
+        self.btnStyle()
+    
+    def is_active_tab(self):
+        return self.btn_isactive
+    
+    def set_active_tab(self, is_active):
+        self.btn_isactive = is_active
+        if not self.btn_isactive:
+            self.set_btn_bg_color = self.btn_bg_color
+            self.btn_isactive = True
+    
+    def is_active_toggle(self):
+        return self.btn_istoggle_active
+    
+    def set_switch_toggle(self, istoggle_active):
+        self.btn_istoggle_active = istoggle_active
+        if self.btn_istoggle_active:
+            self.set_btn_bg_color = self.btn_bg_color_pressed
+        if not self.btn_istoggle_active:
+            self.set_btn_bg_color = self.btn_bg_color
+        self.btnStyle()
+    
+    def is_active_tooltip(self):
+        return self.btn_istooltip_active
+    
+    def set_tooltip(self, tooltip_text):
         self.label_tooltip = Btn_ToolTip(
             self.app_parent,
             tooltip_text,
@@ -83,6 +118,19 @@ class Title_Button(QPushButton):
             self.btn_bg_color
         )
         self.label_tooltip.hide()
+        
+    def set_tooltip_active(self, istooltip):
+        self.btn_istooltip = istooltip
+        if not self.btn_istooltip:
+            self.label_tooltip.hide()
+    
+    def set_tooltip_switch(self, istooltip_switch):
+        self.btn_istooltip_active = istooltip_switch
+        if self.btn_istooltip:
+            if self.btn_istooltip_active:
+                self.label_tooltip.show()
+            elif not self.btn_istooltip_active:
+                self.label_tooltip.hide()
         
     def changeStyle(self, event):
         if event == QEvent.Enter:

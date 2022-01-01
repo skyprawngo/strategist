@@ -80,8 +80,8 @@ class Ui_MainWindow(object):
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
         self.title_bar_vlayout.setContentsMargins(5, 5, 5, 0)
                     
-                        # Title_Bar_Widget(
-        self.title_bar_widget = Ui_Title_Bar_Widget(
+                        # Title_Bar(
+        self.title_bar = Ui_Title_Bar_Widget(
             app_parent = UiMainWindow,
             parent = self.title_bar_frame,
             app_name = self.theme_settings["app_name"],
@@ -106,8 +106,8 @@ class Ui_MainWindow(object):
             title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
         )
-                        # )Title_Bar_Widget
-        self.title_bar_vlayout.addWidget(self.title_bar_widget)
+                        # )Title_Bar
+        self.title_bar_vlayout.addWidget(self.title_bar)
                     # )title_bar_frame
 
                     # not_title_bar_frame(
@@ -128,8 +128,8 @@ class Ui_MainWindow(object):
         self.left_menu_bar_vlayout = QVBoxLayout(self.left_menu_bar_frame)
         self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
         self.left_menu_bar_vlayout.setSpacing(0)
-                            # Left_Menu_Bar_Widget(
-        self.left_menu_bar_widget = Ui_Left_Menu_Column_Widget(
+                            # Left_Menu(
+        self.left_menu = Ui_Left_Menu_Column_Widget(
             app_parent = UiMainWindow,
             parent = self.left_menu_bar_frame,
             time_animation = self.theme_settings["time_animation"],
@@ -154,8 +154,8 @@ class Ui_MainWindow(object):
             left_menu_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             left_menu_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
         )
-                            # )Left_Menu_Bar_Widget
-        self.left_menu_bar_vlayout.addWidget(self.left_menu_bar_widget)
+                            # )Left_Menu
+        self.left_menu_bar_vlayout.addWidget(self.left_menu)
                         # )left_menu_bar_frame
                         # left_column_frame(
         self.left_column_frame = QFrame()
@@ -165,9 +165,10 @@ class Ui_MainWindow(object):
                         # )left_column_frame
                         # main_page_frame(
         self.main_page_frame = QFrame()
-        self.main_page_vlayout = QVBoxLayout(self.main_page_frame)
+                            # load_page(
         self.load_pages = MainPages()
         self.load_pages.setupUi(self.main_page_frame)
+                            # )load_page
                         # )main_page_frame
                         # right_settings_column_Frame(
         self.right_column_frame = QFrame()

@@ -10,8 +10,28 @@ class MainFunctions():
     def set_page(self, page):
         self.ui.load_pages.pages.setCurrentWidget(page)
         
-    # RETURN IF LEFT COLUMN IS VISIBLE
-    # ///////////////////////////////////////////////////////////////
+    def get_title_bar_btn(self, object_name):
+        return self.ui.title_bar_frame.findChild(QPushButton, object_name)
+
+    def get_left_menu_btn(self, object_name):
+        return self.ui.left_menu.findChild(QPushButton, object_name)
+    
+    # SET left_column
+    def set_left_column_menu(
+        self,
+        menu,
+        title,
+        icon_path
+    ):
+        self.ui.left_column.menus.menus.setCurrentWidget(menu)
+        self.ui.left_column.title_label.setText(title)
+        self.ui.left_column.icon.set_icon(icon_path)
+            
+    # SET right_column
+    def set_right_column_menu(self, menu):
+        self.ui.right_column.menus.setCurrentWidget(menu)
+    
+    # VISIBLE left_column 
     def left_column_is_visible(self):
         width = self.ui.left_column_frame.width()
         if width == 0:
@@ -19,17 +39,15 @@ class MainFunctions():
         else:
             return True
 
-    # RETURN IF RIGHT COLUMN IS VISIBLE
-    # ///////////////////////////////////////////////////////////////
+    # VISIBLE right_column 
     def right_column_is_visible(self):
         width = self.ui.right_column_frame.width()
         if width == 0:
             return False
         else:
             return True
-        
-    # LEFT AND RIGHT COLUMNS / SHOW / HIDE
-    # ///////////////////////////////////////////////////////////////
+
+    # TOGGLE left_column
     def toggle_left_column(self):
         # GET ACTUAL CLUMNS SIZE
         left_column_width = self.ui.left_column_frame.width()
@@ -37,6 +55,7 @@ class MainFunctions():
 
         MainFunctions.start_box_animation(self, left_column_width, right_column_width, "left")
         
+    # TOGGLE right_column
     def toggle_right_column(self):
         # GET ACTUAL CLUMNS SIZE
         left_column_width = self.ui.left_column_frame.width()

@@ -8,18 +8,25 @@ class MainPages(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.stackedWidget = QStackedWidget(MainPages)
-        self.stackedWidget.setObjectName(u"stackedWidget")
+        self.pages = QStackedWidget(MainPages)
+        self.pages.setObjectName(u"stackedWidget")
+        
         self.page_0 = QWidget()
         self.page_0.setStyleSheet("background-color: lightblue")
         self.page_0.setObjectName(u"page_1")
-        self.stackedWidget.addWidget(self.page_0)
+        self.pages.addWidget(self.page_0)
+        
         self.page_1 = QWidget()
+        self.page_1.setStyleSheet("background-color: orange")
         self.page_1.setObjectName(u"page_1")
-        self.stackedWidget.addWidget(self.page_1)
+        self.pages.addWidget(self.page_1)
+        self.verticalLayout.addWidget(self.pages)
 
-        self.verticalLayout.addWidget(self.stackedWidget)
-
+        self.page_2 = QWidget()
+        self.page_2.setStyleSheet("background-color: lightgreen")
+        self.page_2.setObjectName(u"page_2")
+        self.pages.addWidget(self.page_2)
+        self.verticalLayout.addWidget(self.pages)
 
         self.retranslateUi(MainPages)
 

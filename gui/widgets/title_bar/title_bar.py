@@ -105,13 +105,13 @@ class Ui_Title_Bar_Widget(QWidget):
             window_isMaximised = False
             self._app_parent.showNormal()
             self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("square.svg"))
-            self.title_btn_maximize.set_label("Maximize")
+            self.title_btn_maximize.set_tooltip("Maximize")
 
         elif not self._app_parent.isMaximized():
             window_isMaximised = True
             self._app_parent.showMaximized()
             self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("copy.svg"))
-            self.title_btn_maximize.set_label("Return Size")
+            self.title_btn_maximize.set_tooltip("Return Size")
         
     def setupUi(self):
         
@@ -165,23 +165,24 @@ class Ui_Title_Bar_Widget(QWidget):
         self.settings = Title_Button(
             parent = self._parent,
             app_parent = self._app_parent,
-            btn_id = "btn_settings",
+            btn_id = "btn_top_settings",
             icon_file_path = Load_Item_Path().set_svg_icon_path("settings.svg"),
             tooltip_text = "Settings",
             
-            btn_istoggle = True,
-            btn_istoggle_active = False,
-            btn_isactive = False,
             btn_size = self._title_bar_btn_size,
             btn_radius  = self._title_bar_btn_radius,
 
+            btn_font_size = self._font_size,
+            
             btn_icon_color = self._title_bar_text_color,
             btn_icon_color_hover = self._title_bar_bg_color_hover,
             btn_icon_color_pressed = self._title_bar_bg_color_pressed,
             
             btn_bg_color = self._title_bar_bg_color,
             btn_bg_color_hover = self._title_bar_bg_color_hover,
-            btn_bg_color_pressed = self._title_bar_bg_color_pressed
+            btn_bg_color_pressed = self._title_bar_bg_color_pressed,
+
+            btn_istoggle = True,
         )
                     # )Menu
         self.title_buttons_hlayout.addWidget(self.settings)
@@ -199,11 +200,10 @@ class Ui_Title_Bar_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("minus.svg"),
             tooltip_text = "Minimize",
             
-            btn_istoggle = False,
-            btn_istoggle_active = False,
-            btn_isactive = False,
             btn_size = self._title_bar_btn_size,
             btn_radius  = self._title_bar_btn_radius,
+            
+            btn_font_size = self._font_size,
 
             btn_icon_color = self._title_bar_text_color,
             btn_icon_color_hover = self._title_bar_bg_color_hover,
@@ -224,9 +224,10 @@ class Ui_Title_Bar_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("square.svg"),
             tooltip_text = "Maximize",
 
-            btn_istoggle = False,
             btn_size = self._title_bar_btn_size,
             btn_radius  =self._title_bar_btn_radius,
+            
+            btn_font_size = self._font_size,
 
             btn_icon_color = self._title_bar_text_color,
             btn_icon_color_hover = self._title_bar_bg_color_hover,
@@ -247,12 +248,11 @@ class Ui_Title_Bar_Widget(QWidget):
             icon_file_path = Load_Item_Path().set_svg_icon_path("cross.svg"),
             tooltip_text = "Close",
 
-            btn_istoggle = False,
-            btn_istoggle_active = False,
-            btn_isactive = False,
             btn_size = self._title_bar_btn_size,
             btn_radius  =self._title_bar_btn_radius,
 
+            btn_font_size = self._font_size,
+            
             btn_icon_color = self._title_bar_text_color,
             btn_icon_color_hover = self._title_bar_bg_color_hover,
             btn_icon_color_pressed = self._title_bar_bg_color_pressed,

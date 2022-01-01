@@ -131,16 +131,9 @@ class Ui_Left_Menu_Column_Widget(QWidget):
                 )
                 self.menu.clicked.connect(self.btn_clicked)
                 self.menu.released.connect(self.btn_released)
-                self.menu.clicked.connect(self.select_only_one)
                 
                 self.btn_menu_vlayout.addWidget(self.menu)
                 
-    def select_only_one(self):
-        self.btn = self.sender()
-        for self.left_menu_btn in self.btn_menu_frame.findChildren(QPushButton):
-            self.left_menu_btn.set_switch_toggle(False)
-            if self.left_menu_btn.objectName() == self.btn.objectName():
-                self.left_menu_btn.set_switch_toggle(True)
                 
     def btn_clicked(self):
         self.clicked.emit(self.menu)
@@ -155,7 +148,6 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         if self.width() == self._minimum_width:
             self.animation.setStartValue(self.width())
             self.animation.setEndValue(self._maximum_width)
-            self.btn_menu_toggle.set_switch_toggle(True)
             self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("angle-left.svg"))
             for btn_left_menu in self.btn_toggle_frame.findChildren(QPushButton):
                 btn_left_menu.set_tooltip_active(False)
@@ -163,7 +155,6 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         else:
             self.animation.setStartValue(self.width())
             self.animation.setEndValue(self._minimum_width)
-            self.btn_menu_toggle.set_switch_toggle(False)
             self.btn_menu_toggle.set_icon(Load_Item_Path().set_svg_icon_path("menu-burger.svg"))
             for btn_left_menu in self.btn_toggle_frame.findChildren(QPushButton):
                 btn_left_menu.set_tooltip_active(True)
@@ -172,6 +163,35 @@ class Ui_Left_Menu_Column_Widget(QWidget):
         self.animation.setEasingCurve(QEasingCurve.InOutCubic)
         self.animation.setDuration(self._time_animation)
         self.animation.start()
+    
+    def select_only_one(self, widget: str):
+        for btn in self.findChildren(QPushButton):
+            if btn.objectName() == widget:
+                btn.set_active(True)
+            else:
+                btn.set_active(False)
+                
+    # SELECT ONLY ONE TAB BTN
+    # ///////////////////////////////////////////////////////////////
+    def select_only_one_tab(self, widget: str):
+        print(widget)
+        for btn in self.findChildren(QPushButton):
+            if btn.objectName() == widget:
+                btn.set_active_tab(True)
+            else:
+                btn.set_active_tab(False)
+
+    # DESELECT ALL BTNs
+    # ///////////////////////////////////////////////////////////////
+    def deselect_all(self):
+        for btn in self.findChildren(QPushButton):
+            btn.set_active(False)
+
+    # DESELECT ALL TAB BTNs
+    # ///////////////////////////////////////////////////////////////
+    def deselect_all_tab(self):
+        for btn in self.findChildren(QPushButton):
+            btn.set_active_tab(False)
 
     def setupUi(self):
         self.left_menu_bar_vlayout = QVBoxLayout(self)
