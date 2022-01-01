@@ -1,8 +1,8 @@
-# PySide6 module import
 import sys
 
 from module.pyside6_module_import import *
 
+from gui.widgets.loginwindow.login_window import Login_Window
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
 from gui.widgets.mainwindow.setup_mainwindow import Setup_MainWindow
 from gui.widgets.mainwindow.func_mainwindow import MainFunctions
@@ -12,6 +12,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         
+        self.login = Login_Window()
+        self.login.setupUi(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
