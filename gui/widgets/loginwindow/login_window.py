@@ -23,26 +23,34 @@ class Login_Window(QMainWindow):
         themes = Themes()
         self.themes = themes.themes
         
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        
         self.resize(
             self.theme_settings["login_size"][0],
             self.theme_settings["login_size"][1]
         )
         
-        self.login_Frame = QFrame()
-        self.login_layout = QVBoxLayout(self.login_Frame)
+        self.login_frame = QFrame()
+        self.login_frame.setStyleSheet(f'''
+            background-color:{self.themes["app_color"]["bg_two"]};
+            border-radius:{self.themes["shape"]["login_window"]["radius"]}
+        ''')
+        self.login_layout = QVBoxLayout(self.login_frame)
         self.login_layout.setContentsMargins(0, 0, 0, 0)
         self.login_layout.setSpacing(0)
         
         self.login_label = QLabel()
+        self.login_label.setFixedHeight(200)
         self.login_label.setStyleSheet("background-color:lightgreen;")
         self.login_layout.addWidget(self.login_label)
         
         self.pushButton2 = QPushButton("click me2")
-        self.pushButton2.clicked.connect(self.off_pushButton_clicked)
+        self.pushButton2.clicked.connect(self.login_completed)
         self.login_layout.addWidget(self.pushButton2)
         
-        self.setCentralWidget(self.login_Frame)
+        self.setCentralWidget(self.login_frame)
     
-    def off_pushButton_clicked(self):
+    def login_completed(self):
         self.hide()
         self._parent.show()

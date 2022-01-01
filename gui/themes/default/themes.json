@@ -7,6 +7,12 @@
         "left_menu_text_size" : 12
     },
     "shape" : {
+        "login_window" : {
+            "radius" : 10,
+            "margin" : 2,
+            "border_radius" : 10,
+            "border_size" : 2
+        },
         "pywindow" : {
             "radius" : 10,
             "margin" : 2,

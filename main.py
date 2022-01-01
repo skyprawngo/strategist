@@ -2,7 +2,7 @@ import sys
 
 from module.pyside6_module_import import *
 
-from gui.widgets.loginwindow.login_window import Login_Window
+
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
 from gui.widgets.mainwindow.setup_mainwindow import Setup_MainWindow
 from gui.widgets.mainwindow.func_mainwindow import MainFunctions
@@ -16,13 +16,11 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
+
         
-        self.login_window = Login_Window(self)
-        self.login_window_appear()
+        Setup_MainWindow.login_window_appear(self)
     
-    def login_window_appear(self):
-        self.hide()
-        self.login_window.show()
+    
 
     def btn_clicked(self):
         btn = Setup_MainWindow.setup_btns(self)

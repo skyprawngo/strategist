@@ -1,10 +1,8 @@
 from module.pyside6_module_import import *
 
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
+from gui.widgets.loginwindow.login_window import Login_Window
 from gui.widgets.pages.mainpages import MainPages
-
-from gui.widgets.pages.page_0 import Page_0
-from gui.widgets.pages.page_1 import Page_1
 from gui.widgets.pygrips.py_grips import PyGrips
 
 class Setup_MainWindow:
@@ -49,6 +47,11 @@ class Setup_MainWindow:
             "btn_isactive" : False
         }
     ]
+    
+    def login_window_appear(self):
+        self.login_window = Login_Window(self)
+        self.login_window.show()
+        
     def setup_btns(self):
         if self.ui.title_bar.sender() != None:
             return self.ui.title_bar.sender()
