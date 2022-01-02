@@ -67,6 +67,7 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_bar_frame.setStyleSheet(f'''
             background-color: {self._title_bar_bg_color};
             border-bottom-left-radius: 0px;
+            font: {self._font_size}px;
         ''')
 
         # Function(
@@ -127,7 +128,7 @@ class Ui_Title_Bar_Widget(QWidget):
             # top_logo_label(
         self.top_logo_label = QLabel()
 
-        self.top_logo_label.setFixedSize(100, 30)
+        self.top_logo_label.setFixedSize(90, 30)
         self.top_logo_label_vlayout = QVBoxLayout(self.top_logo_label)
         self.top_logo_label_vlayout.setContentsMargins(8, 5, 0, 5)
         

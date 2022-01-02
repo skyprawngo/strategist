@@ -1,7 +1,7 @@
 import sys
+import os
 
 from module.pyside6_module_import import *
-
 
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
 from gui.widgets.mainwindow.setup_mainwindow import Setup_MainWindow
@@ -11,6 +11,7 @@ from gui.widgets.mainwindow.func_mainwindow import MainFunctions
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        
         
         
         self.ui = Ui_MainWindow()
@@ -71,7 +72,7 @@ class MainWindow(QMainWindow):
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
+    
     window = MainWindow()
     # window.show()
     app.exec()

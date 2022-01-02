@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from module.pyside6_module_import import *
 
 from gui.themes.theme_settings import Settings
@@ -26,6 +27,7 @@ class Ui_MainWindow(object):
 
         self.app_parent = UiMainWindow
         
+        
         UiMainWindow.resize(
             self.theme_settings["startup_size"][0],
             self.theme_settings["startup_size"][1]
@@ -43,6 +45,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setStyleSheet(f'''
             border-radius: {self.themes["pywindow"]["border_radius"]};
         ''')
+        
         self.centralwidget_vlayout = QVBoxLayout(self.centralwidget)
         self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
         if self.theme_settings["custom_title_bar"]:

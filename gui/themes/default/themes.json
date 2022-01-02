@@ -1,7 +1,7 @@
 {
     "theme_name" : "default",
     "font" : {
-        "family" : "Segoe UI",
+        "family" : "Exo-Regular.otf",
         "title_size" : 11,
         "text_size" : 10,
         "left_menu_text_size" : 12
@@ -25,15 +25,17 @@
         "bg_radius" : 8
     },
     "app_color" : {
-        "dark_one" : "#141a1f",
-        "dark_two" : "#272f35",
-        "dark_three" : "#434b51",
-        "dark_four" : "#5c6770",
+        "dark_one" : "#0a0a0a",
+        "dark_two" : "#212121",
+        "dark_three" : "#383838",
+        "dark_four" : "#545454",
 
         "bg_one" : "#fff",
         "bg_two" : "#eaebec",
         "bg_three" : "#d8d9da",
         "bg_four" : "#c3c4c6",
+        "bg_five" : "#b0b2b5",
+        "bg_six" : "#a2a5a9",
 
         "color_one" : "#eee9e7",
         "color_two" : "#e3dbd7",

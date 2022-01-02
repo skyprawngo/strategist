@@ -61,9 +61,11 @@ class Title_Button(QPushButton):
         self.set_btn_icon_color = btn_icon_color
         self.set_btn_icon_color_hover = btn_icon_color_hover
         self.set_btn_icon_color_pressed = btn_icon_color_pressed
+        
+        self.btn_size[1] = min(btn_size[0], self._parent.height())
     
         self.setCursor(Qt.PointingHandCursor)
-        self.setFixedSize(self.btn_size[0], self.btn_size[1])
+        self.setFixedSize(self.btn_size[0], self.btn_size[1]-5)
 
 
         self.set_icon(icon_file_path)
@@ -73,7 +75,7 @@ class Title_Button(QPushButton):
     def set_icon(self, icon_file_path):
         self.btn_image = QIcon()
         self.btn_image.addFile(icon_file_path)
-        self.setIconSize(QSize(self.btn_size[0]-5,self.btn_size[1]-5))
+        self.setIconSize(QSize(self.btn_size[0]-10,self.btn_size[1]-10))
         self.repaint()
         self.setIcon(self.btn_image)
         
