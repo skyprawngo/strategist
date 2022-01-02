@@ -232,8 +232,8 @@ class Left_Menu_Button(QPushButton):
 
         # FORMAT POSITION
         # Adjust tooltip position with offset
-        pos_x = pos.x() + self.width() + 13
-        pos_y = pos.y() + self.height() + 10
+        pos_x = pos.x() + self.width() + 17
+        pos_y = pos.y() + 1.5*self.height()
         # SET POSITION TO WIDGET
         # Move tooltip position
         self.label_tooltip.move(pos_x, pos_y)

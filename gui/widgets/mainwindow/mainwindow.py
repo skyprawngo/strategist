@@ -41,26 +41,28 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setFocusPolicy(Qt.NoFocus)
         self.centralwidget.setStyleSheet(f'''
-            background-color: {self.themes["app_color"]["bg_one"]};
-            border-radius: 10px
+            border-radius: {self.themes["pywindow"]["border_radius"]};
         ''')
         self.centralwidget_vlayout = QVBoxLayout(self.centralwidget)
-        self.centralwidget_vlayout.setSpacing(0)
         self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
-        self.centralwidget_vlayout.setContentsMargins(0, 0, 0, 0)
+        if self.theme_settings["custom_title_bar"]:
+            self.centralwidget_vlayout.setContentsMargins(10,10,10,10)
+        else:
+            self.centralwidget_vlayout.setContentsMargins(0,0,0,0)
+
                 # PyWindow(
         self.window = PyWindow(
             app_parent = UiMainWindow,
             startup_size = self.theme_settings["startup_size"],
             minimum_size = self.theme_settings["minimum_size"],
 
-            margin = self.themes["shape"]["pywindow"]["margin"],
-            spacing = self.themes["shape"]["pywindow"]["margin"],
+            margin = self.themes["pywindow"]["margin"],
+            spacing = self.themes["pywindow"]["margin"],
             bg_color = self.themes["app_color"]["bg_one"],
             text_color = self.themes["app_color"]["dark_one"],
             text_font_size = self.themes["font"]["text_size"],
-            border_radius = self.themes["shape"]["pywindow"]["border_radius"],
-            border_size = self.themes["shape"]["pywindow"]["border_size"],
+            border_radius = self.themes["pywindow"]["border_radius"],
+            border_size = self.themes["pywindow"]["border_size"],
             border_color = self.themes["app_color"]["bg_three"],
             custom_title_bar = self.theme_settings["custom_title_bar"]
         )
@@ -68,10 +70,10 @@ class Ui_MainWindow(object):
                     # title_bar_frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
-        self.title_bar_frame.setMinimumHeight(self.themes["shape"]["title_bar"]["bg_height"])
-        self.title_bar_frame.setMaximumHeight(self.themes["shape"]["title_bar"]["bg_height"])
+        self.title_bar_frame.setMinimumHeight(self.themes["title_bar"]["bg_height"])
+        self.title_bar_frame.setMaximumHeight(self.themes["title_bar"]["bg_height"])
         self.title_bar_vlayout = QVBoxLayout(self.title_bar_frame)
-        self.title_bar_vlayout.setContentsMargins(5, 5, 5, 0)
+        self.title_bar_vlayout.setContentsMargins(3, 3, 3, 0)
                     
                         # Title_Bar(
         self.title_bar = Ui_Title_Bar_Widget(
@@ -86,15 +88,15 @@ class Ui_MainWindow(object):
             font_type = self.themes["font"]["family"],
             font_size = self.themes["font"]["title_size"],
 
-            title_bar_btn_size = self.themes["shape"]["title_bar"]["btn_size"],
-            title_bar_btn_radius = self.themes["shape"]["title_bar"]["btn_radius"],
+            title_bar_btn_size = self.themes["title_bar"]["btn_size"],
+            title_bar_btn_radius = self.themes["title_bar"]["btn_radius"],
 
             title_bar_text_color = self.themes["app_color"]["dark_three"],
             title_bar_text_color_hover = self.themes["app_color"]["dark_two"],
             title_bar_text_color_pressed = self.themes["app_color"]["dark_one"],
             
-            title_bar_bg_height = self.themes["shape"]["title_bar"]["bg_height"],
-            title_bar_bg_radius = self.themes["shape"]["title_bar"]["bg_radius"],
+            title_bar_bg_height = self.themes["title_bar"]["bg_height"],
+            title_bar_bg_radius = self.themes["title_bar"]["bg_radius"],
             title_bar_bg_color = self.themes["app_color"]["bg_two"],
             title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
             title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
@@ -110,7 +112,7 @@ class Ui_MainWindow(object):
         self.not_title_bar_frame.setFrameShadow(QFrame.Raised)
         self.not_title_bar_hlayout = QHBoxLayout(self.not_title_bar_frame)
         self.not_title_bar_hlayout.setObjectName(u"not_title_bar_hlayout")
-        self.not_title_bar_hlayout.setContentsMargins(5, 5, 5, 5)
+        self.not_title_bar_hlayout.setContentsMargins(3, 5, 3, 3)
         self.not_title_bar_hlayout.setSpacing(0)
         
                         # left_menu_bar_frame(

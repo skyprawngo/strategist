@@ -6,25 +6,23 @@
         "text_size" : 10,
         "left_menu_text_size" : 12
     },
-    "shape" : {
-        "login_window" : {
-            "radius" : 10,
-            "margin" : 2,
-            "border_radius" : 10,
-            "border_size" : 2
-        },
-        "pywindow" : {
-            "radius" : 10,
-            "margin" : 2,
-            "border_radius" : 10,
-            "border_size" : 2
-        },
-        "title_bar" : {
-            "btn_size" : [30, 22],
-            "btn_radius" : 8,
-            "bg_height" : 34,
-            "bg_radius" : 8
-        }
+    "login_window" : {
+        "radius" : 10,
+        "margin" : 2,
+        "border_radius" : 10,
+        "border_size" : 2
+    },
+    "pywindow" : {
+        "radius" : 10,
+        "margin" : 2,
+        "border_radius" : 10,
+        "border_size" : 2
+    },
+    "title_bar" : {
+        "btn_size" : [30, 22],
+        "btn_radius" : 8,
+        "bg_height" : 34,
+        "bg_radius" : 8
     },
     "app_color" : {
         "dark_one" : "#141a1f",

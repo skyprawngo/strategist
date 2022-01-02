@@ -222,8 +222,8 @@ class Title_Button(QPushButton):
 
         # FORMAT POSITION
         # Adjust tooltip position with offset
-        pos_x = (pos.x() - self.label_tooltip.width()) + self.width() + 5
-        pos_y = pos.y() + self.height() + 6
+        pos_x = (pos.x() - self.label_tooltip.width()) + self.width() + 10
+        pos_y = pos.y() + self.height() + 17
         # SET POSITION TO WIDGET
         # Move tooltip position
         self.label_tooltip.move(pos_x, pos_y)

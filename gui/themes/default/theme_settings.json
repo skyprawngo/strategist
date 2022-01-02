@@ -4,7 +4,7 @@
     "version" : "v0.0.1",
     "copyright" : "By: JeongYun Lee",
     "year" : 2021,
-    "title_text": "Automatic Trading System",
+    "title_text": "Automatic Trading System in Modern UI",
     "theme_name" : "default",
     "custom_title_bar": true,
     "startup_size": [
