@@ -16,6 +16,18 @@ class Login_Window(QMainWindow):
         self.app_parent = app_parent
         self.setupUi()
         
+    def lineedit_enter(self):
+        print(self.sender().objectName())
+        if self.sender().objectName() == "login_id":
+            self.lineedit_password.setFocus()
+        
+        elif self.sender().objectName() == "login_password":
+            if self.login_remember_ckbox.isChecked():
+                # Function_Login.save_login_id(self.lineedit_id.text())
+                pass
+            self.btn_login.mouseReleaseEvent(event=QEvent.MouseButtonRelease)
+            pass
+           
     def setupUi(self):
             # Load Settings
         theme_settings = Settings()
@@ -124,17 +136,7 @@ class Login_Window(QMainWindow):
         
         self.setCentralWidget(self.login_frame)
         
-    def lineedit_enter(self):
-        print(self.sender().objectName())
-        if self.sender().objectName() == "login_id":
-            self.lineedit_password.setFocus()
-        
-        elif self.sender().objectName() == "login_password":
-            if self.login_remember_ckbox.isChecked():
-                # Function_Login.save_login_id(self.lineedit_id.text())
-                pass
-            self.btn_login.mouseReleaseEvent(event=QEvent.MouseButtonRelease)
-            pass
+    
     
     
         

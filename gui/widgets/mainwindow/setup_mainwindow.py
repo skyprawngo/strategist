@@ -57,8 +57,13 @@ class Setup_MainWindow:
             return self.ui.title_bar.sender()
         elif self.ui.left_menu.sender() != None:
             return self.ui.left_menu.sender()
+        elif self.ui.load_pages.sender() != None:
+            print("asdf")
+            return self.ui.load_pages.sender()   
         elif self.ui.left_column.sender() != None:
-            return self.ui.left_column.sender()      
+            return self.ui.left_column.sender()   
+            
+           
     
     def setup_gui(self):
 

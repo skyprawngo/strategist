@@ -59,7 +59,9 @@ class MainWindow(QMainWindow):
 
             # Load Page 2
             MainFunctions.set_page(self, self.ui.load_pages.page_3_frame)
-            
+        
+        if btn.objectName() == "btn_warning1_y":
+            print("aaaa")
     
     def resizeEvent(self, event):
         Setup_MainWindow.resize_grips(self)

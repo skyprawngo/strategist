@@ -11,9 +11,11 @@ class MainPages(QStackedWidget):
 
     ):
         super().__init__()
-        
-        
         self.setupUi()
+    
+    def page_0_setting(self):
+        print(self.page_0.sender().objectName())
+        pass
         
     def setupUi(self):
         self.setObjectName("mainPages")
@@ -23,6 +25,7 @@ class MainPages(QStackedWidget):
         self.page_0_vlayout = QVBoxLayout(self.page_0_frame)
         self.page_0_vlayout.setContentsMargins(0, 0, 0, 0)
         self.page_0 = Page_0()
+        self.page_0.clicked.connect(self.page_0_setting)
         self.page_0_vlayout.addWidget(self.page_0)
         self.addWidget(self.page_0_frame)
         
