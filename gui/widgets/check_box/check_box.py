@@ -6,6 +6,7 @@ from module.pyside6_module_import import *
 class Check_Box(QCheckBox):
     def __init__(self):
         super().__init__()
+        self.setFixedHeight(20)
         self.setStyleSheet('''
             QCheckBox::indicator {
                 background-color: qlineargradient(...);
@@ -13,6 +14,7 @@ class Check_Box(QCheckBox):
                 width: 15px;
                 height: 15px;
                 border-radius: 5px;
+                left: 1px;
             }
             QCheckBox::indicator:hover {
                 background-color: #9dabbe;

@@ -5,7 +5,8 @@ from gui.themes.themes import Themes
 
 from gui.widgets.check_box.check_box import Check_Box
 from gui.themes.load_item_path import Load_Item_Path
-from func.func_login import Function_Login
+# from func.func_login import Function_Login
+
 class Login_Window(QMainWindow):
     def __init__(
         self,
@@ -55,6 +56,13 @@ class Login_Window(QMainWindow):
         self.logo_subtext = QLabel()
         self.logo_subtext.setText(self.theme_settings["title_text"])
         self.login_logo_vlayout.addWidget(self.logo_subtext, alignment=Qt.AlignHCenter)
+
+        self.logo_subtext_1 = QLabel()
+        self.logo_subtext_1.setText('''
+            It is just emitation log-in window,
+            So Press "Log in" Button and go ahead
+        ''')
+        self.login_logo_vlayout.addWidget(self.logo_subtext_1, alignment=Qt.AlignHCenter)
         
         self.lineedit_frame = QFrame()
         self.lineedit_vlayout = QVBoxLayout(self.lineedit_frame)
@@ -100,9 +108,11 @@ class Login_Window(QMainWindow):
             bg_color_pressed = self.themes["app_color"]["bg_six"]
         )
         
-        
+        self.sign_in_label = QLabel()
+        self.sign_in_label.setText("Sign in")
         
         self.btn_login_vlayout.addWidget(self.btn_login)
+        self.btn_login_vlayout.addWidget(self.sign_in_label, alignment=Qt.AlignHCenter)
         
         self.lineedit_vlayout.addWidget(self.lineedit_id)
         self.lineedit_vlayout.addWidget(self.lineedit_password)
@@ -121,7 +131,8 @@ class Login_Window(QMainWindow):
         
         elif self.sender().objectName() == "login_password":
             if self.login_remember_ckbox.isChecked():
-                Function_Login.save_login_id(self.lineedit_id.text())
+                # Function_Login.save_login_id(self.lineedit_id.text())
+                pass
             self.btn_login.mouseReleaseEvent(event=QEvent.MouseButtonRelease)
             pass
     
