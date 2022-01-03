@@ -76,8 +76,8 @@ class Setup_MainWindow:
         self.bottom_right_grip = PyGrips(self, "bottom_right", self.hide_grips)
     
         self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
-        
         self.ui.left_menu.clicked.connect(self.btn_clicked)
+        
         
         
         

@@ -98,7 +98,7 @@ class Ui_Title_Bar_Widget(QWidget):
             self.title_label.mouseDoubleClickEvent = self.func_maximize
             self.top_logo_label.mouseDoubleClickEvent = self.func_maximize
 
-    def func_maximize(self):
+    def func_maximize(self, e=None):
         global window_isMaximised
         global window_oldSize
 
@@ -110,7 +110,9 @@ class Ui_Title_Bar_Widget(QWidget):
 
         elif not self._app_parent.isMaximized():
             window_isMaximised = True
+            
             self._app_parent.showMaximized()
+            self._app_parent
             self.title_btn_maximize.set_icon(Load_Item_Path().set_svg_icon_path("copy.svg"))
             self.title_btn_maximize.set_tooltip("Return Size")
         

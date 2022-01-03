@@ -48,6 +48,7 @@ class Ui_MainWindow(object):
         
         self.centralwidget_vlayout = QVBoxLayout(self.centralwidget)
         self.centralwidget_vlayout.setObjectName(u"centralwidget_vlayout")
+        self.centralwidget_vlayout.setContentsMargins(0,0,0,0)
         if self.theme_settings["custom_title_bar"]:
             self.centralwidget_vlayout.setContentsMargins(10,10,10,10)
         else:

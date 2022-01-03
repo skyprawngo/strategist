@@ -23,13 +23,6 @@ class Scroll_Area(QScrollArea):
         self.setStyleSheet(_style)
     
     def set_style(self):
-        bar_vertical = f'''
-            border: none;
-            background-color: {self.bg_color};
-            width: 14px;
-            margin: 15px 0 15px 0;
-            border-radius 0px;
-        '''
         bar_handle_vertical = f'''
             background-color: {self.bar_bg_color};
             min-height: 30px;
@@ -79,7 +72,6 @@ class Scroll_Area(QScrollArea):
         }
         '''
         
-        bar_vertical = "{"+bar_vertical+"}"
         bar_handle_vertical = "{"+bar_handle_vertical+"}"
         Bar_handle_vertical_hover = "{"+Bar_handle_vertical_hover+"}"
         Bar_handle_vertical_pressed = "{"+Bar_handle_vertical_pressed+"}"
@@ -95,13 +87,11 @@ class Scroll_Area(QScrollArea):
         
         _style = f'''
         /* VERTICAL SCROLLBAR */
-            QScrollBar:vertical {bar_vertical}
 
             /* HANDLE BAR VERTICAL */
             QScrollBar::handle:vertical {bar_handle_vertical}
             QScrollBar::handle:vertical:hover {Bar_handle_vertical_hover}
-            QScrollBar::handle:vertical:pressed {Bar_handle_vertical_pressed
-            }
+            QScrollBar::handle:vertical:pressed {Bar_handle_vertical_pressed}
 
             /* BTN TOP - SCHROLLBAR */
             QScrollBar::sub-line:vertical {bar_sub_line_vertical}
