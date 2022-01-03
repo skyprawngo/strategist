@@ -2,6 +2,8 @@ import os
 import pickle
 import getpass
 
+from module.CCXT_module_import import *
+
 
 class Function_Login:
     username = getpass.getuser()
@@ -29,3 +31,7 @@ class Function_Login:
     
     def save_sign_in():
         pass
+    
+
+class Function_ccxt:
+    pass

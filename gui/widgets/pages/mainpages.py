@@ -1,6 +1,6 @@
 from module.pyside6_module_import import *
 
-from gui.widgets.pages.page_0 import Page_0
+from gui.widgets.pages.page_0.page_0 import Page_0
 from gui.widgets.pages.page_1 import Page_1
 from gui.widgets.pages.page_2 import Page_2
 from gui.widgets.pages.page_3 import Page_3
@@ -13,9 +13,6 @@ class MainPages(QStackedWidget):
         super().__init__()
         self.setupUi()
     
-    def page_0_setting(self):
-        print(self.page_0.sender().objectName())
-        pass
         
     def setupUi(self):
         self.setObjectName("mainPages")
@@ -25,7 +22,6 @@ class MainPages(QStackedWidget):
         self.page_0_vlayout = QVBoxLayout(self.page_0_frame)
         self.page_0_vlayout.setContentsMargins(0, 0, 0, 0)
         self.page_0 = Page_0()
-        self.page_0.clicked.connect(self.page_0_setting)
         self.page_0_vlayout.addWidget(self.page_0)
         self.addWidget(self.page_0_frame)
         

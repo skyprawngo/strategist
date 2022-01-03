@@ -5,9 +5,9 @@ class Scroll_Area(QScrollArea):
             self,
             bg_color = "#fff",
             
-            bar_bg_color = "#c3c4c6",
-            bar_bg_color_hover = "#9dabbe",
-            bar_bg_color_pressed = "#3867a8",
+            bar_bg_color = "#eaebec",
+            bar_bg_color_hover = "#e3dbd7",
+            bar_bg_color_pressed = "#d0a99a",
             add_sub_color = "#d8d9da",
         ):
         super().__init__()

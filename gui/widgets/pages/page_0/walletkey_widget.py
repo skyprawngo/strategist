@@ -1,16 +1,22 @@
+from gui.widgets.pages.page_0.btn_apikey_enter import Btn_Apickey_enter
 from module.pyside6_module_import import *
-from gui.widgets.scroll_area.scroll_area import Scroll_Area
+
 from gui.widgets.check_box.check_box import Check_Box
 
+from gui.themes.load_item_path import Load_Item_Path
 
-class Page_0(QWidget):
+
+class Walletkey_Widget(QWidget):
     clicked = Signal(object)
-    def __init__(
-        self
-    ):
-        super().__init__()
-        self.setupUi()
     
+    def __init__(
+        self,
+        parent
+        ):
+        super().__init__()
+        self._parent = parent
+        self.setup_Ui()
+        
     def apikey_return(self):
         self.lineedit_secretkey.setFocus()
     
@@ -21,7 +27,7 @@ class Page_0(QWidget):
         pass
     
     def appear_warning_window(self):
-        self.warning_window = QWidget(self)
+        self.warning_window = QWidget(self._parent)
         self.warning_window.setStyleSheet('''
             background-color: #eaebec
         ''')
@@ -61,7 +67,7 @@ class Page_0(QWidget):
         self.btn_hlayout.addWidget(self.btn_yes)
         
         self.btn_no = QPushButton()
-        self.btn_no.setObjectName("btn_warning1_y")
+        self.btn_no.setObjectName("btn_warning1_n")
         self.btn_no.setText("No, I don't")
         self.btn_no.setStyleSheet('''
             background-color: #fff;
@@ -87,32 +93,13 @@ class Page_0(QWidget):
         self.key_remember_ckbox.setChecked(False)
         self.warning_window.close()
         pass
-    
-    def setupUi(self):
-        self.vlayout = QVBoxLayout(self)
-        self.setStyleSheet('background-color: "#f7f7f7"')
-        self.vlayout.setContentsMargins(0, 0, 0, 0)
-        self.vlayout.setSpacing(0)
-        
-        self.scrollarea = Scroll_Area(self)
-        self.scrollarea.setObjectName(u"scrollArea")
-        self.scrollarea.setWidgetResizable(True)
-        
-        self.scrollarea_widget = QWidget()
-        self.scrollarea_widget.setGeometry(QRect(0, 0, 763, 1000))
-        self.scrollarea_widget.setMinimumSize(QSize(0, 1000))
-        self.scrollarea_widget.setStyleSheet('''
-            border-radius: 15px;
-        ''')
-        
-        self.scrollarea_glayout = QGridLayout(self.scrollarea_widget)
-        self.scrollarea_glayout.setContentsMargins(5, 0, 5, 0)
-        
+    def setup_Ui(self):
+        self.walletkey_widget_vlayout = QVBoxLayout(self)
         self.walletkey_frame = QFrame()
-        self.walletkey_frame.setStyleSheet("background-color: #fff;")
-        self.walletkey_vlayout = QVBoxLayout(self.walletkey_frame)
-        self.walletkey_vlayout.setContentsMargins(10, 10, 10, 5)
-        self.walletkey_vlayout.setSpacing(5)
+        self.setStyleSheet("background-color: #fff;")
+        self.walletkey_glayout = QGridLayout(self.walletkey_frame)
+        self.walletkey_glayout.setContentsMargins(10, 10, 10, 5)
+        self.walletkey_glayout.setSpacing(5)
         
         self.walletkey_label = QLabel()
         self.walletkey_label.setStyleSheet('''
@@ -120,7 +107,6 @@ class Page_0(QWidget):
             font: 12px;
         ''')
         self.walletkey_label.setText("Binance API Key")
-        self.walletkey_vlayout.addWidget(self.walletkey_label, alignment=Qt.AlignLeft)
         
         self.lineedit_apikey = QLineEdit()
         self.lineedit_apikey.setFixedHeight(50)
@@ -131,7 +117,6 @@ class Page_0(QWidget):
             font: 400 15px;
         ''')
         self.lineedit_apikey.returnPressed.connect(self.apikey_return)
-        self.walletkey_vlayout.addWidget(self.lineedit_apikey)
         
         self.lineedit_secretkey = QLineEdit()
         self.lineedit_secretkey.setFixedHeight(50)
@@ -141,39 +126,22 @@ class Page_0(QWidget):
             border-radius: {self.lineedit_secretkey.height()/3}px;
             font: 400 15px;
         ''')
-        self.walletkey_vlayout.addWidget(self.lineedit_secretkey)
+        self.btn_key_enter = Btn_Apickey_enter(
+            icon_file_path = Load_Item_Path().set_svg_icon_path("check.svg"),
+        )
+        self.btn_key_enter.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        self.btn_key_enter.setFixedWidth(60)
         
         self.key_remember_ckbox = Check_Box()
         self.key_remember_ckbox.setLayoutDirection(Qt.RightToLeft)
         self.key_remember_ckbox.setText("Remember Key")
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
-        self.walletkey_vlayout.addWidget(self.key_remember_ckbox)
         
+        self.walletkey_glayout.addWidget(self.walletkey_label,0, 0, 1, 1)
+        self.walletkey_glayout.addWidget(self.lineedit_apikey,1, 0, 1, 1)
+        self.walletkey_glayout.addWidget(self.lineedit_secretkey,2, 0, 1, 1)
+        self.walletkey_glayout.addWidget(self.btn_key_enter,1, 1, 2, 1)
+        self.walletkey_glayout.addWidget(self.key_remember_ckbox, 3, 0, 1, 2)
         
-        self.scrollarea_glayout.addWidget(self.walletkey_frame, 0, 0, 1, 3)
+        self.walletkey_widget_vlayout.addWidget(self.walletkey_frame)
         
-        self.distribution_frame = QFrame()
-        self.distribution_frame.setStyleSheet("background-color: blue;")
-        self.scrollarea_glayout.addWidget(self.distribution_frame, 0, 3, 1, 2)
-        
-        self.stock_chart_frame = QFrame()
-        self.stock_chart_frame.setStyleSheet("background-color: lightgreen;")
-        self.scrollarea_glayout.addWidget(self.stock_chart_frame, 0, 5, 3, 7)
-        
-        self.wallet_stock_frame = QFrame()
-        self.wallet_stock_frame.setStyleSheet("background-color: lightgreen;")
-        self.scrollarea_glayout.addWidget(self.wallet_stock_frame, 1, 0, 2, 5)
-        
-        
-        self.frame2 = QFrame()
-        self.frame2.setStyleSheet("background-color: lightblue;")
-        self.scrollarea_glayout.addWidget(self.frame2, 3, 0)
-        
-        self.frame3 = QFrame()
-        self.frame3.setStyleSheet("background-color: pink;")
-        self.scrollarea_glayout.addWidget(self.frame3, 4, 0)
-        
-        self.scrollarea.setWidget(self.scrollarea_widget)
-        
-        self.vlayout.addWidget(self.scrollarea)
-    

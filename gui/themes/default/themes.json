@@ -41,6 +41,11 @@
         "color_two" : "#e3dbd7",
         "color_three" : "#d1cac7",
         "color_four" : "#c0b8b5",
+        "color_five" : "#d0a99a",
+
+        "color_hover" : "#9dabbe",
+        "color_pressed" : "#3867a8",
+
 
         "pink" : "#edadff",
         "light_orange" : "##ffe1ad",
