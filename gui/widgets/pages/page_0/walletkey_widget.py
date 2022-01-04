@@ -19,6 +19,7 @@ class Walletkey_Widget(QWidget):
         super().__init__()
         self._parent = parent
         self.setup_Ui()
+        self.sig_n_slot()
         
     def apikey_return(self):
         self.lineedit_secretkey.setFocus()
@@ -28,7 +29,8 @@ class Walletkey_Widget(QWidget):
             self.appear_warning_window()
             pass
         elif not self.key_remember_ckbox.isChecked():
-            Function_Login.save_key()
+            Function_Login.save_key(None, None)
+            Function_Login.save_ckbox_remember_key(False)
         pass
     
     def appear_warning_window(self):
@@ -91,21 +93,25 @@ class Walletkey_Widget(QWidget):
     def btn_yes_clicked(self):
         self.clicked.emit(self.btn_yes)
         Function_Login.save_key(
-            self.lineedit_apikey.text(),
-            self.lineedit_secretkey.text()
+            apikey = self.lineedit_apikey.text(),
+            secretkey = self.lineedit_secretkey.text()
         )
+        Function_Login.save_ckbox_remember_key(True)
+        Function_Login.save_warning_label_appear(False)
         self.warning_window.close()
         pass
     
     def btn_no_clicked(self):
         self.clicked.emit(self.btn_no)
-        Function_Login.save_key()
+        Function_Login.save_key(None, None)
+        Function_Login.save_ckbox_remember_key(False)
         self.key_remember_ckbox.setChecked(False)
         self.warning_window.close()
         pass
     
     def btn_key_enter_clicked(self):
         self.clicked.emit(self.btn_key_enter)
+        self.remember_ckbox_pressed()
         
         Function_ccxt.set_account(
             self.lineedit_apikey.text(),
@@ -113,7 +119,7 @@ class Walletkey_Widget(QWidget):
         )
         balance = Function_ccxt.get_balance()
         if not balance:
-            self.walletkey_glayout.addWidget(self.warning_label_correct_key, 3, 0, 1, 1)
+            self.walletkey_glayout.addWidget(self.warning_correct_key_label, 3, 0, 1, 1)
             self.btn_key_enter.btn_istoggle_active = True
             self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
         
@@ -125,8 +131,17 @@ class Walletkey_Widget(QWidget):
             self.lineedit_secretkey.setEnabled(True)
         
         if balance:
-            self.warning_label_correct_key.hide()
+            self.warning_correct_key_label.hide()
             pass
+    
+    def sig_n_slot(self):
+        self.lineedit_apikey.returnPressed.connect(self.apikey_return)
+        self.lineedit_apikey.setText(Function_Login.load_key()[0])
+        self.lineedit_secretkey.setText(Function_Login.load_key()[1])
+        self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
+        self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
+        self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
+        pass
 
             
     def setup_Ui(self):
@@ -154,7 +169,6 @@ class Walletkey_Widget(QWidget):
             border-radius: {self.lineedit_apikey.height()/3};
             font: 400 15px;
         ''')
-        self.lineedit_apikey.returnPressed.connect(self.apikey_return)
         
         self.lineedit_secretkey = QLineEdit()
         self.lineedit_secretkey.setFixedHeight(50)
@@ -170,14 +184,13 @@ class Walletkey_Widget(QWidget):
         )
         self.btn_key_enter.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         self.btn_key_enter.setFixedWidth(60)
-        self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
         
-        self.warning_label_correct_key = QLabel("Set Correct Key!")
+        self.warning_correct_key_label = QLabel("Set Correct Key!")
+        self.warning_correct_key_label.setAttribute(Qt.WA_TranslucentBackground)
         
         self.key_remember_ckbox = Check_Box()
-        self.key_remember_ckbox.setLayoutDirection(Qt.RightToLeft)
         self.key_remember_ckbox.setText("Remember Key")
-        self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
+        self.key_remember_ckbox.setLayoutDirection(Qt.RightToLeft)
         
         self.walletkey_glayout.addWidget(self.walletkey_label,0, 0, 1, 1)
         self.walletkey_glayout.addWidget(self.lineedit_apikey,1, 0, 1, 1)

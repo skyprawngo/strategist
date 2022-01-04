@@ -2,6 +2,7 @@ import sys
 import os
 
 from module.pyside6_module_import import *
+from func.func_userdata import Function_Login
 
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
 from gui.widgets.mainwindow.setup_mainwindow import Setup_MainWindow
@@ -17,11 +18,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
-
-        
         Setup_MainWindow.login_window_appear(self)
-    
-    
+
 
     def btn_clicked(self):
         btn = Setup_MainWindow.setup_btns(self)
@@ -73,6 +71,7 @@ class MainWindow(QMainWindow):
         self.dragPos = globalPos
         
 if __name__ == "__main__":
+    install = Function_Login()
     app = QApplication(sys.argv)
     window = MainWindow()
     # window.show()
