@@ -1,9 +1,12 @@
 from module.pyside6_module_import import *
 
+from func.func_ccxt import Function_ccxt
+from func.func_userdata import Function_Login
+from gui.themes.load_item_path import Load_Item_Path
+
 from gui.widgets.pages.page_0.btn_apikey_enter import Btn_Apikey_enter
 from gui.widgets.check_box.check_box import Check_Box
 
-from gui.themes.load_item_path import Load_Item_Path
 
 
 class Walletkey_Widget(QWidget):
@@ -24,6 +27,8 @@ class Walletkey_Widget(QWidget):
         if self.key_remember_ckbox.isChecked():
             self.appear_warning_window()
             pass
+        elif not self.key_remember_ckbox.isChecked():
+            Function_Login.save_key()
         pass
     
     def appear_warning_window(self):
@@ -85,11 +90,16 @@ class Walletkey_Widget(QWidget):
     
     def btn_yes_clicked(self):
         self.clicked.emit(self.btn_yes)
+        Function_Login.save_key(
+            self.lineedit_apikey.text(),
+            self.lineedit_secretkey.text()
+        )
         self.warning_window.close()
         pass
     
     def btn_no_clicked(self):
         self.clicked.emit(self.btn_no)
+        Function_Login.save_key()
         self.key_remember_ckbox.setChecked(False)
         self.warning_window.close()
         pass
@@ -97,9 +107,23 @@ class Walletkey_Widget(QWidget):
     def btn_key_enter_clicked(self):
         self.clicked.emit(self.btn_key_enter)
         
-        print("asdf")
-        pass
-    
+        Function_ccxt.set_account(
+            self.lineedit_apikey.text(),
+            self.lineedit_secretkey.text()
+        )
+        if not Function_ccxt.get_balance():
+            warning_label_correct_key = QLabel("Set Correct Key!")
+            self.walletkey_glayout.addWidget(warning_label_correct_key, 3, 0, 1, 1)
+            self.btn_key_enter.btn_istoggle_active = True
+            self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
+        
+        if self.btn_key_enter.btn_istoggle_active:
+            self.lineedit_apikey.setEnabled(False)
+            self.lineedit_secretkey.setEnabled(False)
+        elif not self.btn_key_enter.btn_istoggle_active:
+            self.lineedit_apikey.setEnabled(True)
+            self.lineedit_secretkey.setEnabled(True)
+            
     def setup_Ui(self):
         self.walletkey_widget_vlayout = QVBoxLayout(self)
         self.walletkey_widget_vlayout.setContentsMargins(0, 0, 0, 0)

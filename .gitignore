@@ -2,7 +2,7 @@
 .vscode/
 venv/
 venv39/
-data/user_data/
+data/settings_data/
 # Created by https://www.toptal.com/developers/gitignore/api/macos,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,python
 

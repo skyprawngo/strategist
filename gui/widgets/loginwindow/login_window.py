@@ -1,11 +1,12 @@
 from module.pyside6_module_import import *
+from func.func_ccxt import Function_ccxt
+from func.func_userdata import Function_Login
+from gui.themes.load_item_path import Load_Item_Path
 
 from gui.themes.theme_settings import Settings
 from gui.themes.themes import Themes
 
 from gui.widgets.check_box.check_box import Check_Box
-from gui.themes.load_item_path import Load_Item_Path
-# from func.func_login import Function_Login
 
 class Login_Window(QMainWindow):
     def __init__(
@@ -27,6 +28,12 @@ class Login_Window(QMainWindow):
                 pass
             self.btn_login.mouseReleaseEvent(event=QEvent.MouseButtonRelease)
             pass
+    
+    def btn_login_clicked(self):
+        Function_Login()
+        self.close()
+        self.app_parent.show()
+        pass
            
     def setupUi(self):
             # Load Settings
@@ -102,7 +109,7 @@ class Login_Window(QMainWindow):
             border-radius: {self.lineedit_password.height()/2};
             font: bold 15px;
         ''')
-        self.lineedit_password.returnPressed.connect(self.lineedit_enter)
+        self.lineedit_password.returnPressed.connect(self.btn_login_clicked)
         
         self.login_remember_ckbox = Check_Box()
         self.login_remember_ckbox.setText("Remember Login Id and Password")
@@ -119,6 +126,7 @@ class Login_Window(QMainWindow):
             bg_color_hover = self.themes["app_color"]["bg_five"],
             bg_color_pressed = self.themes["app_color"]["bg_six"]
         )
+        self.btn_login.clicked.connect(self.btn_login_clicked)
         
         self.sign_in_label = QLabel()
         self.sign_in_label.setText("Sign in")
@@ -172,9 +180,7 @@ class Btn_Login(QPushButton):
         self.btn_style(self.bg_color_pressed)
         
     def mouseReleaseEvent(self, event):
-        self._parent.close()
-        self.app_parent.show()
-    
+        self.btn_style(self.bg_color)
         
     def btn_style(self, bg_color):
         self.set_bg_color = bg_color

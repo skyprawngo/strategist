@@ -1,7 +1,6 @@
 from module.pyside6_module_import import *
 from gui.widgets.scroll_area.scroll_area import Scroll_Area
 from gui.widgets.check_box.check_box import Check_Box
-from func.func_save_n_load import Function_ccxt
 
 from .walletkey_widget import Walletkey_Widget
 
@@ -12,16 +11,6 @@ class Page_0(QWidget):
     ):
         super().__init__()
         self.setupUi()
-    
-    def wallet_key_enter_clicked(self):
-        if self.walletkey_widget.sender().objectName() == "btn_walletkey_enter":
-            Function_ccxt().set_account(
-                self.walletkey_widget.lineedit_apikey.text(),
-                self.walletkey_widget.lineedit_secretkey.text()
-            )
-            print(Function_ccxt.get_balance())
-            print("acac")
-        pass
     
     def setupUi(self):
         self.vlayout = QVBoxLayout(self)
@@ -46,7 +35,6 @@ class Page_0(QWidget):
         self.walletkey_widget = Walletkey_Widget(
             parent = self
         )
-        self.walletkey_widget.clicked.connect(self.wallet_key_enter_clicked)
         self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
         
         self.distribution_frame = QFrame()
