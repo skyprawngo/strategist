@@ -2,36 +2,29 @@ import os
 import pickle
 import getpass
 
-from module.CCXT_module_import import *
+from module.ccxt_module_import import *
 
-
+class Function_ccxt:
+    binance = ccxt.binance()
+    apikey = None
+    secretkey = None
+    
+    def set_account(self, apikey, secretkey):
+        self.apikey = apikey
+        self.secretkey = secretkey
+        self.binance = ccxt.binance(config={
+            'apiKey': self.apikey,
+            'secret': self.secretkey
+        })
+    
+    def get_balance(self):
+        balance = self.binance.fetch_balance()
+        return balance
+    
 class Function_Login:
     username = getpass.getuser()
     file_path = os.path.normpath(os.path.join("C:/Users",username,"AppData/Local/Stretegist/user_data.txt"))
     dir_path = os.path.normpath(os.path.join("C:/Users",username,"AppData/Local/Stretegist"))
-    if os.path.isdir(dir_path):
-        os.makedirs(dir_path)
     
-    if os.path.isfile(file_path):
-        with open(file_path, 'rb') as datareader:
-            data = pickle.load(datareader)
-            print(data)
-    else:
-        data = {
-            "id": "",
-        }
-        
-        with open(file_path, 'wb') as datawriter:
-            pickle.dump(data, datawriter)
-            
-    def save_login_id(self, id=""):
-        with open(self.file_path, 'wb') as datawriter:
-            self.data["id"] = id
-            pickle.dump(self.data, datawriter)
-    
-    def save_sign_in():
-        pass
     
 
-class Function_ccxt:
-    pass

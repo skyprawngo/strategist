@@ -1,6 +1,6 @@
 from module.pyside6_module_import import *
 
-class Btn_Apickey_enter(QPushButton):
+class Btn_Apikey_enter(QPushButton):
     def __init__(
         self,
         icon_file_path,
@@ -22,6 +22,7 @@ class Btn_Apickey_enter(QPushButton):
         self.setup_Ui()
     
     def setup_Ui(self):
+        self.setObjectName("btn_walletkey_enter")
         self.setStyleSheet(f"background-color: {self.bg_color}")
         self.vlayout = QVBoxLayout(self)
         self.setIcon(QIcon(self.icon_file_path).pixmap(QSize(50, 50)))
