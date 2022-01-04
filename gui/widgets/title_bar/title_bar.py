@@ -127,6 +127,10 @@ class Ui_Title_Bar_Widget(QWidget):
         self.title_bar_hlayout.setContentsMargins(0, 0, 0, 0)
         self.title_bar_hlayout.setSpacing(0)
         
+        opacity_effect = QGraphicsOpacityEffect(self.title_bar_frame)
+        opacity_effect.setOpacity(0.85)
+        self.title_bar_frame.setGraphicsEffect(opacity_effect)
+        
             # top_logo_label(
         self.top_logo_label = QLabel()
 
@@ -261,8 +265,8 @@ class Ui_Title_Bar_Widget(QWidget):
             btn_icon_color_pressed = self._title_bar_bg_color_pressed,
             
             btn_bg_color = self._title_bar_bg_color,
-            btn_bg_color_hover = self._title_bar_bg_color_hover,
-            btn_bg_color_pressed = self._title_bar_bg_color_pressed
+            btn_bg_color_hover = "#feb9b9",
+            btn_bg_color_pressed = "#fe6c6c"
         )
                     # )close_button
         self.title_buttons_hlayout.addWidget(self.title_btn_close)

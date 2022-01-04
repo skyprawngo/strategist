@@ -2,27 +2,52 @@ from module.pyside6_module_import import *
 from gui.widgets.scroll_area.scroll_area import Scroll_Area
 from gui.widgets.check_box.check_box import Check_Box
 
-from .walletkey_widget import Walletkey_Widget
+from .wallet_key_widget.walletkey_widget import Walletkey_Widget
 
 
 class Page_0(QWidget):
     def __init__(
-        self
+        self,
+        bg_one = "#e0e3ea",
+        bg_two = "#f5f6fa",
+        bg_three = "#fff",
+        
+        color_one = "#b9cefe",
+        color_two = "#8aadff",
+        color_three = "#6c98fe"
     ):
         super().__init__()
+        self.bg_one = bg_one
+        self.bg_two = bg_two
+        self.bg_three = bg_three
+        
+        self.color_one = color_one
+        self.color_two = color_two
+        self.color_three = color_three
         self.setupUi()
     
     def setupUi(self):
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.vlayout = QVBoxLayout(self)
-        self.setStyleSheet('background-color: "#f7f7f7"')
         self.vlayout.setContentsMargins(0, 0, 0, 0)
         self.vlayout.setSpacing(0)
         
-        self.scrollarea = Scroll_Area(self)
+        
+        self.scrollarea = Scroll_Area(
+            parent = self,
+            bg_one = self.bg_one,
+            bg_two = self.bg_two,
+            bg_three = self.bg_three,
+
+            color_one = self.color_one,
+            color_two = self.color_two,
+            color_three = self.color_three
+        )
         self.scrollarea.setObjectName(u"scrollArea")
         self.scrollarea.setWidgetResizable(True)
         
         self.scrollarea_widget = QWidget()
+        self.scrollarea_widget.setAttribute(Qt.WA_TranslucentBackground)
         self.scrollarea_widget.setGeometry(QRect(0, 0, 763, 1000))
         self.scrollarea_widget.setMinimumSize(QSize(0, 1000))
         self.scrollarea_widget.setStyleSheet('''
@@ -33,12 +58,19 @@ class Page_0(QWidget):
         self.scrollarea_glayout.setContentsMargins(5, 0, 5, 0)
         
         self.walletkey_widget = Walletkey_Widget(
-            parent = self
+            parent = self,
+            bg_one = self.bg_one,
+            bg_two = self.bg_two,
+            bg_three = self.bg_three,
+
+            color_one = self.color_one,
+            color_two = self.color_two,
+            color_three = self.color_three
         )
         self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
         
         self.distribution_frame = QFrame()
-        self.distribution_frame.setStyleSheet("background-color: blue;")
+        self.distribution_frame.setStyleSheet(f"background-color: {self.bg_three};")
         self.scrollarea_glayout.addWidget(self.distribution_frame, 0, 3, 1, 2)
         
         self.stock_chart_frame = QFrame()
@@ -46,7 +78,7 @@ class Page_0(QWidget):
         self.scrollarea_glayout.addWidget(self.stock_chart_frame, 0, 5, 3, 7)
         
         self.wallet_stock_frame = QFrame()
-        self.wallet_stock_frame.setStyleSheet("background-color: lightgreen;")
+        self.wallet_stock_frame.setStyleSheet(f"background-color: {self.bg_three};")
         self.scrollarea_glayout.addWidget(self.wallet_stock_frame, 1, 0, 2, 5)
         
         

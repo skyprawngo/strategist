@@ -54,6 +54,7 @@ class Ui_MainWindow(object):
         else:
             self.centralwidget_vlayout.setContentsMargins(0,0,0,0)
 
+
                 # PyWindow(
         self.window = PyWindow(
             app_parent = UiMainWindow,
@@ -67,10 +68,10 @@ class Ui_MainWindow(object):
             text_font_size = self.themes["font"]["text_size"],
             border_radius = self.themes["pywindow"]["border_radius"],
             border_size = self.themes["pywindow"]["border_size"],
-            border_color = self.themes["app_color"]["bg_three"],
+            border_color = self.themes["app_color"]["color_one"],
             custom_title_bar = self.theme_settings["custom_title_bar"]
         )
-
+        
                     # title_bar_frame(
         self.title_bar_frame = QFrame()
         self.title_bar_frame.setFrameShape(QFrame.NoFrame)
@@ -102,8 +103,8 @@ class Ui_MainWindow(object):
             title_bar_bg_height = self.themes["title_bar"]["bg_height"],
             title_bar_bg_radius = self.themes["title_bar"]["bg_radius"],
             title_bar_bg_color = self.themes["app_color"]["bg_two"],
-            title_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
-            title_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
+            title_bar_bg_color_hover = self.themes["app_color"]["color_two"],
+            title_bar_bg_color_pressed = self.themes["app_color"]["color_four"]
         )
                         # )Title_Bar
         self.title_bar_vlayout.addWidget(self.title_bar)
@@ -150,8 +151,8 @@ class Ui_MainWindow(object):
             left_menu_bar_bg_width_maximum = self.theme_settings["left_menu_size"]["bg_width_maximum"],
             left_menu_bar_bg_radius = self.theme_settings["left_menu_size"]["bg_radius"],
             left_menu_bar_bg_color = self.themes["app_color"]["bg_two"],
-            left_menu_bar_bg_color_hover = self.themes["app_color"]["bg_three"],
-            left_menu_bar_bg_color_pressed = self.themes["app_color"]["bg_four"]
+            left_menu_bar_bg_color_hover = self.themes["app_color"]["color_one"],
+            left_menu_bar_bg_color_pressed = self.themes["app_color"]["color_three"]
         )
                             # )Left_Menu
         self.left_menu_bar_vlayout.addWidget(self.left_menu)
@@ -186,6 +187,7 @@ class Ui_MainWindow(object):
                     # )not_title_bar_frame
         self.window.vlayout.addWidget(self.title_bar_frame)
         self.window.vlayout.addWidget(self.not_title_bar_frame)
+        
                 # )PyWindow
         self.centralwidget_vlayout.addWidget(self.window)
             # )Centralwidget

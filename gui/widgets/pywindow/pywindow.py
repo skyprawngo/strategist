@@ -1,6 +1,6 @@
 from module.pyside6_module_import import *
+from gui.themes.load_item_path import Load_Item_Path
 
-from . styles import Styles
 
 class PyWindow(QFrame):
     def __init__(
@@ -35,12 +35,23 @@ class PyWindow(QFrame):
 
         self.setObjectName("pod_bg_app")
 
-        self.set_stylesheet()
+        self._layout = QVBoxLayout(self)
+        self._layout.setContentsMargins(margin, margin, margin, margin)
+        self._layout.setSpacing(0)
+        
+        
+        self.background = QSvgWidget()
+        self.background.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.internal_bg_image = Load_Item_Path().set_svg_image_path("background_1000_600_1.svg")
+        self.background.load(self.internal_bg_image)
+        self.background.setStyleSheet(f"border-radius: {self.border_radius}")
+        self._layout.addWidget(self.background)
 
-        self.vlayout = QVBoxLayout(self)
-        self.vlayout.setContentsMargins(margin, margin, margin, margin)
+        self.vlayout = QVBoxLayout(self.background)
+        self.vlayout.setContentsMargins(0, 0, 0, 0)
         self.vlayout.setSpacing(0)
 
+        self.set_stylesheet()
         if custom_title_bar:
             if enable_shadow:
                 self.shadow = QGraphicsDropShadowEffect()
@@ -91,3 +102,16 @@ class PyWindow(QFrame):
             _text_color = internal_text_color,
             _text_font_size = internal_text_font_size
         ))
+
+class Styles(object):
+    bg_style = """
+    #pod_bg_app {{
+        background-color: {_bg_color};
+        border-radius: {_border_radius};
+        border: {_border_size}px solid {_border_color};
+    }}
+    QFrame {{ 
+        color: {_text_color};
+        font: {_text_font_size}px;
+    }}
+    """

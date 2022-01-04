@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 1000 600" style="enable-background:new 0 0 1000 600;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#6C98FE;stroke:#6C98FE;stroke-width:50;stroke-miterlimit:10;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#6C98FE;}
+</style>
+<path class="st0" d="M1058.9,153.1L661.4,519.9c-38.9,35.9-99.5,33.5-135.4-5.4l-41-44.5c-35.9-38.9-33.5-99.5,5.4-135.4L887.9-32.2
+	c38.9-35.9,99.5-33.5,135.4,5.4l41,44.5C1100.2,56.6,1097.8,117.2,1058.9,153.1z"/>
+<path class="st0" d="M986.7-17.5L727.3,221.8c-33.7,31.1-86.2,29-117.3-4.7l-58.4-63.3c-31.1-33.7-29-86.2,4.7-117.3l259.4-239.3
+	c33.7-31.1,86.2-29,117.3,4.7l58.4,63.3C1022.6-101.1,1020.4-48.6,986.7-17.5z"/>
+<path class="st0" d="M215.2-27L-44.2,212.3c-33.7,31.1-86.2,29-117.3-4.7l-58.4-63.3c-31.1-33.7-29-86.2,4.7-117.3L44.2-212.3
+	c33.7-31.1,86.2-29,117.3,4.7l58.4,63.3C251-110.6,248.9-58.1,215.2-27z"/>
+<line class="st1" x1="0" y1="5" x2="0" y2="0"/>
+<polyline class="st1" points="0,0 5,0 5,5 0,5 "/>
+<path class="st2" d="M5,0c2.8,0,5,2.2,5,5s-2.2,5-5,5S0,7.8,0,5S2.2,0,5,0"/>
+<rect x="995" class="st1" width="5" height="5"/>
+<circle class="st2" cx="995" cy="5" r="5"/>
+</svg>

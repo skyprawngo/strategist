@@ -203,6 +203,10 @@ class Ui_Left_Menu_Column_Widget(QWidget):
             background-color: {self._left_menu_bar_bg_color};
             border-top-left-radius: 0px;
         ''')
+        opacity_effect = QGraphicsOpacityEffect(self.btn_toggle_frame)
+        opacity_effect.setOpacity(0.85)
+        self.btn_toggle_frame.setGraphicsEffect(opacity_effect)
+        
         self.btn_toggle_vlayout = QVBoxLayout(self.btn_toggle_frame)
         self.btn_toggle_vlayout.setContentsMargins(4, 4, 4, 0)
         self.btn_toggle_vlayout.setSpacing(0)

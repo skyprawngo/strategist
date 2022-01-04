@@ -5,6 +5,8 @@ from gui.widgets.pages.page_1 import Page_1
 from gui.widgets.pages.page_2 import Page_2
 from gui.widgets.pages.page_3 import Page_3
 
+from gui.themes.themes import Themes
+
 class MainPages(QStackedWidget):
     def __init__(
         self
@@ -15,13 +17,25 @@ class MainPages(QStackedWidget):
     
         
     def setupUi(self):
+        
+        themes = Themes()
+        self.themes = themes.themes
+        
         self.setObjectName("mainPages")
         self.setContentsMargins(0, 0, 0, 0)
-        
         self.page_0_frame = QFrame()
+        self.page_0_frame.setStyleSheet("background-color: none;")
         self.page_0_vlayout = QVBoxLayout(self.page_0_frame)
         self.page_0_vlayout.setContentsMargins(0, 0, 0, 0)
-        self.page_0 = Page_0()
+        self.page_0 = Page_0(
+            bg_one = self.themes["app_color"]["bg_one"],
+            bg_two = self.themes["app_color"]["bg_two"],
+            bg_three = self.themes["app_color"]["bg_three"],
+            
+            color_one = self.themes["app_color"]["color_one"],
+            color_two = self.themes["app_color"]["color_two"],
+            color_three = self.themes["app_color"]["color_three"]
+        )
         self.page_0_vlayout.addWidget(self.page_0)
         self.addWidget(self.page_0_frame)
         

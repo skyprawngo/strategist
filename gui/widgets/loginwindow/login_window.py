@@ -53,7 +53,7 @@ class Login_Window(QMainWindow):
         
         self.login_frame = QFrame()
         self.login_frame.setStyleSheet(f'''
-            background-color:{self.themes["app_color"]["bg_two"]};
+            background-color:{self.themes["app_color"]["bg_one"]};
             border-radius:{self.themes["login_window"]["radius"]}
         ''')
         self.login_layout = QVBoxLayout(self.login_frame)
@@ -93,7 +93,7 @@ class Login_Window(QMainWindow):
         self.lineedit_id.setFixedSize(300, 50)
         self.lineedit_id.setAlignment(Qt.AlignHCenter)
         self.lineedit_id.setStyleSheet(f'''
-            background-color: {self.themes["app_color"]["bg_one"]};
+            background-color: {self.themes["app_color"]["bg_three"]};
             border-radius: {self.lineedit_id.height()/2};
             font: bold 15px;
         ''')
@@ -105,7 +105,7 @@ class Login_Window(QMainWindow):
         self.lineedit_password.setFixedSize(300, 50)
         self.lineedit_password.setAlignment(Qt.AlignHCenter)
         self.lineedit_password.setStyleSheet(f'''
-            background-color: {self.themes["app_color"]["bg_one"]};
+            background-color: {self.themes["app_color"]["bg_three"]};
             border-radius: {self.lineedit_password.height()/2};
             font: bold 15px;
         ''')
@@ -122,9 +122,9 @@ class Login_Window(QMainWindow):
             self.app_parent,
             parent = self,
             
-            bg_color = self.themes["app_color"]["bg_four"],
-            bg_color_hover = self.themes["app_color"]["bg_five"],
-            bg_color_pressed = self.themes["app_color"]["bg_six"]
+            bg_color = self.themes["app_color"]["color_two"],
+            bg_color_hover = self.themes["app_color"]["color_three"],
+            bg_color_pressed = self.themes["app_color"]["color_four"]
         )
         self.btn_login.released.connect(self.btn_login_clicked)
         
@@ -167,7 +167,11 @@ class Btn_Login(QPushButton):
         self.set_bg_color = bg_color
         
         self.setFixedSize(250, 60)
-        self.setText("Log In")
+        self.btn_login_vlayout = QVBoxLayout(self)
+        self.login_svg_1 = QSvgWidget()
+        self.login_svg_1.setFixedSize(100, 30)
+        self.login_svg_1.load(Load_Item_Path().set_svg_image_path("login_80_30.svg"))
+        self.btn_login_vlayout.addWidget(self.login_svg_1, alignment=Qt.AlignHCenter)
         self.btn_style(self.bg_color)
         
     def enterEvent(self, event):

@@ -30,22 +30,16 @@
         "dark_three" : "#383838",
         "dark_four" : "#545454",
 
-        "bg_one" : "#f7f7f7",
-        "bg_two" : "#eaebec",
-        "bg_three" : "#d8d9da",
-        "bg_four" : "#c3c4c6",
-        "bg_five" : "#b0b2b5",
-        "bg_six" : "#a2a5a9",
+        "bg_one" : "#e0e3ea",
+        "bg_two" : "#f5f6fa",
+        "bg_three" : "#fff",
 
-        "color_one" : "#eee9e7",
-        "color_two" : "#e3dbd7",
-        "color_three" : "#d1cac7",
-        "color_four" : "#c0b8b5",
-        "color_five" : "#d0a99a",
+        "color_one" : "#b9cefe",
+        "color_two" : "#8aadff",
+        "color_three" : "#6c98fe",
+        "color_four" : "#4c7fff",
 
-        "color_hover" : "#9dabbe",
-        "color_pressed" : "#3867a8",
-
+        "color_red" : "#fe6c6c",
 
         "pink" : "#edadff",
         "light_orange" : "##ffe1ad",
