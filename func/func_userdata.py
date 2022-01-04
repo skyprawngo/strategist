@@ -22,7 +22,7 @@ class Function_Login:
                 }
                 pickle.dump(data, datawriter)
         
-        if not os.path_isdir(self.settings_data_dir_path):
+        if not os.path.isdir(self.settings_data_dir_path):
             os.makedirs(self.settings_data_dir_path)
         if not os.path.isfile(self.settings_data_path):
             with open(self.settings_data_path, "wb") as datawriter:

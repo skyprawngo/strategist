@@ -111,9 +111,9 @@ class Walletkey_Widget(QWidget):
             self.lineedit_apikey.text(),
             self.lineedit_secretkey.text()
         )
-        if not Function_ccxt.get_balance():
-            warning_label_correct_key = QLabel("Set Correct Key!")
-            self.walletkey_glayout.addWidget(warning_label_correct_key, 3, 0, 1, 1)
+        balance = Function_ccxt.get_balance()
+        if not balance:
+            self.walletkey_glayout.addWidget(self.warning_label_correct_key, 3, 0, 1, 1)
             self.btn_key_enter.btn_istoggle_active = True
             self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
         
@@ -123,6 +123,11 @@ class Walletkey_Widget(QWidget):
         elif not self.btn_key_enter.btn_istoggle_active:
             self.lineedit_apikey.setEnabled(True)
             self.lineedit_secretkey.setEnabled(True)
+        
+        if balance:
+            self.warning_label_correct_key.hide()
+            pass
+
             
     def setup_Ui(self):
         self.walletkey_widget_vlayout = QVBoxLayout(self)
@@ -166,6 +171,8 @@ class Walletkey_Widget(QWidget):
         self.btn_key_enter.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         self.btn_key_enter.setFixedWidth(60)
         self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
+        
+        self.warning_label_correct_key = QLabel("Set Correct Key!")
         
         self.key_remember_ckbox = Check_Box()
         self.key_remember_ckbox.setLayoutDirection(Qt.RightToLeft)

@@ -64,7 +64,7 @@ class Login_Window(QMainWindow):
         self.login_logo_frame = QFrame()
         self.login_logo_frame.setFixedHeight(200)
         self.login_logo_vlayout = QVBoxLayout(self.login_logo_frame)
-        self.login_logo_vlayout.setContentsMargins(0, 40, 0, 0)
+        self.login_logo_vlayout.setContentsMargins(50, 40, 50, 0)
         self.login_logo_vlayout.setSpacing(0)
         
         self.logo_svg_1 = QSvgWidget()
@@ -78,10 +78,10 @@ class Login_Window(QMainWindow):
 
         self.logo_subtext_1 = QLabel()
         self.logo_subtext_1.setText('''
-            It is just emitation log-in window,
-            So Press "Log in" Button and go ahead
+            This Window is just emitation log-in window,
+                   So Press "Log in" Button and go ahead
         ''')
-        self.login_logo_vlayout.addWidget(self.logo_subtext_1, alignment=Qt.AlignHCenter)
+        self.login_logo_vlayout.addWidget(self.logo_subtext_1, alignment=Qt.AlignRight)
         
         self.lineedit_frame = QFrame()
         self.lineedit_vlayout = QVBoxLayout(self.lineedit_frame)
@@ -126,7 +126,7 @@ class Login_Window(QMainWindow):
             bg_color_hover = self.themes["app_color"]["bg_five"],
             bg_color_pressed = self.themes["app_color"]["bg_six"]
         )
-        self.btn_login.clicked.connect(self.btn_login_clicked)
+        self.btn_login.released.connect(self.btn_login_clicked)
         
         self.sign_in_label = QLabel()
         self.sign_in_label.setText("Sign in")
@@ -178,9 +178,10 @@ class Btn_Login(QPushButton):
     
     def mousePressEvent(self, event):
         self.btn_style(self.bg_color_pressed)
-        
+
     def mouseReleaseEvent(self, event):
         self.btn_style(self.bg_color)
+        self.released.emit()
         
     def btn_style(self, bg_color):
         self.set_bg_color = bg_color
