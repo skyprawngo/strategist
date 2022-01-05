@@ -39,7 +39,8 @@
         "color_three" : "#6c98fe",
         "color_four" : "#4c7fff",
 
-        "color_red" : "#fe6c6c",
+        "color_red1" : "#fe6c6c",
+        "color_red2" : "#fe4646",
 
         "pink" : "#edadff",
         "light_orange" : "##ffe1ad",

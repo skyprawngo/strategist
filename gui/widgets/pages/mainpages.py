@@ -37,7 +37,8 @@ class MainPages(QStackedWidget):
             
             color_one = self.themes["app_color"]["color_one"],
             color_two = self.themes["app_color"]["color_two"],
-            color_three = self.themes["app_color"]["color_three"]
+            color_three = self.themes["app_color"]["color_three"],
+            color_red = self.themes["app_color"]["color_red2"]
         )
         self.page_0_vlayout.addWidget(self.page_0)
         self.addWidget(self.page_0_frame)

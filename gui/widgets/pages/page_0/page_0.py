@@ -17,7 +17,8 @@ class Page_0(QWidget):
         
         color_one = "#b9cefe",
         color_two = "#8aadff",
-        color_three = "#6c98fe"
+        color_three = "#6c98fe",
+        color_red = "#fb4646"
     ):
         super().__init__()
         self._app_parent = app_parent
@@ -28,6 +29,9 @@ class Page_0(QWidget):
         self.color_one = color_one
         self.color_two = color_two
         self.color_three = color_three
+        self.color_red = color_red
+        
+        
         self.setupUi()
     
     def walletkey_btn_enter_clicked(self):
@@ -81,7 +85,8 @@ class Page_0(QWidget):
 
             color_one = self.color_one,
             color_two = self.color_two,
-            color_three = self.color_three
+            color_three = self.color_three,
+            color_red = self.color_red
         )
         self.walletkey_widget.clicked.connect(self.walletkey_btn_enter_clicked)
         self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)

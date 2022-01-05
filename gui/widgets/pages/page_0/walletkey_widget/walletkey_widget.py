@@ -23,7 +23,8 @@ class Walletkey_Widget(QWidget):
         
         color_one = "#b9cefe",
         color_two = "#8aadff",
-        color_three = "#6c98fe"
+        color_three = "#6c98fe",
+        color_red = "#fb4646"
         ):
         super().__init__()
         self._parent = parent
@@ -35,6 +36,7 @@ class Walletkey_Widget(QWidget):
         self.color_one = color_one
         self.color_two = color_two
         self.color_three = color_three
+        self.color_red = color_red
         self.setup_Ui()
         self.setup_thread()
         self.sig_n_slot()
@@ -53,13 +55,17 @@ class Walletkey_Widget(QWidget):
             self.key_remember_ckbox_istoggled = False
     
     def appear_warning_window(self):
-        self.warning_window = QWidget(self._parent)
-        self.warning_window.setStyleSheet(f'''
+        self.warning_window_widget = QWidget(self._parent)
+        self.warning_window_widget.setAttribute(Qt.WA_TranslucentBackground)
+        self.warning_window_widget.resize(350, 210)
+        self.warning_window_widget.move(100, 100)
+        self.warning_window_layout = QVBoxLayout(self.warning_window_widget)
+        
+        self.warning_window_frame = QFrame()
+        self.warning_window_frame.setStyleSheet(f'''
             background-color: {self.bg_one}
         ''')
-        self.warning_window.resize(350, 200)
-        self.warning_window.move(100, 100)
-        self.warning_window_vlayout = QVBoxLayout(self.warning_window)
+        self.warning_window_vlayout = QVBoxLayout(self.warning_window_frame)
         
         self.warning_title = QLabel()
         self.warning_title.setStyleSheet('''
@@ -83,7 +89,7 @@ class Walletkey_Widget(QWidget):
         self.btn_yes.setObjectName("btn_warning1_y")
         self.btn_yes.setText("Yes. I Remember Key")
         self.btn_yes.setStyleSheet(f'''
-            background-color: #fb4646;
+            background-color: {self.color_red};
             font: bold 13px;
             color: {self.bg_three};
             height: 40px;
@@ -104,9 +110,9 @@ class Walletkey_Widget(QWidget):
         self.btn_no.clicked.connect(self.btn_no_clicked)
         self.btn_hlayout.addWidget(self.btn_no)
         
-        
         self.warning_window_vlayout.addWidget(self.btn_frame)
-        self.warning_window.show()
+        self.warning_window_layout.addWidget(self.warning_window_frame, alignment=Qt.AlignCenter)
+        self.warning_window_widget.show()
         pass
     
     def btn_yes_clicked(self):
@@ -116,7 +122,7 @@ class Walletkey_Widget(QWidget):
             secretkey = self.lineedit_secretkey.text()
         )
         Function_Login.save_ckbox_remember_key(True)
-        self.warning_window.close()
+        self.warning_window_widget.close()
         pass
     
     def btn_no_clicked(self):
@@ -124,7 +130,7 @@ class Walletkey_Widget(QWidget):
         Function_Login.save_key(None, None)
         Function_Login.save_ckbox_remember_key(False)
         self.key_remember_ckbox.setChecked(False)
-        self.warning_window.close()
+        self.warning_window_widget.close()
         pass
     
     def btn_key_enter_clicked(self):
