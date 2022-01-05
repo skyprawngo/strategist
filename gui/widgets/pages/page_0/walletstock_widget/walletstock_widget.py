@@ -29,4 +29,4 @@ class Walletstock_Widget(QWidget):
         self.setup_Ui()
         
     def setup_Ui(self):
-        
+        pass

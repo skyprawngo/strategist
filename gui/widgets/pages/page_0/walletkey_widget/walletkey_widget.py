@@ -4,7 +4,7 @@ from func.func_ccxt import Function_ccxt
 from func.func_userdata import Function_Login
 from gui.themes.load_item_path import Load_Item_Path
 
-from gui.widgets.pages.page_0.wallet_key_widget.btn_apikey_enter import Btn_Apikey_enter
+from gui.widgets.pages.page_0.walletkey_widget.btn_apikey_enter import Btn_Apikey_enter
 from gui.widgets.check_box.check_box import Check_Box
 
 
@@ -124,7 +124,6 @@ class Walletkey_Widget(QWidget):
         pass
     
     def btn_key_enter_clicked(self):
-        self.clicked.emit(self.btn_key_enter)
         self.remember_ckbox_pressed()
         
         Function_ccxt.set_account(
@@ -146,6 +145,9 @@ class Walletkey_Widget(QWidget):
         
         if balance:
             self.warning_correct_key_label.hide()
+            print(balance)
+            print(id(balance))
+            self.clicked.emit(balance)
             pass
     
     def sig_n_slot(self):

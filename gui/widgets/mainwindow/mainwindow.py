@@ -117,7 +117,7 @@ class Ui_MainWindow(object):
         self.not_title_bar_frame.setFrameShadow(QFrame.Raised)
         self.not_title_bar_hlayout = QHBoxLayout(self.not_title_bar_frame)
         self.not_title_bar_hlayout.setObjectName(u"not_title_bar_hlayout")
-        self.not_title_bar_hlayout.setContentsMargins(3, 5, 3, 3)
+        self.not_title_bar_hlayout.setContentsMargins(3, 0, 3, 3)
         self.not_title_bar_hlayout.setSpacing(0)
         
                         # left_menu_bar_frame(

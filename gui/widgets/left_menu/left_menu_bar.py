@@ -195,7 +195,7 @@ class Ui_Left_Menu_Column_Widget(QWidget):
 
     def setupUi(self):
         self.left_menu_bar_vlayout = QVBoxLayout(self)
-        self.left_menu_bar_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.left_menu_bar_vlayout.setContentsMargins(0, 5, 0, 0)
         self.left_menu_bar_vlayout.setSpacing(0)
 
         self.btn_toggle_frame = QFrame()

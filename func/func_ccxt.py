@@ -16,7 +16,7 @@ class Function_ccxt:
     def get_balance():
         try:
             balance = Function_ccxt.binance.fetch_balance()
-            print(balance)
+            
         except:
             balance = None
             print("balance error!")

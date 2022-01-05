@@ -2,10 +2,12 @@ from module.pyside6_module_import import *
 from gui.widgets.scroll_area.scroll_area import Scroll_Area
 from gui.widgets.check_box.check_box import Check_Box
 
-from .wallet_key_widget.walletkey_widget import Walletkey_Widget
+from .walletkey_widget.walletkey_widget import Walletkey_Widget
+from .walletstock_widget.walletstock_widget import Walletstock_Widget
 
 
 class Page_0(QWidget):
+    btn_enter_clicked = Signal(object)
     def __init__(
         self,
         bg_one = "#e0e3ea",
@@ -26,12 +28,23 @@ class Page_0(QWidget):
         self.color_three = color_three
         self.setupUi()
     
+    def walletkey_btn_enter_clicked(self):
+        balance = self.sender()
+        print(balance)
+        self.btn_enter_clicked.emit(self.sender())
+    
     def setupUi(self):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.vlayout = QVBoxLayout(self)
-        self.vlayout.setContentsMargins(0, 0, 0, 0)
+        self.vlayout.setContentsMargins(0, 5, 0, 0)
         self.vlayout.setSpacing(0)
         
+        self.shadow = QGraphicsDropShadowEffect()
+        self.shadow.setBlurRadius(20)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 160))
+        self.setGraphicsEffect(self.shadow)
         
         self.scrollarea = Scroll_Area(
             parent = self,
@@ -67,6 +80,7 @@ class Page_0(QWidget):
             color_two = self.color_two,
             color_three = self.color_three
         )
+        self.walletkey_widget.clicked.connect(self.walletkey_btn_enter_clicked)
         self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
         
         self.distribution_frame = QFrame()
@@ -77,9 +91,18 @@ class Page_0(QWidget):
         self.stock_chart_frame.setStyleSheet("background-color: lightgreen;")
         self.scrollarea_glayout.addWidget(self.stock_chart_frame, 0, 5, 3, 7)
         
-        self.wallet_stock_frame = QFrame()
-        self.wallet_stock_frame.setStyleSheet(f"background-color: {self.bg_three};")
-        self.scrollarea_glayout.addWidget(self.wallet_stock_frame, 1, 0, 2, 5)
+        self.walletstock_widget = Walletstock_Widget(
+            parent = self,
+            bg_one = self.bg_one,
+            bg_two = self.bg_two,
+            bg_three = self.bg_three,
+
+            color_one = self.color_one,
+            color_two = self.color_two,
+            color_three = self.color_three
+        )
+        self.walletstock_widget.setStyleSheet(f"background-color: {self.bg_three};")
+        self.scrollarea_glayout.addWidget(self.walletstock_widget, 1, 0, 2, 5)
         
         
         self.frame2 = QFrame()
