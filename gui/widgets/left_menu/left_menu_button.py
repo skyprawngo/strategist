@@ -1,7 +1,4 @@
-
-
 from module.pyside6_module_import import *
-
 
 class Left_Menu_Button(QPushButton):
     clicked = Signal
