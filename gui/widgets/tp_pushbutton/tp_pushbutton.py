@@ -3,10 +3,10 @@ from module.pyside6_module_import import *
 
 # Pushbutton_Template
 class Tp_PushButton(QPushButton):
-    clicked = Signal
-    released = Signal
-    _on = Signal
-    _off = Signal
+    clicked = Signal(object)
+    released = Signal()
+    _on = Signal(object)
+    _off = Signal()
     
     def __init__(
         self,
@@ -62,12 +62,12 @@ class Tp_PushButton(QPushButton):
         self.color_three = color_three # btn pressed color
         
         self.icon_color_one = icon_color_one # tooltip text color
-        self.icon_color_two = icon_color_two,
-        self.icon_color_three = icon_color_three,
+        self.icon_color_two = icon_color_two
+        self.icon_color_three = icon_color_three
         
-        self.is_toggle_btn = is_toggle_btn,
-        self.is_tooltip_btn = is_tooltip_btn,
-        self.btn_toggled = btn_toggled,
+        self.is_toggle_btn = is_toggle_btn
+        self.is_tooltip_btn = is_tooltip_btn
+        self.btn_toggled = btn_toggled
         
         self.setup_Ui()
     
@@ -75,7 +75,6 @@ class Tp_PushButton(QPushButton):
         self.setObjectName(self.btn_id)
         self.setCursor(Qt.PointingHandCursor)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setSizePolicy(self.btn_sizepolicy[0],self.btn_sizepolicy[1])
         self.setStyleSheet(f"background-color: {self.bg_one}")
         
         if self.btn_layout == "vlayout":
@@ -86,7 +85,7 @@ class Tp_PushButton(QPushButton):
         self.btn_image = QSvgWidget()
         self.btn_image.setFixedSize(self.icon_size[0], self.icon_size[1])
         self.set_icon(self.icon_file_path)
-        self._layout.addWidget(self.btn_image)
+        self._layout.addWidget(self.btn_image, alignment=Qt.AlignCenter)
         
         self.btn_text = QLabel()
         self.btn_text.setText(self.tooltip_text)
@@ -125,7 +124,7 @@ class Tp_PushButton(QPushButton):
                 elif not self.btn_toggled:
                     self.btn_toggled = True
                     self.set_btn_bg_color = self.color_three
-                    self._on.emit()
+                    self._on.emit(self)
             elif not self.is_toggle_btn:
                 self.set_btn_bg_color = self.color_three
             self.btnStyle()
@@ -149,7 +148,7 @@ class Tp_PushButton(QPushButton):
         self.clicked.emit()
     
     def mouseReleaseEvent(self, event):
-        self.changStyle(QEvent.MouseButtonRelease)
+        self.changeStyle(QEvent.MouseButtonRelease)
         self.released.emit()
                 
     def set_icon(self, icon_file_path):

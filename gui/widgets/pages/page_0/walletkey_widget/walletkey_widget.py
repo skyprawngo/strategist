@@ -160,7 +160,7 @@ class Walletkey_Widget(QWidget):
     def thread_operation_completed(self):
         if not Function_ccxt.wallet_balance:
             self.walletkey_glayout.addWidget(self.warning_correct_key_label, 3, 0, 1, 1)
-            self.btn_key_enter.btn_istoggle_active = True
+            self.btn_key_enter.set_toggled(False)
             self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
             
         elif Function_ccxt.wallet_balance:
@@ -177,7 +177,7 @@ class Walletkey_Widget(QWidget):
         self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
         
         self.lineedit_apikey.returnPressed.connect(self.apikey_return)
-        self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
+        self.btn_key_enter._on.connect(self.btn_key_enter_clicked)
         self.thread_wallet_update.done_signal.connect(self.thread_operation_completed)
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
         
@@ -221,8 +221,13 @@ class Walletkey_Widget(QWidget):
             font: 400 15px;
         ''')
         
-        self.btn_key_enter = Btn_Apikey_enter(
+        self.btn_key_enter = Tp_PushButton(
+            parent = self,
+            app_parent = self._app_parent,
+            btn_id = "btn_apikey_enter",
+            
             icon_file_path = Load_Item_Path().set_svg_icon_path("check.svg"),
+            icon_size = [35, 35],
             
             bg_one = self.bg_one,
             bg_two = self.bg_two,
@@ -230,7 +235,9 @@ class Walletkey_Widget(QWidget):
 
             color_one = self.color_one,
             color_two = self.color_two,
-            color_three = self.color_three
+            color_three = self.color_three,
+            
+            is_toggle_btn = True
         )
         self.btn_key_enter.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         self.btn_key_enter.setFixedWidth(60)
