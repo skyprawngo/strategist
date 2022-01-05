@@ -6,12 +6,13 @@ from func.func_userdata import Function_Login
 from gui.themes.load_item_path import Load_Item_Path
 
 from gui.widgets.pages.page_0.walletkey_widget.btn_apikey_enter import Btn_Apikey_enter
-from gui.widgets.check_box.check_box import Check_Box
+from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 
 
 class Walletkey_Widget(QWidget):
     clicked = Signal(object)
+    thread_operation_completed_signal = Signal(object)
     
     def __init__(
         self,
@@ -163,23 +164,22 @@ class Walletkey_Widget(QWidget):
             
         elif Function_ccxt.wallet_balance:
             self.warning_correct_key_label.hide()
-            
-        str = self.thread_wallet_update.sender()
-        print(str)
-        
+            self.thread_operation_completed_signal.emit(Function_ccxt.wallet_balance)
         self.btn_key_enter.setEnabled(True)
         self.lineedit_apikey.setEnabled(True)
         self.lineedit_secretkey.setEnabled(True)
         pass
     
     def sig_n_slot(self):
-        self.lineedit_apikey.returnPressed.connect(self.apikey_return)
         self.lineedit_apikey.setText(Function_Login.load_key()[0])
         self.lineedit_secretkey.setText(Function_Login.load_key()[1])
-        self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
-        self.thread_wallet_update.sig.connect(self.thread_operation_completed)
-        self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
         self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
+        
+        self.lineedit_apikey.returnPressed.connect(self.apikey_return)
+        self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
+        self.thread_wallet_update.done_signal.connect(self.thread_operation_completed)
+        self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
+        
         self.key_remember_ckbox_istoggled = Function_Login.load_ckbox_remember_key()
         pass
 
@@ -237,7 +237,7 @@ class Walletkey_Widget(QWidget):
         self.warning_correct_key_label = QLabel("Set Correct Key!")
         self.warning_correct_key_label.setAttribute(Qt.WA_TranslucentBackground)
         
-        self.key_remember_ckbox = Check_Box(
+        self.key_remember_ckbox = Tp_Check_Box(
             bg_one = self.bg_one,
             bg_two = self.bg_two,
             bg_three = self.bg_three,

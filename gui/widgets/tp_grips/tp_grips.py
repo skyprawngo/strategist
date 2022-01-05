@@ -24,7 +24,7 @@ from module.pyside6_module_import import *
 
 # PY GRIPS
 # ///////////////////////////////////////////////////////////////
-class PyGrips(QWidget):
+class TpGrips(QWidget):
     def __init__(self, parent, position, disable_color = False):
 
         # SETUP UI

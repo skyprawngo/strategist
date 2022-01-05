@@ -33,22 +33,22 @@ class Btn_Apikey_enter(QPushButton):
     
     def setup_Ui(self):
         self.setObjectName("btn_walletkey_enter")
-        self.setStyleSheet(f"background-color: {self.color_one}")
+        self.setStyleSheet(f"background-color: {self.bg_two}")
         self.vlayout = QVBoxLayout(self)
         self.setIcon(QIcon(self.icon_file_path).pixmap(QSize(50, 50)))
     
     def changetoggleStyle(self, event):
         if event == QEvent.Enter:
             if not self.btn_istoggle_active:
-                self.set_btn_bg_color = self.color_two
+                self.set_btn_bg_color = self.color_one
             self.btnStyle()
         elif event == QEvent.Leave:
             if not self.btn_istoggle_active:
-                self.set_btn_bg_color = self.color_one
+                self.set_btn_bg_color = self.bg_two
             self.btnStyle()
         elif event == QEvent.MouseButtonPress:
             if self.btn_istoggle_active:
-                self.set_btn_bg_color = self.color_two
+                self.set_btn_bg_color = self.bg_one
                 self.btn_istoggle_active = False
             elif not self.btn_istoggle_active:
                 self.set_btn_bg_color = self.color_three

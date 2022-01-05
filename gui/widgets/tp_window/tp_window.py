@@ -2,7 +2,7 @@ from module.pyside6_module_import import *
 from gui.themes.load_item_path import Load_Item_Path
 
 
-class PyWindow(QFrame):
+class TpWindow(QFrame):
     def __init__(
         self,
         app_parent,

@@ -7,7 +7,7 @@ from gui.themes.themes import Themes
 from gui.themes.theme_switch import Theme_Switch
 
 
-from gui.widgets.pywindow.pywindow import PyWindow
+from gui.widgets.tp_window.tp_window import TpWindow
 from gui.widgets.title_bar.title_bar import Ui_Title_Bar_Widget
 from gui.widgets.left_menu.left_menu_bar import Ui_Left_Menu_Column_Widget
 from gui.widgets.pages.mainpages import MainPages
@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
 
 
                 # PyWindow(
-        self.window = PyWindow(
+        self.window = TpWindow(
             app_parent = UiMainWindow,
             startup_size = self.theme_settings["startup_size"],
             minimum_size = self.theme_settings["minimum_size"],

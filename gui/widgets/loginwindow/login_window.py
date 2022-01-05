@@ -6,7 +6,7 @@ from gui.themes.load_item_path import Load_Item_Path
 from gui.themes.theme_settings import Settings
 from gui.themes.themes import Themes
 
-from gui.widgets.check_box.check_box import Check_Box
+from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 class Login_Window(QMainWindow):
     def __init__(
@@ -111,7 +111,7 @@ class Login_Window(QMainWindow):
         ''')
         self.lineedit_password.returnPressed.connect(self.btn_login_clicked)
         
-        self.login_remember_ckbox = Check_Box()
+        self.login_remember_ckbox = Tp_Check_Box()
         self.login_remember_ckbox.setText("Remember Login Id and Password")
 
         self.btn_login_frame = QFrame()

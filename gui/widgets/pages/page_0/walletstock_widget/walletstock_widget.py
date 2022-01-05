@@ -1,7 +1,6 @@
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
-from func.func_userdata import Function_Login
 from gui.themes.load_item_path import Load_Item_Path
 
 class Walletstock_Widget(QWidget):
@@ -27,6 +26,22 @@ class Walletstock_Widget(QWidget):
         self.color_three = color_three
         
         self.setup_Ui()
+        self._parent.walletkey_completed_signal.connect(self.key_receiver)
         
+    def key_receiver(self):
+        print(Function_ccxt.wallet_balance)
+        pass
+    
     def setup_Ui(self):
+        self.walletstock_widget_vlayout = QVBoxLayout(self)
+        self.walletstock_widget_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.walletstock_widget_vlayout.setSpacing(0)
+        
+        self.walletstock_frame = QFrame()
+        self.walletstock_frame.setStyleSheet(f'''
+            background-color: {self.bg_three}                   
+        ''')
+        
+        self.walletstock_widget_vlayout.addWidget(self.walletstock_frame)
+        
         pass

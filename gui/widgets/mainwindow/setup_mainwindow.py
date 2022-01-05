@@ -3,7 +3,7 @@ from module.pyside6_module_import import *
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
 from gui.widgets.loginwindow.login_window import Login_Window
 from gui.widgets.pages.mainpages import MainPages
-from gui.widgets.pygrips.py_grips import PyGrips
+from gui.widgets.tp_grips.tp_grips import TpGrips
 
 class Setup_MainWindow:
     def __init__(self):
@@ -71,14 +71,14 @@ class Setup_MainWindow:
         self.setAttribute(Qt.WA_TranslucentBackground)
         
         self.hide_grips = True
-        self.left_grip = PyGrips(self, "left", self.hide_grips)
-        self.right_grip = PyGrips(self, "right", self.hide_grips)
-        self.top_grip = PyGrips(self, "top", self.hide_grips)
-        self.bottom_grip = PyGrips(self, "bottom", self.hide_grips)
-        self.top_left_grip = PyGrips(self, "top_left", self.hide_grips)
-        self.top_right_grip = PyGrips(self, "top_right", self.hide_grips)
-        self.bottom_left_grip = PyGrips(self, "bottom_left", self.hide_grips)
-        self.bottom_right_grip = PyGrips(self, "bottom_right", self.hide_grips)
+        self.left_grip = TpGrips(self, "left", self.hide_grips)
+        self.right_grip = TpGrips(self, "right", self.hide_grips)
+        self.top_grip = TpGrips(self, "top", self.hide_grips)
+        self.bottom_grip = TpGrips(self, "bottom", self.hide_grips)
+        self.top_left_grip = TpGrips(self, "top_left", self.hide_grips)
+        self.top_right_grip = TpGrips(self, "top_right", self.hide_grips)
+        self.bottom_left_grip = TpGrips(self, "bottom_left", self.hide_grips)
+        self.bottom_right_grip = TpGrips(self, "bottom_right", self.hide_grips)
     
         self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
         self.ui.left_menu.clicked.connect(self.btn_clicked)

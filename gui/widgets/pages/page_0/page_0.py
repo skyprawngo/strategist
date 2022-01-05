@@ -1,13 +1,13 @@
 from module.pyside6_module_import import *
-from gui.widgets.scroll_area.scroll_area import Scroll_Area
-from gui.widgets.check_box.check_box import Check_Box
+from gui.widgets.tp_scroll_area.tp_scroll_area import Scroll_Area
+from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 from .walletkey_widget.walletkey_widget import Walletkey_Widget
 from .walletstock_widget.walletstock_widget import Walletstock_Widget
 
 
 class Page_0(QWidget):
-    btn_enter_clicked = Signal(object)
+    walletkey_completed_signal = Signal(object)
     def __init__(
         self,
         app_parent,
@@ -34,10 +34,8 @@ class Page_0(QWidget):
         
         self.setupUi()
     
-    def walletkey_btn_enter_clicked(self):
-        balance = self.sender()
-        # print(balance)
-        self.btn_enter_clicked.emit(self.sender())
+    def walletkey_completed(self):
+        self.walletkey_completed_signal.emit(self.walletkey_widget.sender())
     
     def setupUi(self):
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -53,7 +51,7 @@ class Page_0(QWidget):
         self.setGraphicsEffect(self.shadow)
         
         self.scrollarea = Scroll_Area(
-            parent = self,
+
             bg_one = self.bg_one,
             bg_two = self.bg_two,
             bg_three = self.bg_three,
@@ -74,7 +72,7 @@ class Page_0(QWidget):
         ''')
         
         self.scrollarea_glayout = QGridLayout(self.scrollarea_widget)
-        self.scrollarea_glayout.setContentsMargins(5, 0, 5, 0)
+        self.scrollarea_glayout.setContentsMargins(5, 2, 5, 0)
         
         self.walletkey_widget = Walletkey_Widget(
             parent = self,
@@ -88,7 +86,7 @@ class Page_0(QWidget):
             color_three = self.color_three,
             color_red = self.color_red
         )
-        self.walletkey_widget.clicked.connect(self.walletkey_btn_enter_clicked)
+        self.walletkey_widget.thread_operation_completed_signal.connect(self.walletkey_completed)
         self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
         
         self.distribution_frame = QFrame()

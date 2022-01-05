@@ -3,7 +3,7 @@ from func.func_ccxt import Function_ccxt
 import time
 
 class Thread_getbalance(QThread):
-    sig = Signal(str)
+    done_signal = Signal()
     
     def __init__(
         self, 
@@ -22,11 +22,7 @@ class Thread_getbalance(QThread):
         Function_ccxt.set_account(
             apikey = apikey,
             secretkey = secretkey
-        )
-        for i in range(3):
-            print("1초 경과")
-            time.sleep(1)
-            
+        )       
         Function_ccxt.get_balance()
-        self.sig.emit("get_balance_done")
+        self.done_signal.emit()
         self.exiting = False
