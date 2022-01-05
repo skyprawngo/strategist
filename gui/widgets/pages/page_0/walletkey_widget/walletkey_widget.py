@@ -1,6 +1,7 @@
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
+from func.thread_ccxt import Thread_ccxt
 from func.func_userdata import Function_Login
 from gui.themes.load_item_path import Load_Item_Path
 
@@ -15,6 +16,7 @@ class Walletkey_Widget(QWidget):
     def __init__(
         self,
         parent,
+        app_parent,
         bg_one = "#e0e3ea",
         bg_two = "#f5f6fa",
         bg_three = "#fff",
@@ -25,6 +27,7 @@ class Walletkey_Widget(QWidget):
         ):
         super().__init__()
         self._parent = parent
+        self._app_parent = app_parent
         self.bg_one = bg_one
         self.bg_two = bg_two
         self.bg_three = bg_three
@@ -33,6 +36,7 @@ class Walletkey_Widget(QWidget):
         self.color_two = color_two
         self.color_three = color_three
         self.setup_Ui()
+        self.setup_thread()
         self.sig_n_slot()
         
     def apikey_return(self):
@@ -145,16 +149,26 @@ class Walletkey_Widget(QWidget):
         
         if balance:
             self.warning_correct_key_label.hide()
-            print(balance)
-            print(id(balance))
             self.clicked.emit(balance)
             pass
+    
+    def setup_thread(self):
+        self.wallet_update = Thread_ccxt()
+        pass
+    
+    def thread_operation(self):
+        pass
+    
+    def thread_operation_completed(self):
+        pass
     
     def sig_n_slot(self):
         self.lineedit_apikey.returnPressed.connect(self.apikey_return)
         self.lineedit_apikey.setText(Function_Login.load_key()[0])
         self.lineedit_secretkey.setText(Function_Login.load_key()[1])
         self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
+        self.btn_key_enter.clicked.connect(self.thread_operation)
+        self.btn_key_enter.clicked.connect(self.thread_operation_completed)
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
         self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
         self.key_remember_ckbox_istoggled = Function_Login.load_ckbox_remember_key()
@@ -166,7 +180,7 @@ class Walletkey_Widget(QWidget):
         self.walletkey_widget_vlayout.setContentsMargins(0, 0, 0, 0)
         self.walletkey_widget_vlayout.setSpacing(0)
         self.walletkey_frame = QFrame()
-        self.setStyleSheet("background-color: #fff;")
+        self.setStyleSheet(f"background-color: {self.bg_three};")
         
         self.walletkey_glayout = QGridLayout(self.walletkey_frame)
         self.walletkey_glayout.setContentsMargins(10, 10, 10, 5)
@@ -183,7 +197,7 @@ class Walletkey_Widget(QWidget):
         self.lineedit_apikey.setFixedHeight(50)
         self.lineedit_apikey.setAlignment(Qt.AlignHCenter)
         self.lineedit_apikey.setStyleSheet(f'''
-            background-color: "#eaebec";
+            background-color: {self.bg_two};
             border-radius: {self.lineedit_apikey.height()/3};
             font: 400 15px;
         ''')
@@ -192,7 +206,7 @@ class Walletkey_Widget(QWidget):
         self.lineedit_secretkey.setFixedHeight(50)
         self.lineedit_secretkey.setAlignment(Qt.AlignHCenter)
         self.lineedit_secretkey.setStyleSheet(f'''
-            background-color: "#eaebec";
+            background-color: {self.bg_two};
             border-radius: {self.lineedit_secretkey.height()/3}px;
             font: 400 15px;
         ''')

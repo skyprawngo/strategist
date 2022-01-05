@@ -169,7 +169,9 @@ class Ui_MainWindow(object):
         self.main_page_vlayout.setContentsMargins(0, 0, 0, 0)
         self.main_page_vlayout.setSpacing(0)
                             # load_page(
-        self.load_pages = MainPages()
+        self.load_pages = MainPages(
+            app_parent = UiMainWindow,
+        )
                             # )load_page
         self.main_page_vlayout.addWidget(self.load_pages)
                         # )main_page_frame

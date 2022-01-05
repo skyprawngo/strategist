@@ -10,6 +10,7 @@ class Page_0(QWidget):
     btn_enter_clicked = Signal(object)
     def __init__(
         self,
+        app_parent,
         bg_one = "#e0e3ea",
         bg_two = "#f5f6fa",
         bg_three = "#fff",
@@ -19,6 +20,7 @@ class Page_0(QWidget):
         color_three = "#6c98fe"
     ):
         super().__init__()
+        self._app_parent = app_parent
         self.bg_one = bg_one
         self.bg_two = bg_two
         self.bg_three = bg_three
@@ -30,7 +32,7 @@ class Page_0(QWidget):
     
     def walletkey_btn_enter_clicked(self):
         balance = self.sender()
-        print(balance)
+        # print(balance)
         self.btn_enter_clicked.emit(self.sender())
     
     def setupUi(self):
@@ -72,6 +74,7 @@ class Page_0(QWidget):
         
         self.walletkey_widget = Walletkey_Widget(
             parent = self,
+            app_parent = self._app_parent,
             bg_one = self.bg_one,
             bg_two = self.bg_two,
             bg_three = self.bg_three,

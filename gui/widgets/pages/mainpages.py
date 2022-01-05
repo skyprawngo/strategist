@@ -9,10 +9,12 @@ from gui.themes.themes import Themes
 
 class MainPages(QStackedWidget):
     def __init__(
-        self
+        self,
+        app_parent
 
     ):
         super().__init__()
+        self._app_parent = app_parent
         self.setupUi()
     
         
@@ -28,6 +30,7 @@ class MainPages(QStackedWidget):
         self.page_0_vlayout = QVBoxLayout(self.page_0_frame)
         self.page_0_vlayout.setContentsMargins(0, 0, 0, 0)
         self.page_0 = Page_0(
+            app_parent = self._app_parent,
             bg_one = self.themes["app_color"]["bg_one"],
             bg_two = self.themes["app_color"]["bg_two"],
             bg_three = self.themes["app_color"]["bg_three"],
