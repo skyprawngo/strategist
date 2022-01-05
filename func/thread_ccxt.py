@@ -1,42 +1,32 @@
 from module.pyside6_module_import import *
-from module.ccxt_module_import import *
+from func.func_ccxt import Function_ccxt
 import time
 
 class Thread_getbalance(QThread):
-    signal = Signal()
-    binance = ccxt.binance()
-    apikey = None
-    secretkey = None
-    wallet_balance = {}
+    sig = Signal(str)
     
     def __init__(
         self, 
-        app_parent = None
+        parent,
+        app_parent
     ):
         QThread.__init__(self, app_parent)
-        self. exiting = None
-        
-    def set_account(self, apikey, secretkey):
-        self.apikey = apikey
-        self.secretkey = secretkey
-        self.binance = ccxt.binance(config={
-            'apiKey': apikey,
-            'secret': secretkey
-        })
+        self._parent = parent
+        self._app_parent = app_parent
+        self.exiting = False
     
     def run(self):
-        try:
-            balance = self.binance.fetch_balance()
-            balance_total = balance["total"]
-            for coin in balance_total:
-                if balance_total[coin] == 0:
-                    pass
-                else :
-                    self.wallet_balance.setdefault(coin, balance[coin])
-        except:
-            balance = None
-            print("balance error!")
-        
-        time.sleep(3)
-        print(self.wallet_balance)
-        return balance
+        self.exiting = True
+        apikey = self._parent.lineedit_apikey.text()
+        secretkey = self._parent.lineedit_secretkey.text()
+        Function_ccxt.set_account(
+            apikey = apikey,
+            secretkey = secretkey
+        )
+        for i in range(3):
+            print("1초 경과")
+            time.sleep(1)
+            
+        Function_ccxt.get_balance()
+        self.sig.emit("get_balance_done")
+        self.exiting = False

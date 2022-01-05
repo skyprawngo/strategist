@@ -1,7 +1,7 @@
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
-from func.thread_ccxt import Thread_ccxt
+from func.thread_ccxt import Thread_getbalance
 from func.func_userdata import Function_Login
 from gui.themes.load_item_path import Load_Item_Path
 
@@ -128,38 +128,42 @@ class Walletkey_Widget(QWidget):
         pass
     
     def btn_key_enter_clicked(self):
-        self.remember_ckbox_pressed()
-        
-        Function_ccxt.set_account(
-            self.lineedit_apikey.text(),
-            self.lineedit_secretkey.text()
-        )
-        balance = Function_ccxt.get_balance()
-        if not balance:
-            self.walletkey_glayout.addWidget(self.warning_correct_key_label, 3, 0, 1, 1)
-            self.btn_key_enter.btn_istoggle_active = True
-            self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
-        
-        if self.btn_key_enter.btn_istoggle_active:
-            self.lineedit_apikey.setEnabled(False)
-            self.lineedit_secretkey.setEnabled(False)
-        elif not self.btn_key_enter.btn_istoggle_active:
-            self.lineedit_apikey.setEnabled(True)
-            self.lineedit_secretkey.setEnabled(True)
-        
-        if balance:
-            self.warning_correct_key_label.hide()
-            self.clicked.emit(balance)
-            pass
+        self.thread_operation()
+        pass
     
     def setup_thread(self):
-        self.wallet_update = Thread_ccxt()
+        self.thread_wallet_update = Thread_getbalance(
+            parent = self,
+            app_parent = self._app_parent
+        )
         pass
     
     def thread_operation(self):
+        self.remember_ckbox_pressed()
+        if not self.thread_wallet_update.isRunning():
+            self.lineedit_apikey.setEnabled(False)
+            self.lineedit_secretkey.setEnabled(False)
+            
+            self.thread_wallet_update.exiting=False
+            self.thread_wallet_update.start()
+            self.btn_key_enter.setEnabled(False)
         pass
     
     def thread_operation_completed(self):
+        if not Function_ccxt.wallet_balance:
+            self.walletkey_glayout.addWidget(self.warning_correct_key_label, 3, 0, 1, 1)
+            self.btn_key_enter.btn_istoggle_active = True
+            self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
+            
+        elif Function_ccxt.wallet_balance:
+            self.warning_correct_key_label.hide()
+            
+        str = self.thread_wallet_update.sender()
+        print(str)
+        
+        self.btn_key_enter.setEnabled(True)
+        self.lineedit_apikey.setEnabled(True)
+        self.lineedit_secretkey.setEnabled(True)
         pass
     
     def sig_n_slot(self):
@@ -167,8 +171,7 @@ class Walletkey_Widget(QWidget):
         self.lineedit_apikey.setText(Function_Login.load_key()[0])
         self.lineedit_secretkey.setText(Function_Login.load_key()[1])
         self.btn_key_enter.clicked.connect(self.btn_key_enter_clicked)
-        self.btn_key_enter.clicked.connect(self.thread_operation)
-        self.btn_key_enter.clicked.connect(self.thread_operation_completed)
+        self.thread_wallet_update.sig.connect(self.thread_operation_completed)
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
         self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
         self.key_remember_ckbox_istoggled = Function_Login.load_ckbox_remember_key()

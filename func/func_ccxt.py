@@ -25,9 +25,5 @@ class Function_ccxt:
                 else :
                     Function_ccxt.wallet_balance.setdefault(coin, balance[coin])
         except:
-            balance = None
-            print("balance error!")
-        
-        time.sleep(3)
-        print(Function_ccxt.wallet_balance)
-        return balance
+            Function_ccxt.wallet_balance = {}
+        return Function_ccxt.wallet_balance
