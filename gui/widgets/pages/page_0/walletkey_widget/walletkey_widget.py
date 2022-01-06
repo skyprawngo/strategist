@@ -12,6 +12,8 @@ from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 
 class Walletkey_Widget(QWidget):
+    clicked = Signal(object)
+    thread_operation_completed_signal = Signal(object, name="balance_done")
     def __init__(
         self,
         parent,
@@ -165,8 +167,6 @@ class Walletkey_Widget(QWidget):
         pass
     
     def sig_n_slot(self):
-        self.clicked = Signal(object)
-        self.thread_operation_completed_signal = Signal(object)
         self.lineedit_apikey.setText(Function_Login.load_key()[0])
         self.lineedit_secretkey.setText(Function_Login.load_key()[1])
         self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())

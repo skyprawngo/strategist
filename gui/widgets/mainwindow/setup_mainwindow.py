@@ -58,7 +58,6 @@ class Setup_MainWindow:
         elif self.ui.left_menu.sender() != None:
             return self.ui.left_menu.sender()
         elif self.ui.load_pages.sender() != None:
-            print("asdf")
             return self.ui.load_pages.sender()   
         elif self.ui.left_column.sender() != None:
             return self.ui.left_column.sender()   
