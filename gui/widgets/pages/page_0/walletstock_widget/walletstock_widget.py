@@ -30,25 +30,38 @@ class Walletstock_Widget(QWidget):
         self._parent.walletkey_completed_signal.connect(self.key_receiver)
         
     def key_receiver(self):
+        self.walletstock_table.horizontalHeader().setVisible(True)
         i = 0
         for coin_name in Function_ccxt.wallet_balance:
-            
+            self.walletstock_table.setRowHeight(i, 28)
             self.walletstock_table.insertRow(i) # Insert row
-            self.walletstock_table.setCellWidget(i, 0, RainBow_Label(i))
-            self.coin_name = QTableWidgetItem()
-            self.coin_name.setText(coin_name)
-            # self.coin_name.setTextAlignment(Qt.AlignTop)
-            self.walletstock_table.setItem(i, 1, self.coin_name)
-            self.walletstock_table.setItem(i, 2, QTableWidgetItem(str("Wanderson"))) # Add name
-            self.walletstock_table.setItem(i, 3, QTableWidgetItem(str("vfx_on_fire_" + str(i)))) # Add nick
-            self.pass_text = QTableWidgetItem()
-            self.pass_text.setTextAlignment(Qt.AlignCenter)
-            self.pass_text.setText("12345" + str(i))
-            self.walletstock_table.setItem(i, 4, self.pass_text) # Add pass
-            self.walletstock_table.setRowHeight(i, 22)
+
+            self.define = RainBow_Label(i)
             
-            # self.walletstock_table.setSpan(i+1, 0, 1, 4)
+            self.coin_name_item = QTableWidgetItem()
+            self.coin_name_item.setText(coin_name)
+
+            self.USD_value_item = QTableWidgetItem()
+            self.USD_value = Function_ccxt.get_price_USD(coin_name)
+            self.USD_value_item.setText(str(self.USD_value))
+
+            self.coin_amount_item = QTableWidgetItem()
+            self.coin_amount = Function_ccxt.wallet_balance[coin_name]["total"]
+            self.coin_amount_item.setText(str(round(self.coin_amount,3)))
+            
+            self.coin_to_USD_item = QTableWidgetItem()
+            self.coin_to_USD = self.coin_amount * Function_ccxt.get_price_USD(coin_name)
+            self.coin_to_USD_item.setText(str(round(self.coin_to_USD,2)))
+            
+            
+            self.walletstock_table.setCellWidget(i, 0, self.define)
+            self.walletstock_table.setItem(i, 1, self.coin_name_item)
+            self.walletstock_table.setItem(i, 2, self.USD_value_item) 
+            self.walletstock_table.setItem(i, 3, self.coin_amount_item) 
+            self.walletstock_table.setItem(i, 4, self.coin_to_USD_item)
             i += 1
+        self.walletstock_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.walletstock_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         
         
         pass
@@ -65,13 +78,38 @@ class Walletstock_Widget(QWidget):
         self.walletstock_table = Tp_Table_Widget()
         self.walletstock_table.setEnabled(False)
         
-        self.walletstock_table.setColumnCount(3)
+        self.walletstock_table.setColumnCount(5)
         self.walletstock_table.verticalHeader().setVisible(False)
         self.walletstock_table.horizontalHeader().setVisible(False)
         self.walletstock_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.walletstock_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         self.walletstock_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.walletstock_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        
+        self.column_1 = QTableWidgetItem()
+        self.column_1.setTextAlignment(Qt.AlignCenter)
+        self.column_1.setText("")
+
+        self.column_2 = QTableWidgetItem()
+        self.column_2.setTextAlignment(Qt.AlignVCenter)
+        self.column_2.setText("  Coin")
+
+        self.column_3 = QTableWidgetItem()
+        self.column_3.setTextAlignment(Qt.AlignVCenter)
+        self.column_3.setText("  Value(USD)")
+
+        self.column_4 = QTableWidgetItem()
+        self.column_4.setTextAlignment(Qt.AlignVCenter)
+        self.column_4.setText("  Amount")
+       
+        self.column_5 = QTableWidgetItem()
+        self.column_5.setTextAlignment(Qt.AlignVCenter)
+        self.column_5.setText("  Asset(USD)")
+        
+        self.walletstock_table.setHorizontalHeaderItem(0, self.column_1)
+        self.walletstock_table.setHorizontalHeaderItem(1, self.column_2)
+        self.walletstock_table.setHorizontalHeaderItem(2, self.column_3)
+        self.walletstock_table.setHorizontalHeaderItem(3, self.column_4)
+        self.walletstock_table.setHorizontalHeaderItem(4, self.column_5)
         
         self.walletstock_vlayout.addWidget(self.walletstock_table)
         self.walletstock_widget_vlayout.addWidget(self.walletstock_frame)
@@ -88,12 +126,12 @@ class RainBow_Label(QLabel):
     ):
         super().__init__()
         self.order = order
-        self.setFixedSize(15, 15)
+        self.setFixedSize(10, 20)
     def paintEvent(self, e):
         painter = QPainter()
         painter.begin(self)
         painter.setPen(Qt.NoPen)
         painter.setBrush(QColor(self.rainbow[self.order]))
-        painter.drawEllipse(0, 5, 10, 10)
+        painter.drawEllipse(0, 10, 10, 10)
         painter.end()
         

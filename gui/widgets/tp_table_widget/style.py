@@ -3,7 +3,7 @@ style = '''
 /* QTableWidget */
 
 QTableWidget {{	
-	background-color: {_bg_three};
+	background-color: {_color_one};
 	padding: 5px;
 	border-radius: {_border_radius}px;
 	gridline-color: {_bg_three};
@@ -13,7 +13,7 @@ QTableWidget::item{{
 	border-color: none;
 	padding-left: 5px;
 	padding-right: 5px;
-    border-bottom: 1px solid {_bg_three};
+    border-bottom: 1px solid {_color_one};
     color: #000;
 }}
 QTableWidget::item:selected{{
