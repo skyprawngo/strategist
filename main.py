@@ -47,7 +47,6 @@ class MainWindow(QMainWindow):
         if btn.objectName() == "btn_purchased":
             # Select Menu
             self.ui.left_menu.select_only_one(btn.objectName())
-
             # Load Page 2
             MainFunctions.set_page(self, self.ui.load_pages.page_2_frame)
         
@@ -57,10 +56,12 @@ class MainWindow(QMainWindow):
 
             # Load Page 2
             MainFunctions.set_page(self, self.ui.load_pages.page_3_frame)
-        
-        if btn.objectName() == "btn_warning1_y":
-            print("aaaa")
     
+        if btn.objectName() == "btn_apikey_enter":
+            print("aaaa")
+        
+        print(btn.objectName())
+
     def resizeEvent(self, event):
         Setup_MainWindow.resize_grips(self)
 

@@ -57,10 +57,13 @@ class Setup_MainWindow:
             return self.ui.title_bar.sender()
         elif self.ui.left_menu.sender() != None:
             return self.ui.left_menu.sender()
-        elif self.ui.load_pages.sender() != None:
-            return self.ui.load_pages.sender()   
+        elif self.ui.load_pages.page_0.walletkey_widget.sender() != None:
+            # print(self.ui.load_pages.page_0.walletkey_widget.sender())
+            return self.ui.load_pages.page_0.walletkey_widget.sender()
         elif self.ui.left_column.sender() != None:
-            return self.ui.left_column.sender()   
+            return self.ui.left_column.sender()
+        else:
+            print(self.ui.load_pages.page_0.walletkey_widget.sender())
             
            
     
@@ -81,6 +84,7 @@ class Setup_MainWindow:
     
         self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
         self.ui.left_menu.clicked.connect(self.btn_clicked)
+        self.ui.load_pages.page_0.walletkey_completed_signal.connect(self.btn_clicked)
         
         
         

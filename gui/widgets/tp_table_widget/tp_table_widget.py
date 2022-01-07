@@ -12,7 +12,7 @@ class Tp_Table_Widget(QTableWidget):
         color_two = "#8aadff",
         color_three = "#6c98fe",
         
-        border_radius = 7
+        border_radius = 15
     ):
         super().__init__()
         
@@ -27,6 +27,7 @@ class Tp_Table_Widget(QTableWidget):
             
             border_radius
         )
+        self.setShowGrid(False)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         
     def set_stylesheet(

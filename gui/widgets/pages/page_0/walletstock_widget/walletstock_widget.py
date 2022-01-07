@@ -1,3 +1,4 @@
+from func.thread_ccxt import Thread_getbalance
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
@@ -6,6 +7,7 @@ from gui.themes.load_item_path import Load_Item_Path
 from gui.widgets.tp_table_widget.tp_table_widget import Tp_Table_Widget
 
 class Walletstock_Widget(QWidget):
+    ani_signal = Signal()
     def __init__(
         self,
         parent,
@@ -28,11 +30,15 @@ class Walletstock_Widget(QWidget):
         self.color_three = color_three
         
         self.setup_Ui()
-        self._parent.walletkey_completed_signal.connect(self.key_receiver)
+        self._parent.walletkey_widget.thread_operation_completed_signal.connect(self.key_receiver)
+        self.ani_signal.connect(self.appear_animation)
         
     def key_receiver(self):
-        self.walletstock_table.horizontalHeader().setVisible(True)
+        # self.walletstock_table.horizontalHeader().setVisible(True)
         i = 0
+        total_USD = 0
+        total_KRW = 0
+        
         for coin_name in Function_ccxt.wallet_balance:
             self.walletstock_table.setRowHeight(i, 28)
             self.walletstock_table.insertRow(i) # Insert row
@@ -56,7 +62,8 @@ class Walletstock_Widget(QWidget):
             
             self.coin_to_KRW_item = QTableWidgetItem()
             self.coin_to_KRW = self.coin_to_USD * int(Function_exchangerate.USD_to_KRW())
-            self.coin_to_KRW_item.setText(str(round(self.coin_to_KRW, 3)))
+                
+            self.coin_to_KRW_item.setText(str(round(self.coin_to_KRW, 0)))
             
             self.walletstock_table.setCellWidget(i, 0, self.define)
             self.walletstock_table.setItem(i, 1, self.coin_name_item)
@@ -65,13 +72,31 @@ class Walletstock_Widget(QWidget):
             self.walletstock_table.setItem(i, 4, self.coin_to_USD_item)
             self.walletstock_table.setItem(i, 5, self.coin_to_KRW_item)
             i += 1
+            total_USD += self.coin_to_USD
+            total_KRW += self.coin_to_KRW
         
-        self.walletstock_table.setItem()
+        self.walletstock_table.insertRow(i)
+        self.walletstock_table.setItem(i, 3, QTableWidgetItem(str("Total")))
+        self.walletstock_table.setItem(i, 4, QTableWidgetItem(str(round(total_USD, 0))))
+        self.walletstock_table.setItem(i, 5, QTableWidgetItem(str(round(total_KRW, 0))))
         
         self.walletstock_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         self.walletstock_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self._height = (i+1) * self.walletstock_table.rowHeight(0)
+        self.ani_signal.emit()
         
+    def appear_animation(self):
+        # CREATE ANIMATION
+        self.animation = QPropertyAnimation(self.ani_frame, b"pos")
+        self.animation.stop()
         
+        self.animation.setStartValue(QPoint(0, -self.walletstock_frame.height()))
+        self.animation.setEndValue(QPoint(0, 0))
+            
+        self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+        self.animation.setDuration(1500)
+        self.animation.start()
+        self.ani_frame.show()
         pass
     
     def setup_Ui(self):
@@ -83,6 +108,11 @@ class Walletstock_Widget(QWidget):
         self.walletstock_frame.setStyleSheet(f'''background-color: {self.bg_three}''')
         self.walletstock_vlayout = QVBoxLayout(self.walletstock_frame)
         
+        self.ani_frame = QFrame()
+        self.ani_frame.hide()
+        self.ani_vlayout = QVBoxLayout(self.ani_frame)
+        self.ani_frame.move(self.walletstock_frame.pos().x(), self.walletstock_frame.pos().y() -self.walletstock_frame.height())
+        
         self.walletstock_table = Tp_Table_Widget(
             bg_one = self.bg_one,
             bg_two = self.bg_two,
@@ -92,11 +122,11 @@ class Walletstock_Widget(QWidget):
             color_two = self.color_two,
             color_three = self.color_three,
         )
+        self.walletstock_table.setObjectName("wallettable")
         self.walletstock_table.setEnabled(False)
         
         self.walletstock_table.setColumnCount(6)
         self.walletstock_table.verticalHeader().setVisible(False)
-        self.walletstock_table.horizontalHeader().setVisible(False)
         self.walletstock_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.walletstock_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.walletstock_table.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -132,7 +162,8 @@ class Walletstock_Widget(QWidget):
         self.walletstock_table.setHorizontalHeaderItem(4, self.column_5)
         self.walletstock_table.setHorizontalHeaderItem(5, self.column_6)
         
-        self.walletstock_vlayout.addWidget(self.walletstock_table)
+        self.ani_vlayout.addWidget(self.walletstock_table)
+        self.walletstock_vlayout.addWidget(self.ani_frame)
         self.walletstock_widget_vlayout.addWidget(self.walletstock_frame)
 
         

@@ -7,7 +7,7 @@ from .walletstock_widget.walletstock_widget import Walletstock_Widget
 
 
 class Page_0(QWidget):
-    walletkey_completed_signal = Signal(object)
+    walletkey_completed_signal = Signal(QObject)
     def __init__(
         self,
         app_parent,
@@ -35,8 +35,8 @@ class Page_0(QWidget):
         self.setupUi()
     
     def walletkey_completed(self):
-        self.walletkey_completed_signal.emit(self.walletkey_widget.sender())
-    
+        self.walletkey_completed_signal.emit(self.walletkey_widget.btn_key_enter)
+        
     def setupUi(self):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.vlayout = QVBoxLayout(self)

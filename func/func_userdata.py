@@ -5,7 +5,6 @@ import getpass
 import platform
 
 class Function_Login:
-    print(platform.system())
     if platform.system() == "Windows":
         username = getpass.getuser()
         user_data_dir_path = os.path.normpath(os.path.join("C:/Users",username,"AppData/Local/Stretegist"))

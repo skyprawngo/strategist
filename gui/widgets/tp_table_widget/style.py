@@ -3,11 +3,11 @@ style = '''
 /* QTableWidget */
 
 QTableWidget {{	
-	background-color: {_color_one};
+	background-color: {_bg_two};
 	padding: 5px;
 	border-radius: {_border_radius}px;
-	gridline-color: {_bg_three};
-    color: {_bg_three};
+	gridline-color: {_bg_two};
+    color: {_bg_two};
 }}
 QTableWidget::item{{
 	border-color: none;
@@ -23,15 +23,15 @@ QTableWidget::item:selected{{
  
 }}
 QHeaderView::section{{
-	background-color: {_bg_three};
+	background-color: {_bg_two};
 	max-width: 30px;
-	border: 1px solid {_bg_three};
+	border: 1px solid {_bg_two};
 	border-style: none;
-    border-bottom: 1px solid {_bg_three};
-    border-right: 1px solid {_bg_three};
+    border-bottom: 1px solid {_bg_two};
+    border-right: 1px solid {_bg_two};
 }}
 QTableWidget::horizontalHeader {{	
-	background-color: {_bg_three};
+	background-color: {_bg_two};
 }}
 QTableWidget QTableCornerButton::section {{
     border: none;
@@ -42,7 +42,7 @@ QTableWidget QTableCornerButton::section {{
 QHeaderView::section:horizontal
 {{
     border: none;
-	background-color: {_bg_three};
+	background-color: {_bg_two};
 	padding: 3px;
 }}
 QHeaderView::section:vertical

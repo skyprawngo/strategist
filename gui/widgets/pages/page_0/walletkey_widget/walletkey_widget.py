@@ -13,7 +13,7 @@ from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 class Walletkey_Widget(QWidget):
     clicked = Signal(object)
-    thread_operation_completed_signal = Signal(object, name="balance_done")
+    thread_operation_completed_signal = Signal(object, name = "thread_done")
     def __init__(
         self,
         parent,
@@ -160,10 +160,11 @@ class Walletkey_Widget(QWidget):
             
         elif Function_ccxt.wallet_balance:
             self.warning_correct_key_label.hide()
-            self.thread_operation_completed_signal.emit(Function_ccxt.wallet_balance)
+            self.thread_operation_completed_signal.emit(self.btn_key_enter)
         self.btn_key_enter.setEnabled(True)
         self.lineedit_apikey.setEnabled(True)
         self.lineedit_secretkey.setEnabled(True)
+        
         pass
     
     def sig_n_slot(self):
