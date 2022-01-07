@@ -2,11 +2,18 @@ from genericpath import isdir
 import os
 import pickle
 import getpass
+import platform
 
 class Function_Login:
-    username = getpass.getuser()
-    user_data_dir_path = os.path.normpath(os.path.join("C:/Users",username,"AppData/Local/Stretegist"))
-    AppData_path = os.path.normpath(os.path.join(user_data_dir_path,"user_data.txt"))
+    print(platform.system())
+    if platform.system() == "Windows":
+        username = getpass.getuser()
+        user_data_dir_path = os.path.normpath(os.path.join("C:/Users",username,"AppData/Local/Stretegist"))
+        AppData_path = os.path.normpath(os.path.join(user_data_dir_path,"user_data.txt"))
+    elif platform.system() == "Darwin":
+        username = getpass.getuser()
+        user_data_dir_path = os.path.abspath("/library/Caches/Stretegist")
+        AppData_path = os.path.abspath(os.path.join(user_data_dir_path,"user_data.txt"))
     settings_data_dir_path = os.path.normpath(os.path.join(os.getcwd(), "data/settings_data"))
     settings_data_path = os.path.normpath(os.path.join(settings_data_dir_path, "settings.txt"))
 
