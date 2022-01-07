@@ -1,18 +1,11 @@
-import urllib.request 
-import urllib.parse as parse
-from bs4 import BeautifulSoup
+import pandas as pd
 
-url = "https://finance.naver.com/marketindex/"
-
-html = urllib.request.urlopen(url).read()
-soup = BeautifulSoup(html,'html.parser')
-
-result = soup.select("h3.h_lst > span.blind")
-value = soup.select("span.value")
-
-while True:
-    select = int(input("금융번호를 입력하세요(0~11): "))
+class Function_exchangerate:
+    url ='https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%ED%99%98%EC%9C%A8%EC%A1%B0%ED%9A%8C'
+    tables = pd.read_html(url)[0]
     
-    for i in range(0, 12):
-        if i == select:
-            print(result[i].string,": ",value[i].string)
+    def USD_to_KRW():
+        return Function_exchangerate.tables["매매기준율"][0]
+    
+    def JPY_to_KRW():
+        return Function_exchangerate.tables["매매기준율"][1]
