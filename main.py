@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
-        Setup_MainWindow.login_window_appear(self)
+        # Setup_MainWindow.login_window_appear(self)
 
 
     def btn_clicked(self):
@@ -74,5 +74,5 @@ if __name__ == "__main__":
     install = Function_Login()
     app = QApplication(sys.argv)
     window = MainWindow()
-    # window.show()
+    window.show()
     app.exec()

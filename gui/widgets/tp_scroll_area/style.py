@@ -14,7 +14,7 @@ QScrollBar {{
 QScrollBar::handle:vertical {{
     background-color: {_color_one};
     min-height: 30px;
-    border-radius: {_bar_radius};
+    border-radius: {_bar_radius}px;
 }}
 QScrollBar::handle:vertical:hover {{
     background-color: {_color_two};
@@ -61,7 +61,7 @@ QScrollbar::down-arrow:vertical {{
 QScrollBar::handle:Horizontal {{
     background-color: {_color_one};
     min-width: 30px;
-    border-radius: {_bar_radius};
+    border-radius: {_bar_radius}px;
 }}
 QScrollBar::handle:Horizontal:hover {{
     background-color: {_color_two};

@@ -27,3 +27,9 @@ class Function_ccxt:
         except:
             Function_ccxt.wallet_balance = {}
         return Function_ccxt.wallet_balance
+    
+    def get_price_USD(coin_name):
+        coin_name = coin_name + "/USDT"
+        price = Function_ccxt.binance.fetch_ticker(coin_name)
+        price = price["close"]
+        return price
