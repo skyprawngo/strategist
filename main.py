@@ -57,10 +57,7 @@ class MainWindow(QMainWindow):
             # Load Page 2
             MainFunctions.set_page(self, self.ui.load_pages.page_3_frame)
     
-        if btn.objectName() == "btn_apikey_enter":
-            print("aaaa")
         
-        print(btn.objectName())
 
     def resizeEvent(self, event):
         Setup_MainWindow.resize_grips(self)

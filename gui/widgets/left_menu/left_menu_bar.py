@@ -174,7 +174,6 @@ class Ui_Left_Menu_Column_Widget(QWidget):
     # SELECT ONLY ONE TAB BTN
     # ///////////////////////////////////////////////////////////////
     def select_only_one_tab(self, widget: str):
-        print(widget)
         for btn in self.findChildren(QPushButton):
             if btn.objectName() == widget:
                 btn.set_active_tab(True)

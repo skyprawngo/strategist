@@ -62,8 +62,6 @@ class Setup_MainWindow:
             return self.ui.load_pages.page_0.walletkey_widget.sender()
         elif self.ui.left_column.sender() != None:
             return self.ui.left_column.sender()
-        else:
-            print(self.ui.load_pages.page_0.walletkey_widget.sender())
             
            
     

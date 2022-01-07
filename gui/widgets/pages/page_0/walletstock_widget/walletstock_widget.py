@@ -38,12 +38,22 @@ class Walletstock_Widget(QWidget):
         i = 0
         total_USD = 0
         total_KRW = 0
+        self.walletstock_table.clear()
+        while (self.walletstock_table.rowCount() > 0):
+            self.walletstock_table.removeRow(0)
+        hheader = ["", "  Coin", "  Price(USD)", "  Amount", "  Value(USD)", "  Value(KRW)"]
+        
+        for j in range(6):
+            self.column_1 = QTableWidgetItem()
+            self.column_1.setTextAlignment(Qt.AlignVCenter)
+            self.column_1.setText(hheader[j])
+            self.walletstock_table.setHorizontalHeaderItem(j, self.column_1)
         
         for coin_name in Function_ccxt.wallet_balance:
             self.walletstock_table.setRowHeight(i, 28)
             self.walletstock_table.insertRow(i) # Insert row
 
-            self.define = RainBow_Label(i)
+            self.define = RainBow_Label(i, bg=self.bg_two)
             
             self.coin_name_item = QTableWidgetItem()
             self.coin_name_item.setText(coin_name)
@@ -77,8 +87,8 @@ class Walletstock_Widget(QWidget):
         
         self.walletstock_table.insertRow(i)
         self.walletstock_table.setItem(i, 3, QTableWidgetItem(str("Total")))
-        self.walletstock_table.setItem(i, 4, QTableWidgetItem(str(round(total_USD, 0))))
-        self.walletstock_table.setItem(i, 5, QTableWidgetItem(str(round(total_KRW, 0))))
+        self.walletstock_table.setItem(i, 4, QTableWidgetItem("$"+str(round(total_USD, 0))))
+        self.walletstock_table.setItem(i, 5, QTableWidgetItem("\\"+str(round(total_KRW, 0))))
         
         self.walletstock_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         self.walletstock_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
@@ -87,16 +97,27 @@ class Walletstock_Widget(QWidget):
         
     def appear_animation(self):
         # CREATE ANIMATION
-        self.animation = QPropertyAnimation(self.ani_frame, b"pos")
-        self.animation.stop()
         
-        self.animation.setStartValue(QPoint(0, -self.walletstock_frame.height()))
-        self.animation.setEndValue(QPoint(0, 0))
+        self.animation = QPropertyAnimation(
+            self.walletstock_table, 
+            propertyName=b"opacity",
+            targetObject=self.effect,
+            duration=500,
+            startValue=0.0,
+            endValue=0.99,
             
-        self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-        self.animation.setDuration(1500)
+            )
+        self._animation = QPropertyAnimation(
+            self.ani_frame, 
+            propertyName=b"pos",
+            targetObject=self.walletstock_table,
+            duration=500,
+            startValue=QPoint(10, -self.walletstock_frame.height()),
+            endValue=QPoint(10, 10),
+            
+            )
         self.animation.start()
-        self.ani_frame.show()
+        self._animation.start()
         pass
     
     def setup_Ui(self):
@@ -107,11 +128,10 @@ class Walletstock_Widget(QWidget):
         self.walletstock_frame = QFrame()
         self.walletstock_frame.setStyleSheet(f'''background-color: {self.bg_three}''')
         self.walletstock_vlayout = QVBoxLayout(self.walletstock_frame)
+        self.walletstock_vlayout.setContentsMargins(10, 10, 10, 10)
         
         self.ani_frame = QFrame()
-        self.ani_frame.hide()
         self.ani_vlayout = QVBoxLayout(self.ani_frame)
-        self.ani_frame.move(self.walletstock_frame.pos().x(), self.walletstock_frame.pos().y() -self.walletstock_frame.height())
         
         self.walletstock_table = Tp_Table_Widget(
             bg_one = self.bg_one,
@@ -131,40 +151,13 @@ class Walletstock_Widget(QWidget):
         self.walletstock_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.walletstock_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         
-        self.column_1 = QTableWidgetItem()
-        self.column_1.setTextAlignment(Qt.AlignCenter)
-        self.column_1.setText("")
-
-        self.column_2 = QTableWidgetItem()
-        self.column_2.setTextAlignment(Qt.AlignVCenter)
-        self.column_2.setText("  Coin")
-
-        self.column_3 = QTableWidgetItem()
-        self.column_3.setTextAlignment(Qt.AlignVCenter)
-        self.column_3.setText("  Price(USD)")
-
-        self.column_4 = QTableWidgetItem()
-        self.column_4.setTextAlignment(Qt.AlignVCenter)
-        self.column_4.setText("  Amount")
-       
-        self.column_5 = QTableWidgetItem()
-        self.column_5.setTextAlignment(Qt.AlignVCenter)
-        self.column_5.setText("  Value(USD)")
-        
-        self.column_6 = QTableWidgetItem()
-        self.column_6.setTextAlignment(Qt.AlignVCenter)
-        self.column_6.setText("  Value(KRW)")
-        
-        self.walletstock_table.setHorizontalHeaderItem(0, self.column_1)
-        self.walletstock_table.setHorizontalHeaderItem(1, self.column_2)
-        self.walletstock_table.setHorizontalHeaderItem(2, self.column_3)
-        self.walletstock_table.setHorizontalHeaderItem(3, self.column_4)
-        self.walletstock_table.setHorizontalHeaderItem(4, self.column_5)
-        self.walletstock_table.setHorizontalHeaderItem(5, self.column_6)
-        
         self.ani_vlayout.addWidget(self.walletstock_table)
         self.walletstock_vlayout.addWidget(self.ani_frame)
+        # self.walletstock_vlayout.addWidget(self.walletstock_table)
         self.walletstock_widget_vlayout.addWidget(self.walletstock_frame)
+        
+        self.effect = QGraphicsOpacityEffect(self, opacity=0.0)
+        self.walletstock_table.setGraphicsEffect(self.effect)
 
         
 
@@ -174,14 +167,19 @@ class RainBow_Label(QLabel):
     rainbow = ["red", "orange", "yellow", "lightgreen", "darkgreen", "blue", "navy","purple", "violet", "pink", "lightblue", "darkgray"]
     def __init__(
         self,
-        order
+        order,
+        bg
     ):
         super().__init__()
         self.order = order
+        self.bg = bg
         self.setFixedSize(10, 20)
     def paintEvent(self, e):
         painter = QPainter()
         painter.begin(self)
+        painter.setPen(Qt.NoPen)
+        painter.setBrush(QColor(self.bg))
+        painter.drawRect(0, 0, 10, 20)
         painter.setPen(Qt.NoPen)
         painter.setBrush(QColor(self.rainbow[self.order]))
         painter.drawEllipse(0, 10, 10, 10)
