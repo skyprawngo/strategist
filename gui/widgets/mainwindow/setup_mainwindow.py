@@ -82,7 +82,7 @@ class Setup_MainWindow:
     
         self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
         self.ui.left_menu.clicked.connect(self.btn_clicked)
-        self.ui.load_pages.page_0.walletkey_completed_signal.connect(self.btn_clicked)
+        # self.ui.load_pages.page_0.walletkey_completed_signal.connect(self.btn_clicked)
         
         
         
