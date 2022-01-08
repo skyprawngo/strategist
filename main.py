@@ -13,11 +13,11 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         
-        
-        
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
+        login = Function_Login()
+        # print(Function_Login.AppData_path)
         # Setup_MainWindow.login_window_appear(self)
 
 
@@ -69,7 +69,6 @@ class MainWindow(QMainWindow):
         self.dragPos = globalPos
         
 if __name__ == "__main__":
-    install = Function_Login()
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

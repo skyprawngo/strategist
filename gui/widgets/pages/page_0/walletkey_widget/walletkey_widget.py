@@ -168,8 +168,9 @@ class Walletkey_Widget(QWidget):
         pass
     
     def sig_n_slot(self):
-        self.lineedit_apikey.setText(Function_Login.load_key()[0])
-        self.lineedit_secretkey.setText(Function_Login.load_key()[1])
+        key = Function_Login.load_key()
+        self.lineedit_apikey.setText(key[0])
+        self.lineedit_secretkey.setText(key[1])
         self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
         
         self.lineedit_apikey.returnPressed.connect(self.apikey_return)

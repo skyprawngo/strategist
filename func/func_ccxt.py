@@ -33,3 +33,4 @@ class Function_ccxt:
         price = Function_ccxt.binance.fetch_ticker(coin_name)
         price = price["close"]
         return price
+    

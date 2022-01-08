@@ -4,6 +4,7 @@ from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 from .walletkey_widget.walletkey_widget import Walletkey_Widget
 from .walletstock_widget.walletstock_widget import Walletstock_Widget
+from .walletchart_widget.walletchart_widget import walletchart_widget
 
 
 class Page_0(QWidget):
@@ -87,15 +88,9 @@ class Page_0(QWidget):
             color_red = self.color_red
         )
         self.walletkey_widget.thread_operation_completed_signal.connect(self.walletkey_completed)
-        self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
         
         self.distribution_frame = QFrame()
         self.distribution_frame.setStyleSheet(f"background-color: {self.bg_three};")
-        self.scrollarea_glayout.addWidget(self.distribution_frame, 0, 3, 1, 2)
-        
-        self.stock_chart_frame = QFrame()
-        self.stock_chart_frame.setStyleSheet("background-color: lightgreen;")
-        self.scrollarea_glayout.addWidget(self.stock_chart_frame, 0, 5, 3, 7)
         
         self.walletstock_widget = Walletstock_Widget(
             parent = self,
@@ -107,18 +102,31 @@ class Page_0(QWidget):
             color_two = self.color_two,
             color_three = self.color_three
         )
-        self.walletstock_widget.setStyleSheet(f"background-color: {self.bg_three};")
-        self.scrollarea_glayout.addWidget(self.walletstock_widget, 1, 0, 2, 5)
         
+        self.walletchart_widget = walletchart_widget(
+            parent = self,
+            bg_one = self.bg_one,
+            bg_two = self.bg_two,
+            bg_three = self.bg_three,
+
+            color_one = self.color_one,
+            color_two = self.color_two,
+            color_three = self.color_three
+        )
         
         self.frame2 = QFrame()
         self.frame2.setStyleSheet("background-color: lightblue;")
-        self.scrollarea_glayout.addWidget(self.frame2, 3, 0)
         
         self.frame3 = QFrame()
         self.frame3.setStyleSheet("background-color: pink;")
-        self.scrollarea_glayout.addWidget(self.frame3, 4, 0)
         
+        
+        self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
+        self.scrollarea_glayout.addWidget(self.distribution_frame, 0, 3, 1, 2)
+        self.scrollarea_glayout.addWidget(self.walletstock_widget, 1, 0, 2, 5)
+        self.scrollarea_glayout.addWidget(self.walletchart_widget, 0, 5, 3, 7)
+        self.scrollarea_glayout.addWidget(self.frame2, 3, 0)
+        self.scrollarea_glayout.addWidget(self.frame3, 4, 0)
         self.scrollarea.setWidget(self.scrollarea_widget)
         
         self.vlayout.addWidget(self.scrollarea)

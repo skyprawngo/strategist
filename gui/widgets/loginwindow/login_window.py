@@ -30,7 +30,7 @@ class Login_Window(QMainWindow):
             pass
     
     def btn_login_clicked(self):
-        Function_Login()
+        Function_Login(id=self.lineedit_id, password=self.lineedit_password)
         self.close()
         self.app_parent.show()
         pass

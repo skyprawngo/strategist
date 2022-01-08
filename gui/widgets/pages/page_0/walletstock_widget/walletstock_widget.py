@@ -1,4 +1,3 @@
-from func.thread_ccxt import Thread_getbalance
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
@@ -128,7 +127,16 @@ class Walletstock_Widget(QWidget):
         self.walletstock_frame = QFrame()
         self.walletstock_frame.setStyleSheet(f'''background-color: {self.bg_three}''')
         self.walletstock_vlayout = QVBoxLayout(self.walletstock_frame)
-        self.walletstock_vlayout.setContentsMargins(10, 10, 10, 10)
+        self.walletstock_vlayout.setContentsMargins(10, 5, 10, 10)
+        self.walletstock_vlayout.setSpacing(0)
+        
+        self.walletstock_label = QLabel()
+        self.walletstock_label.setStyleSheet('''
+            padding-top: 10px;
+            padding-left: 5px;
+            font: 12px;
+        ''')
+        self.walletstock_label.setText("Table")
         
         self.ani_frame = QFrame()
         self.ani_vlayout = QVBoxLayout(self.ani_frame)
@@ -152,6 +160,7 @@ class Walletstock_Widget(QWidget):
         self.walletstock_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         
         self.ani_vlayout.addWidget(self.walletstock_table)
+        self.walletstock_vlayout.addWidget(self.walletstock_label)
         self.walletstock_vlayout.addWidget(self.ani_frame)
         # self.walletstock_vlayout.addWidget(self.walletstock_table)
         self.walletstock_widget_vlayout.addWidget(self.walletstock_frame)
