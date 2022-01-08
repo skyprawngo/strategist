@@ -1,25 +1,35 @@
 import pickle
-import time
+import pprint
 
 from .func_userdata import Function_Login
 from .func_ccxt import Function_ccxt
+from module.pyside6_module_import import *
+from func.func_ccxt import Function_ccxt
+import time
 
-class Func_Work:
+class Function_Work:
+    # DO NOT USED!
     def my_balance_trend_data():
         old_data = Function_Login.load_AppData_record()
-        datum_time = None
+        datum_time = Function_Login.load_history_timestamp_check()
         if not old_data:
             pass
         else:
-            datum_time = old_data.pop()["timestamp"]
-        
+            try:
+                datum_time = old_data.index(-1)["timestamp"]
+            except:
+                pass
         binance = Function_ccxt.binance
         markets = Function_Login.load_local_markets()
-        my_trades = {}
+        my_trades = []
         for market in markets:
-            my_trade = binance.fetch_my_trades(symbol=market, since=datum_time, limit=None)
-            my_trades[f"{market['timestamp']}"] = my_trade
-        my_trades = my_trades.sort(key=my_trades.keys())
-        Function_Login.save_AppData_record(my_trades)
+            my_trades.append(binance.fetch_my_trades(symbol=market, since=datum_time, limit=None))
+            if my_trades[-1] == []:
+                my_trades.remove([])
+            time.sleep(1)
+        sorted_my_trades = my_trades.sort(key=lambda x: x["timestamp"])
+        Function_Login.save_history_timestamp_check(binance.milliseconds())
+        return sorted_my_trades
+        
 
         

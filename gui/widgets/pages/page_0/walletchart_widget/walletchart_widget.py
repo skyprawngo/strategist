@@ -1,11 +1,16 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
+from func.thread_ccxt import Thread_get_history
 
 class walletchart_widget(QWidget):
     def __init__(
         self,
         parent,
+        app_parent,
         bg_one = "#e0e3ea",
         bg_two = "#f5f6fa",
         bg_three = "#fff",
@@ -16,6 +21,7 @@ class walletchart_widget(QWidget):
     ):
         super().__init__()
         self._parent = parent
+        self._app_parent = app_parent
         self.bg_one = bg_one
         self.bg_two = bg_two
         self.bg_three = bg_three
@@ -24,6 +30,25 @@ class walletchart_widget(QWidget):
         self.color_two = color_two
         self.color_three = color_three
         self.setup_Ui()
+        self.setup_thread()
+        
+        self._parent.walletkey_widget.thread_operation_completed_signal.connect(self.thread_operation)
+    
+    def setup_thread(self):
+        self.thread_history_data = Thread_get_history(
+            parent = self,
+            app_parent = self._app_parent
+        )
+        pass
+    
+    def thread_operation(self):
+        self.thread_history_data.pause = not self.thread_history_data.pause 
+        if self.thread_history_data.runtime >= 1:
+            return
+        if not self.thread_history_data.isRunning():
+            self.thread_history_data.start()
+
+
         
         
     def setup_Ui(self):

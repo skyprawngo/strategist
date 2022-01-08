@@ -1,5 +1,7 @@
 from genericpath import isdir
 import os
+import csv
+import pandas as pd
 import pickle
 import getpass
 import platform
@@ -13,7 +15,7 @@ class Function_Login:
         username = getpass.getuser()
         appdata_dir_path = os.path.abspath("/library/Caches/Stretegist")  
     appdata_path = os.path.abspath(os.path.join(appdata_dir_path,"user_data.txt"))
-    appdata_record_path = os.path.normpath(os.path.join(appdata_dir_path, "record.txt"))
+    appdata_record_path = os.path.normpath(os.path.join(appdata_dir_path, "record.csv"))
     settings_data_dir_path = os.path.normpath(os.path.join(os.getcwd(), "data/settings_data"))
     settings_data_path = os.path.normpath(os.path.join(settings_data_dir_path, "settings.txt"))
     settings_data_dir_path = os.path.normpath(os.path.join(os.getcwd(), "data/local"))
@@ -36,9 +38,8 @@ class Function_Login:
                 pickle.dump(data, datawriter)
                 
         if not os.path.isfile(Function_Login.appdata_record_path):
-            with open(Function_Login.appdata_record_path, "wb") as datawriter:
-                data = {}
-                pickle.dump(data, datawriter)
+            with open(Function_Login.appdata_record_path, "w") as datawriter:
+                pass
         
         if not os.path.isdir(Function_Login.settings_data_dir_path):
             os.makedirs(Function_Login.settings_data_dir_path)
@@ -46,6 +47,7 @@ class Function_Login:
             with open(Function_Login.settings_data_path, "wb") as datawriter:
                 data = {
                     "apikey_save_ckbox": False,
+                    "history_timestamp": None
                 }
                 pickle.dump(data, datawriter)
         if not os.path.isfile(Function_Login.local_data_path):
@@ -63,8 +65,6 @@ class Function_Login:
         local_markets = Function_Login.load_local_markets()
         if len(markets) != len(local_markets):
             Function_Login.save_local_markets(markets)
-        print(Function_Login.load_local_markets())
-        print(type(Function_Login.load_local_markets()))
         
     
     def save_AppData_decorator(func):
@@ -83,23 +83,6 @@ class Function_Login:
                 data = func(data=data, *args, **kwargs)
             return data
         return load_AppData
-    
-    def save_AppData_record_decorator(func):
-        def save_AppData_record(*args, **kwargs):
-            with open(Function_Login.settings_data_path, 'rb') as datareader:
-                data = pickle.load(datareader)
-            with open(Function_Login.settings_data_path, "wb") as datawriter:
-                func(data=data, *args, **kwargs)
-                pickle.dump(data, datawriter)
-        return save_AppData_record
-    
-    def load_local_record_decorator(func):
-        def load_AppData_record(*args, **kwargs):
-            with open(Function_Login.settings_data_path, 'rb') as datareader:
-                data = pickle.load(datareader)
-                data = func(data=data, *args, **kwargs)
-            return data
-        return load_AppData_record
     
     def save_local_decorator(func):
         def save_userdata(*args, **kwargs):
@@ -145,13 +128,14 @@ class Function_Login:
         key = [data["apikey"], data["secretkey"]]
         return key
     
-    @save_AppData_record_decorator
-    def save_AppData_record(record, data=None):
-        data = record
-    
-    @load_local_record_decorator
-    def load_AppData_record(data=None):
-        record = data
+    def save_AppData_record(record):
+        record.to_csv(Function_Login.appdata_record_path)
+        print(record)
+        
+    def load_AppData_record():
+        record = pd.read_csv(Function_Login.appdata_record_path)
+
+        print(record)
         return record
 
     @save_local_decorator
@@ -162,6 +146,15 @@ class Function_Login:
     def load_ckbox_remember_key(data=None):
         ckbox = data["apikey_save_ckbox"]
         return ckbox
+
+    @save_local_decorator
+    def save_history_timestamp_check(timestamp, data=None):
+        data["history_timestamp"] = timestamp
+        
+    @load_local_decorator
+    def load_history_timestamp_check(data=None):
+        timestamp = data["history_timestamp"]
+        return timestamp
     
     @save_local_record_decorator
     def save_local_markets(markets, data=None):
@@ -171,6 +164,7 @@ class Function_Login:
     def load_local_markets(data=None):
         markets = data["markets"]
         return markets
+    
     
 
 

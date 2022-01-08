@@ -105,6 +105,7 @@ class Page_0(QWidget):
         
         self.walletchart_widget = walletchart_widget(
             parent = self,
+            app_parent = self._app_parent,
             bg_one = self.bg_one,
             bg_two = self.bg_two,
             bg_three = self.bg_three,
