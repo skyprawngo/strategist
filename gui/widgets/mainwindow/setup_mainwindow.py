@@ -57,11 +57,8 @@ class Setup_MainWindow:
             return self.ui.title_bar.sender()
         elif self.ui.left_menu.sender() != None:
             return self.ui.left_menu.sender()
-        elif self.ui.load_pages.page_0.walletkey_widget.sender() != None:
-            # print(self.ui.load_pages.page_0.walletkey_widget.sender())
-            return self.ui.load_pages.page_0.walletkey_widget.sender()
-        elif self.ui.left_column.sender() != None:
-            return self.ui.left_column.sender()
+        # elif self.ui.left_column.sender() != None:
+        #     return self.ui.left_column.sender()
             
            
     
@@ -81,11 +78,7 @@ class Setup_MainWindow:
         self.bottom_right_grip = TpGrips(self, "bottom_right", self.hide_grips)
     
         self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
-        self.ui.left_menu.clicked.connect(self.btn_clicked)
-        # self.ui.load_pages.page_0.walletkey_completed_signal.connect(self.btn_clicked)
-        
-        
-        
+        self.ui.left_menu.clicked.connect(self.left_menu_clicked)
         
     def resize_grips(self):
         self.left_grip.setGeometry(0, 15, 10, self.height()-10)

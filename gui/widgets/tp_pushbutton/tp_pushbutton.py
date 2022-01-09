@@ -3,10 +3,8 @@ from module.pyside6_module_import import *
 
 # Pushbutton_Template
 class Tp_PushButton(QPushButton):
-    clicked = Signal(object)
-    released = Signal()
     _on = Signal(object)
-    _off = Signal()
+    _off = Signal(object)
     
     def __init__(
         self,
@@ -120,7 +118,7 @@ class Tp_PushButton(QPushButton):
                 if self.btn_toggled:
                     self.btn_toggled = False
                     self.set_btn_bg_color = self.color_one
-                    self._off.emit()
+                    self._off.emit(self)
                 elif not self.btn_toggled:
                     self.btn_toggled = True
                     self.set_btn_bg_color = self.color_three
@@ -145,11 +143,9 @@ class Tp_PushButton(QPushButton):
     
     def mousePressEvent(self, event):
         self.changeStyle(QEvent.MouseButtonPress)
-        self.clicked.emit()
     
     def mouseReleaseEvent(self, event):
         self.changeStyle(QEvent.MouseButtonRelease)
-        self.released.emit()
                 
     def set_icon(self, icon_file_path):
         self.btn_image.load(icon_file_path)

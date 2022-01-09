@@ -129,8 +129,7 @@ class Function_DataIO:
         return key
     
     def save_AppData_record(record):
-        record.to_csv(Function_DataIO.appdata_record_path)
-        
+        record.to_csv(Function_DataIO.appdata_record_path, index=None)
     def load_AppData_record():
         try:
             record = pd.read_csv(Function_DataIO.appdata_record_path)

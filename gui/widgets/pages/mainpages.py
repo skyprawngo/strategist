@@ -16,7 +16,11 @@ class MainPages(QStackedWidget):
         super().__init__()
         self._app_parent = app_parent
         self.setupUi()
-    
+        self.sig_n_slot()
+        
+    def sig_n_slot(self):
+        
+        pass
         
     def setupUi(self):
         

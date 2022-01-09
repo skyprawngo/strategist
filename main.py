@@ -17,11 +17,10 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
         login = Function_DataIO()
-        # print(Function_Login.AppData_path)
         # Setup_MainWindow.login_window_appear(self)
 
 
-    def btn_clicked(self):
+    def left_menu_clicked(self):
         btn = Setup_MainWindow.setup_btns(self)
         
         if btn.objectName() != "btn_settings":

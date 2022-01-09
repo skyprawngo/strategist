@@ -8,7 +8,6 @@ from .walletchart_widget.walletchart_widget import walletchart_widget
 
 
 class Page_0(QWidget):
-    walletkey_completed_signal = Signal(QObject)
     def __init__(
         self,
         app_parent,
@@ -32,11 +31,12 @@ class Page_0(QWidget):
         self.color_three = color_three
         self.color_red = color_red
         
-        
         self.setupUi()
-    
-    def walletkey_completed(self):
-        self.walletkey_completed_signal.emit(self.walletkey_widget.btn_key_enter)
+        self.sig_n_slot()
+
+    def sig_n_slot(self):
+        self.walletkey_widget.thread_setkey.setkey_donesig.connect(self.walletstock_widget.key_received)
+        pass
         
     def setupUi(self):
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -87,13 +87,13 @@ class Page_0(QWidget):
             color_three = self.color_three,
             color_red = self.color_red
         )
-        self.walletkey_widget.thread_operation_completed_signal.connect(self.walletkey_completed)
         
         self.distribution_frame = QFrame()
         self.distribution_frame.setStyleSheet(f"background-color: {self.bg_three};")
         
         self.walletstock_widget = Walletstock_Widget(
             parent = self,
+            app_parent = self._app_parent,
             bg_one = self.bg_one,
             bg_two = self.bg_two,
             bg_three = self.bg_three,
@@ -120,7 +120,6 @@ class Page_0(QWidget):
         
         self.frame3 = QFrame()
         self.frame3.setStyleSheet("background-color: pink;")
-        
         
         self.scrollarea_glayout.addWidget(self.walletkey_widget, 0, 0, 1, 3)
         self.scrollarea_glayout.addWidget(self.distribution_frame, 0, 3, 1, 2)

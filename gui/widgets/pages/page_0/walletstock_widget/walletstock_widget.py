@@ -1,3 +1,4 @@
+from func.thread_ccxt import Thread_getBalance
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
@@ -6,10 +7,10 @@ from gui.themes.load_item_path import Load_Item_Path
 from gui.widgets.tp_table_widget.tp_table_widget import Tp_Table_Widget
 
 class Walletstock_Widget(QWidget):
-    ani_signal = Signal()
     def __init__(
         self,
         parent,
+        app_parent,
         bg_one = "#e0e3ea",
         bg_two = "#f5f6fa",
         bg_three = "#fff",
@@ -20,6 +21,7 @@ class Walletstock_Widget(QWidget):
     ):
         super().__init__()
         self._parent = parent
+        self._app_parent = app_parent
         self.bg_one = bg_one
         self.bg_two = bg_two
         self.bg_three = bg_three
@@ -29,14 +31,21 @@ class Walletstock_Widget(QWidget):
         self.color_three = color_three
         
         self.setup_Ui()
-        self._parent.walletkey_widget.thread_operation_completed_signal.connect(self.key_receiver)
-        self.ani_signal.connect(self.appear_animation)
+        self.setup_thread()
+        self.sig_n_slot()
         
-    def key_receiver(self):
-        # self.walletstock_table.horizontalHeader().setVisible(True)
+    def key_received(self):
+        if not self.thread_getbalance.isRunning():
+            self.thread_getbalance.start()
+        
+    def organize_table(self):   
         i = 0
         total_USD = 0
         total_KRW = 0
+        df_balance = self.thread_getbalance.df_balance.loc["total"]
+        df_balance = df_balance.drop("timestamp")
+        datetime = df_balance.pop("datetime")
+        print(df_balance.loc["ETH"])
         self.walletstock_table.clear()
         while (self.walletstock_table.rowCount() > 0):
             self.walletstock_table.removeRow(0)
@@ -48,52 +57,52 @@ class Walletstock_Widget(QWidget):
             self.column_1.setText(hheader[j])
             self.walletstock_table.setHorizontalHeaderItem(j, self.column_1)
         
-        for coin_name in Function_ccxt.wallet_balance:
-            self.walletstock_table.setRowHeight(i, 28)
-            self.walletstock_table.insertRow(i) # Insert row
+        for coin_name in df_balance:
+            pass
+        #     self.walletstock_table.setRowHeight(i, 28)
+        #     self.walletstock_table.insertRow(i) # Insert row
 
-            self.define = RainBow_Label(i, bg=self.bg_two)
+        #     self.define = RainBow_Label(i, bg=self.bg_two)
             
-            self.coin_name_item = QTableWidgetItem()
-            self.coin_name_item.setText(coin_name)
+        #     self.coin_name_item = QTableWidgetItem()
+        #     self.coin_name_item.setText(coin_name)
 
-            self.USD_value_item = QTableWidgetItem()
-            self.USD_value = Function_ccxt.get_price_USD(coin_name)
-            self.USD_value_item.setText(str(self.USD_value))
+        #     self.USD_value_item = QTableWidgetItem()
+        #     self.USD_value = Function_ccxt.get_price_USD(coin_name)
+        #     self.USD_value_item.setText(str(self.USD_value))
 
-            self.coin_amount_item = QTableWidgetItem()
-            self.coin_amount = Function_ccxt.wallet_balance[coin_name]["total"]
-            self.coin_amount_item.setText(str(round(self.coin_amount,3)))
+        #     self.coin_amount_item = QTableWidgetItem()
+        #     self.coin_amount = Function_ccxt.df_balance[coin_name]["total"]
+        #     self.coin_amount_item.setText(str(round(self.coin_amount,3)))
             
-            self.coin_to_USD_item = QTableWidgetItem()
-            self.coin_to_USD = self.coin_amount * Function_ccxt.get_price_USD(coin_name)
-            self.coin_to_USD_item.setText(str(round(self.coin_to_USD,2)))
+        #     self.coin_to_USD_item = QTableWidgetItem()
+        #     self.coin_to_USD = self.coin_amount * Function_ccxt.get_price_USD(coin_name)
+        #     self.coin_to_USD_item.setText(str(round(self.coin_to_USD,2)))
             
-            self.coin_to_KRW_item = QTableWidgetItem()
-            self.coin_to_KRW = self.coin_to_USD * int(Function_exchangerate.USD_to_KRW())
+        #     self.coin_to_KRW_item = QTableWidgetItem()
+        #     self.coin_to_KRW = self.coin_to_USD * int(Function_exchangerate.USD_to_KRW())
                 
-            self.coin_to_KRW_item.setText(str(round(self.coin_to_KRW, 0)))
+        #     self.coin_to_KRW_item.setText(str(round(self.coin_to_KRW, 0)))
             
-            self.walletstock_table.setCellWidget(i, 0, self.define)
-            self.walletstock_table.setItem(i, 1, self.coin_name_item)
-            self.walletstock_table.setItem(i, 2, self.USD_value_item) 
-            self.walletstock_table.setItem(i, 3, self.coin_amount_item) 
-            self.walletstock_table.setItem(i, 4, self.coin_to_USD_item)
-            self.walletstock_table.setItem(i, 5, self.coin_to_KRW_item)
-            i += 1
-            total_USD += self.coin_to_USD
-            total_KRW += self.coin_to_KRW
+        #     self.walletstock_table.setCellWidget(i, 0, self.define)
+        #     self.walletstock_table.setItem(i, 1, self.coin_name_item)
+        #     self.walletstock_table.setItem(i, 2, self.USD_value_item) 
+        #     self.walletstock_table.setItem(i, 3, self.coin_amount_item) 
+        #     self.walletstock_table.setItem(i, 4, self.coin_to_USD_item)
+        #     self.walletstock_table.setItem(i, 5, self.coin_to_KRW_item)
+        #     i += 1
+        #     total_USD += self.coin_to_USD
+        #     total_KRW += self.coin_to_KRW
         
-        self.walletstock_table.insertRow(i)
-        self.walletstock_table.setItem(i, 3, QTableWidgetItem(str("Total")))
-        self.walletstock_table.setItem(i, 4, QTableWidgetItem("$"+str(round(total_USD, 0))))
-        self.walletstock_table.setItem(i, 5, QTableWidgetItem("\\"+str(round(total_KRW, 0))))
+        # self.walletstock_table.insertRow(i)
+        # self.walletstock_table.setItem(i, 3, QTableWidgetItem(str("Total")))
+        # self.walletstock_table.setItem(i, 4, QTableWidgetItem("$"+str(round(total_USD, 0))))
+        # self.walletstock_table.setItem(i, 5, QTableWidgetItem("\\"+str(round(total_KRW, 0))))
         
-        self.walletstock_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        self.walletstock_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self._height = (i+1) * self.walletstock_table.rowHeight(0)
-        self.ani_signal.emit()
-        
+        # self.walletstock_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        # self.walletstock_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        # self._height = (i+1) * self.walletstock_table.rowHeight(0)
+    
     def appear_animation(self):
         # CREATE ANIMATION
         
@@ -119,6 +128,17 @@ class Walletstock_Widget(QWidget):
         self._animation.start()
         pass
     
+    def sig_n_slot(self):
+        self.thread_getbalance.getbalance_donesig.connect(self.organize_table)
+        self.thread_getbalance.getbalance_donesig.connect(self.appear_animation)
+        pass
+    
+    def setup_thread(self):
+        self.thread_getbalance = Thread_getBalance(
+            parent = self,
+            app_parent = self._app_parent
+        )
+        
     def setup_Ui(self):
         self.walletstock_widget_vlayout = QVBoxLayout(self)
         self.walletstock_widget_vlayout.setContentsMargins(0, 0, 0, 0)
@@ -167,10 +187,6 @@ class Walletstock_Widget(QWidget):
         
         self.effect = QGraphicsOpacityEffect(self, opacity=0.0)
         self.walletstock_table.setGraphicsEffect(self.effect)
-
-        
-
-        
         
 class RainBow_Label(QLabel):
     rainbow = ["red", "orange", "yellow", "lightgreen", "darkgreen", "blue", "navy","purple", "violet", "pink", "lightblue", "darkgray"]

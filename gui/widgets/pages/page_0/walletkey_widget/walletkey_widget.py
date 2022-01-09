@@ -1,7 +1,7 @@
 from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
-from func.thread_ccxt import Thread_getbalance
+from func.thread_ccxt import Thread_setKey
 from func.func_userdata import Function_DataIO
 from gui.themes.load_item_path import Load_Item_Path
 
@@ -13,7 +13,6 @@ from gui.widgets.tp_check_box.tp_check_box import Tp_Check_Box
 
 class Walletkey_Widget(QWidget):
     clicked = Signal(object)
-    thread_operation_completed_signal = Signal(object, name = "thread_done")
     def __init__(
         self,
         parent,
@@ -41,9 +40,6 @@ class Walletkey_Widget(QWidget):
         self.setup_Ui()
         self.setup_thread()
         self.sig_n_slot()
-        
-    def apikey_return(self):
-        self.lineedit_secretkey.setFocus()
     
     def remember_ckbox_pressed(self):
         if self.key_remember_ckbox.isChecked():
@@ -134,54 +130,39 @@ class Walletkey_Widget(QWidget):
         self.warning_window_widget.close()
         pass
     
-    def setup_thread(self):
-        self.thread_wallet_update = Thread_getbalance(
-            parent = self,
-            app_parent = self._app_parent
-        )
-        pass
-    
-    def thread_operation(self):
+    def btn_keyenter_on(self):
         self.remember_ckbox_pressed()
-        if not self.thread_wallet_update.isRunning():
+        if not self.thread_setkey.isRunning():
             self.lineedit_apikey.setEnabled(False)
             self.lineedit_secretkey.setEnabled(False)
             
-            self.thread_wallet_update.exiting=False
-            self.thread_wallet_update.start()
-            self.btn_key_enter.setEnabled(False)
-        pass
+            self.thread_setkey.start()
+            self.btn_keyenter.set_toggled(True)
+            self.clicked.emit(self.btn_keyenter)
     
-    def thread_operation_completed(self):
-        if not Function_ccxt.wallet_balance:
-            self.walletkey_glayout.addWidget(self.warning_correct_key_label, 3, 0, 1, 1)
-            self.btn_key_enter.set_toggled(False)
-            self.btn_key_enter.changetoggleStyle(QEvent.MouseButtonPress)
-            
-        elif Function_ccxt.wallet_balance:
-            self.warning_correct_key_label.hide()
-            self.thread_operation_completed_signal.emit(self.btn_key_enter)
-        self.btn_key_enter.setEnabled(True)
+    def btn_keyenter_off(self):
         self.lineedit_apikey.setEnabled(True)
         self.lineedit_secretkey.setEnabled(True)
-        
-        pass
     
     def sig_n_slot(self):
         key = Function_DataIO.load_key()
         self.lineedit_apikey.setText(key[0])
+        self.lineedit_apikey.returnPressed.connect(self.lineedit_secretkey.setFocus())
         self.lineedit_secretkey.setText(key[1])
+        
         self.key_remember_ckbox.setChecked(Function_DataIO.load_ckbox_remember_key())
-        
-        self.lineedit_apikey.returnPressed.connect(self.apikey_return)
-        self.btn_key_enter._on.connect(self.thread_operation)
-        self.thread_wallet_update.done_signal.connect(self.thread_operation_completed)
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
-        
         self.key_remember_ckbox_istoggled = Function_DataIO.load_ckbox_remember_key()
-        pass
-
             
+        self.btn_keyenter._on.connect(self.btn_keyenter_on)
+        self.btn_keyenter._off.connect(self.btn_keyenter_off)
+        
+    def setup_thread(self):
+        self.thread_setkey = Thread_setKey(
+            parent = self,
+            app_parent = self._app_parent
+        )
+        
     def setup_Ui(self):
         self.walletkey_widget_vlayout = QVBoxLayout(self)
         self.walletkey_widget_vlayout.setContentsMargins(0, 0, 0, 0)
@@ -218,7 +199,7 @@ class Walletkey_Widget(QWidget):
             font: 400 15px;
         ''')
         
-        self.btn_key_enter = Tp_PushButton(
+        self.btn_keyenter = Tp_PushButton(
             parent = self,
             app_parent = self._app_parent,
             btn_id = "btn_apikey_enter",
@@ -236,8 +217,8 @@ class Walletkey_Widget(QWidget):
             
             is_toggle_btn = True
         )
-        self.btn_key_enter.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
-        self.btn_key_enter.setFixedWidth(60)
+        self.btn_keyenter.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        self.btn_keyenter.setFixedWidth(60)
         
         self.warning_correct_key_label = QLabel("Set Correct Key!")
         self.warning_correct_key_label.setAttribute(Qt.WA_TranslucentBackground)
@@ -257,7 +238,7 @@ class Walletkey_Widget(QWidget):
         self.walletkey_glayout.addWidget(self.walletkey_label,0, 0, 1, 1)
         self.walletkey_glayout.addWidget(self.lineedit_apikey,1, 0, 1, 1)
         self.walletkey_glayout.addWidget(self.lineedit_secretkey,2, 0, 1, 1)
-        self.walletkey_glayout.addWidget(self.btn_key_enter,1, 1, 2, 1)
+        self.walletkey_glayout.addWidget(self.btn_keyenter,1, 1, 2, 1)
         self.walletkey_glayout.addWidget(self.key_remember_ckbox, 3, 0, 1, 2)
         
         self.walletkey_widget_vlayout.addWidget(self.walletkey_frame)
