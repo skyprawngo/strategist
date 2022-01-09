@@ -1,8 +1,10 @@
 import time
+from ccxt.base.exchange import Exchange
 import pandas as pd
 from module.pyside6_module_import import *
 from module.ccxt_module_import import *
 from func.func_userdata import Function_DataIO
+from func.func_exchangerate import Function_Exchangerate
 
 binance = ccxt.binance()
 df_balance = pd.DataFrame()
@@ -61,9 +63,30 @@ class Thread_getBalance(QThread):
         for coin in balance_total.keys():
             if balance_total[coin] == 0:
                 del balance[coin]
-                
-        self.df_balance = pd.DataFrame(balance)
         
+        df_balance = pd.DataFrame(balance)
+        df_balance = df_balance.transpose()
+        df_balance = df_balance.drop(["free", "used"], axis=1)
+        self.datetime = df_balance.loc["datetime"]["total"]
+        df_balance = df_balance.drop("datetime")
+        df_balance = df_balance.drop("timestamp")
+        df_balance = df_balance.reset_index()
+        df_balance = df_balance.rename(columns={"index":"Coin"})
+        df_balance = df_balance.rename(columns={"total":"Amount"})
+        
+        coin_names = list(df_balance["Coin"])
+        prices=[]
+        for coin_name in  coin_names:
+            symbol = coin_name+"/USDT"
+            price = binance.fetch_ticker(symbol=symbol)
+            prices.append(price["close"])
+        df_balance["Price(USD)"] = prices
+        df_balance["Value(USD)"] = df_balance["Price(USD)"] * df_balance["Amount"]
+        exchange_rate = Function_Exchangerate.USD_to_KRW()
+        df_balance["Value(KRW)"] = df_balance["Value(USD)"] * exchange_rate
+        hheaders = ["Coin", "Price(USD)", "Amount", "Value(USD)", "Value(KRW)"]
+        self.df_balance = df_balance.reindex(columns=hheaders)
+
         self.getbalance_donesig.emit()
         self.exiting = False
 
