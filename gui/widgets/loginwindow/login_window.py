@@ -1,6 +1,6 @@
 from module.pyside6_module_import import *
 from func.func_ccxt import Function_ccxt
-from func.func_userdata import Function_Login
+from func.func_userdata import Function_DataIO
 from gui.themes.load_item_path import Load_Item_Path
 
 from gui.themes.theme_settings import Settings
@@ -30,7 +30,7 @@ class Login_Window(QMainWindow):
             pass
     
     def btn_login_clicked(self):
-        Function_Login(id=self.lineedit_id, password=self.lineedit_password)
+        Function_DataIO(id=self.lineedit_id, password=self.lineedit_password)
         self.close()
         self.app_parent.show()
         pass

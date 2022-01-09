@@ -2,7 +2,7 @@ from module.pyside6_module_import import *
 
 from func.func_ccxt import Function_ccxt
 from func.thread_ccxt import Thread_getbalance
-from func.func_userdata import Function_Login
+from func.func_userdata import Function_DataIO
 from gui.themes.load_item_path import Load_Item_Path
 
 from gui.widgets.pages.page_0.walletkey_widget.btn_apikey_enter import Btn_Apikey_enter
@@ -51,8 +51,8 @@ class Walletkey_Widget(QWidget):
                 self.appear_warning_window()
             self.key_remember_ckbox_istoggled = True
         elif not self.key_remember_ckbox.isChecked():
-            Function_Login.save_key(None, None)
-            Function_Login.save_ckbox_remember_key(False)
+            Function_DataIO.save_key(None, None)
+            Function_DataIO.save_ckbox_remember_key(False)
             self.key_remember_ckbox_istoggled = False
     
     def appear_warning_window(self):
@@ -118,18 +118,18 @@ class Walletkey_Widget(QWidget):
     
     def btn_yes_clicked(self):
         self.clicked.emit(self.btn_yes)
-        Function_Login.save_key(
+        Function_DataIO.save_key(
             apikey = self.lineedit_apikey.text(),
             secretkey = self.lineedit_secretkey.text()
         )
-        Function_Login.save_ckbox_remember_key(True)
+        Function_DataIO.save_ckbox_remember_key(True)
         self.warning_window_widget.close()
         pass
     
     def btn_no_clicked(self):
         self.clicked.emit(self.btn_no)
-        Function_Login.save_key(None, None)
-        Function_Login.save_ckbox_remember_key(False)
+        Function_DataIO.save_key(None, None)
+        Function_DataIO.save_ckbox_remember_key(False)
         self.key_remember_ckbox.setChecked(False)
         self.warning_window_widget.close()
         pass
@@ -168,17 +168,17 @@ class Walletkey_Widget(QWidget):
         pass
     
     def sig_n_slot(self):
-        key = Function_Login.load_key()
+        key = Function_DataIO.load_key()
         self.lineedit_apikey.setText(key[0])
         self.lineedit_secretkey.setText(key[1])
-        self.key_remember_ckbox.setChecked(Function_Login.load_ckbox_remember_key())
+        self.key_remember_ckbox.setChecked(Function_DataIO.load_ckbox_remember_key())
         
         self.lineedit_apikey.returnPressed.connect(self.apikey_return)
         self.btn_key_enter._on.connect(self.thread_operation)
         self.thread_wallet_update.done_signal.connect(self.thread_operation_completed)
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
         
-        self.key_remember_ckbox_istoggled = Function_Login.load_ckbox_remember_key()
+        self.key_remember_ckbox_istoggled = Function_DataIO.load_ckbox_remember_key()
         pass
 
             

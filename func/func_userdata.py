@@ -7,7 +7,7 @@ import getpass
 import platform
 from .func_ccxt import Function_ccxt
 
-class Function_Login:
+class Function_DataIO:
     if platform.system() == "Windows":
         username = getpass.getuser()
         appdata_dir_path = os.path.normpath(os.path.join("C:/Users",username,"AppData/Local/Stretegist"))
@@ -27,31 +27,31 @@ class Function_Login:
         self.renewal_markets()
     
     def isfile_check(self):
-        if not os.path.isdir(Function_Login.appdata_dir_path):
-            os.makedirs(Function_Login.appdata_dir_path)
-        if not os.path.isfile(Function_Login.appdata_path):
-            with open(Function_Login.appdata_path, "wb") as datawriter:
+        if not os.path.isdir(Function_DataIO.appdata_dir_path):
+            os.makedirs(Function_DataIO.appdata_dir_path)
+        if not os.path.isfile(Function_DataIO.appdata_path):
+            with open(Function_DataIO.appdata_path, "wb") as datawriter:
                 data = {
                     "apikey": None,
                     "secretkey": None
                 }
                 pickle.dump(data, datawriter)
                 
-        if not os.path.isfile(Function_Login.appdata_record_path):
-            with open(Function_Login.appdata_record_path, "w") as datawriter:
+        if not os.path.isfile(Function_DataIO.appdata_record_path):
+            with open(Function_DataIO.appdata_record_path, "w") as datawriter:
                 pass
         
-        if not os.path.isdir(Function_Login.settings_data_dir_path):
-            os.makedirs(Function_Login.settings_data_dir_path)
-        if not os.path.isfile(Function_Login.settings_data_path):
-            with open(Function_Login.settings_data_path, "wb") as datawriter:
+        if not os.path.isdir(Function_DataIO.settings_data_dir_path):
+            os.makedirs(Function_DataIO.settings_data_dir_path)
+        if not os.path.isfile(Function_DataIO.settings_data_path):
+            with open(Function_DataIO.settings_data_path, "wb") as datawriter:
                 data = {
                     "apikey_save_ckbox": False,
                     "history_timestamp": None
                 }
                 pickle.dump(data, datawriter)
-        if not os.path.isfile(Function_Login.local_data_path):
-            with open(Function_Login.local_data_path, "wb") as datawriter:
+        if not os.path.isfile(Function_DataIO.local_data_path):
+            with open(Function_DataIO.local_data_path, "wb") as datawriter:
                 data = {
                     "markets" : ""
                 }
@@ -62,23 +62,23 @@ class Function_Login:
         binance = Function_ccxt.binance
         
         markets = binance.load_markets()
-        local_markets = Function_Login.load_local_markets()
+        local_markets = Function_DataIO.load_local_markets()
         if len(markets) != len(local_markets):
-            Function_Login.save_local_markets(markets)
+            Function_DataIO.save_local_markets(markets)
         
     
     def save_AppData_decorator(func):
         def save_AppData(*args, **kwargs):
-            with open(Function_Login.appdata_path, 'rb') as datareader:
+            with open(Function_DataIO.appdata_path, 'rb') as datareader:
                 data = pickle.load(datareader)
-            with open(Function_Login.appdata_path, "wb") as datawriter:
+            with open(Function_DataIO.appdata_path, "wb") as datawriter:
                 func(data=data, *args, **kwargs)
                 pickle.dump(data, datawriter)
         return save_AppData
     
     def load_AppData_decorator(func):
         def load_AppData(*args, **kwargs):
-            with open(Function_Login.appdata_path, 'rb') as datareader:
+            with open(Function_DataIO.appdata_path, 'rb') as datareader:
                 data = pickle.load(datareader)
                 data = func(data=data, *args, **kwargs)
             return data
@@ -86,16 +86,16 @@ class Function_Login:
     
     def save_local_decorator(func):
         def save_userdata(*args, **kwargs):
-            with open(Function_Login.settings_data_path, 'rb') as datareader:
+            with open(Function_DataIO.settings_data_path, 'rb') as datareader:
                 data = pickle.load(datareader)
-            with open(Function_Login.settings_data_path, "wb") as datawriter:
+            with open(Function_DataIO.settings_data_path, "wb") as datawriter:
                 func(data=data, *args, **kwargs)
                 pickle.dump(data, datawriter)
         return save_userdata
     
     def load_local_decorator(func):
         def load_userdata(*args, **kwargs):
-            with open(Function_Login.settings_data_path, 'rb') as datareader:
+            with open(Function_DataIO.settings_data_path, 'rb') as datareader:
                 data = pickle.load(datareader)
                 data = func(data=data, *args, **kwargs)
             return data
@@ -103,16 +103,16 @@ class Function_Login:
     
     def save_local_record_decorator(func):
         def save_recorddata(*args, **kwargs):
-            with open(Function_Login.local_data_path, 'rb') as datareader:
+            with open(Function_DataIO.local_data_path, 'rb') as datareader:
                 data = pickle.load(datareader)
-            with open(Function_Login.local_data_path, "wb") as datawriter:
+            with open(Function_DataIO.local_data_path, "wb") as datawriter:
                 func(data=data, *args, **kwargs)
                 pickle.dump(data, datawriter)
         return save_recorddata
     
     def load_local_record_decorator(func):
         def load_recorddata(*args, **kwargs):
-            with open(Function_Login.local_data_path, 'rb') as datareader:
+            with open(Function_DataIO.local_data_path, 'rb') as datareader:
                 data = pickle.load(datareader)
                 data = func(data=data, *args, **kwargs)
             return data
@@ -129,13 +129,13 @@ class Function_Login:
         return key
     
     def save_AppData_record(record):
-        record.to_csv(Function_Login.appdata_record_path)
-        print(record)
+        record.to_csv(Function_DataIO.appdata_record_path)
         
     def load_AppData_record():
-        record = pd.read_csv(Function_Login.appdata_record_path)
-
-        print(record)
+        try:
+            record = pd.read_csv(Function_DataIO.appdata_record_path)
+        except:
+            record = pd.DataFrame()
         return record
 
     @save_local_decorator

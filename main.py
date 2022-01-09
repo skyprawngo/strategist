@@ -2,7 +2,7 @@ import sys
 import os
 
 from module.pyside6_module_import import *
-from func.func_userdata import Function_Login
+from func.func_userdata import Function_DataIO
 
 from gui.widgets.mainwindow.mainwindow import Ui_MainWindow
 from gui.widgets.mainwindow.setup_mainwindow import Setup_MainWindow
@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
-        login = Function_Login()
+        login = Function_DataIO()
         # print(Function_Login.AppData_path)
         # Setup_MainWindow.login_window_appear(self)
 
