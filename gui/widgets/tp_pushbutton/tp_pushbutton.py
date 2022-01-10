@@ -14,6 +14,7 @@ class Tp_PushButton(QPushButton):
         btn_layout = "vlayout",
         btn_sizepolicy = [QSizePolicy.Preferred, QSizePolicy.Preferred],
         btn_size = [None, None],
+        btn_radius = 15,
         
         icon_file_path = "",
         icon_size = [50, 50],
@@ -44,6 +45,7 @@ class Tp_PushButton(QPushButton):
         self.btn_layout = btn_layout
         self.btn_sizepolicy = btn_sizepolicy
         self.btn_size = btn_size
+        self.btn_radius = btn_radius
         
         self.icon_file_path = icon_file_path
         self.icon_size = icon_size
@@ -73,7 +75,10 @@ class Tp_PushButton(QPushButton):
         self.setObjectName(self.btn_id)
         self.setCursor(Qt.PointingHandCursor)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setStyleSheet(f"background-color: {self.bg_one}")
+        self.setStyleSheet(f'''
+            background-color: {self.bg_one};
+            border-radius: {self.btn_radius}px;
+        ''')
         
         if self.btn_layout == "vlayout":
             self._layout = QVBoxLayout(self)
@@ -133,6 +138,7 @@ class Tp_PushButton(QPushButton):
         self.setContentsMargins(0, 0, 0, 0)
         self.setStyleSheet(f'''
             background-color: {self.set_btn_bg_color};
+            border-radius: {self.btn_radius}px;
         ''')
     
     def enterEvent(self, event):
@@ -152,8 +158,13 @@ class Tp_PushButton(QPushButton):
         
     def set_text(self, text_appear):
         if text_appear:
+            self._layout.addWidget(self.btn_image, alignment=Qt.AlignLeft|Qt.AlignVCenter)
+            self._layout.addWidget(QFrame())
+            self._layout.addWidget(self.btn_text)
+            self._layout.addWidget(QFrame())
             self.btn_text.show()
         else:
+            self._layout.addWidget(self.btn_image, alignment=Qt.AlignCenter)
             self.btn_text.hide()
 
     def set_toggled(self, set):

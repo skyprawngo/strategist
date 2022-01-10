@@ -33,10 +33,11 @@ class Thread_setKey(QThread):
         })
         self.setkey_donesig.emit(self.__class__.__name__)
         self.exiting = False
+        return
         
 
 class Thread_getBalance(QThread):
-    getbalance_donesig = Signal()
+    getbalance_donesig = Signal(object)
     
     def __init__(
         self, 
@@ -87,8 +88,9 @@ class Thread_getBalance(QThread):
         hheaders = ["Coin", "Price(USD)", "Amount", "Value(USD)", "Value(KRW)"]
         self.df_balance = df_balance.reindex(columns=hheaders)
 
-        self.getbalance_donesig.emit()
+        self.getbalance_donesig.emit(coin_names)
         self.exiting = False
+        return
 
 class Thread_getHistory(QThread):
     gethistory_donesig = Signal()
@@ -107,34 +109,45 @@ class Thread_getHistory(QThread):
     def run(self):
         global binance
         global df_balance
+        markets = Function_DataIO.load_local_markets().keys()
+        df_old = Function_DataIO.load_AppData_wallethistory()
+        coin_names = self._parent.coin_names
+        bases = ["BNB", "BUSD", "USDT"]
         
-        df_old = Function_DataIO.load_AppData_record()
-        df_bundle = pd.DataFrame()
-        df_new = pd.DataFrame()
+        coin_names = list(set(coin_names) - set(bases))
+        possibles = []
+        for coin_name in coin_names:
+            possible1 = [coin_name+"/"+base for base in bases]
+            possible2 = bases[0]+"/"+coin_name
+            possibles = possibles+possible1
+            possibles.append(possible2)
+            
+        interested_market = list(set(markets) & set(possibles))
+        print(interested_market)
         
-
         if df_old.empty:
             datum_time = None
         else:
             datum_time = df_old.iloc[-1]["timestamp"]
-            print(datum_time)
-            if binance.milliseconds()-datum_time <= 70000000:
+            if binance.milliseconds()-datum_time <= 50000000:
                 self.runtime +=1
-            pass
-
-        markets = ["BNB/ETH", "SOL/BUSD", "SOL/USDT", "BNB/BUSD", "BNB/USDT", "BTT/USDT", "BTT/BUSD" ]
-        for market in markets:
-            if self.runtime >= 1:
-                break
+        print(datum_time)
+        
+        interested_market.append("ETH/BUSD")
+        df_bundle = pd.DataFrame()
+        df_new = pd.DataFrame()
+        for market in interested_market:
             df = pd.DataFrame(binance.fetch_my_trades(symbol=market, since=datum_time, limit=None))
             df_bundle = df.append(df_bundle)
+            time.sleep(0.5)
         df_bundle = df_bundle.drop(index=0)
         df_new = df_bundle.append(df_old)
         df_new = df_new.sort_values("timestamp")
         df_new = df_new.reset_index(drop=True)
         
-        Function_DataIO.save_AppData_record(df_new)
-        Function_DataIO.save_history_timestamp_check(binance.milliseconds())
+        print(len(df_new))
+        Function_DataIO.save_AppData_wallethistory(df_new)
         self.gethistory_donesig.emit()
         self.runtime +=1
+        return
         

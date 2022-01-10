@@ -1,6 +1,5 @@
 from module.pyside6_module_import import *
 
-from func.func_ccxt import Function_ccxt
 from func.thread_ccxt import Thread_setKey
 from func.func_userdata import Function_DataIO
 from gui.themes.load_item_path import Load_Item_Path
@@ -45,10 +44,11 @@ class Walletkey_Widget(QWidget):
         if self.key_remember_ckbox.isChecked():
             if not self.key_remember_ckbox_istoggled:
                 self.appear_warning_window()
-            self.key_remember_ckbox_istoggled = True
+                self.key_remember_ckbox_istoggled = True
         elif not self.key_remember_ckbox.isChecked():
-            Function_DataIO.save_key(None, None)
-            Function_DataIO.save_ckbox_remember_key(False)
+            Function_DataIO.save_AppData("apikey", None)
+            Function_DataIO.save_AppData("secret", None)
+            Function_DataIO.save_local_parameter("key_save_ckbox", False)
             self.key_remember_ckbox_istoggled = False
     
     def appear_warning_window(self):
@@ -113,19 +113,16 @@ class Walletkey_Widget(QWidget):
         pass
     
     def btn_yes_clicked(self):
-        self.clicked.emit(self.btn_yes)
-        Function_DataIO.save_key(
-            apikey = self.lineedit_apikey.text(),
-            secretkey = self.lineedit_secretkey.text()
-        )
-        Function_DataIO.save_ckbox_remember_key(True)
+        Function_DataIO.save_AppData("apikey", self.lineedit_apikey.text())
+        Function_DataIO.save_AppData("secret", self.lineedit_secretkey.text())
+        Function_DataIO.save_local_parameter("key_save_ckbox", True)
         self.warning_window_widget.close()
         pass
     
     def btn_no_clicked(self):
-        self.clicked.emit(self.btn_no)
-        Function_DataIO.save_key(None, None)
-        Function_DataIO.save_ckbox_remember_key(False)
+        Function_DataIO.save_AppData("apikey", None)
+        Function_DataIO.save_AppData("secret", None)
+        Function_DataIO.save_local_parameter("key_save_ckbox", False)
         self.key_remember_ckbox.setChecked(False)
         self.warning_window_widget.close()
         pass
@@ -145,15 +142,14 @@ class Walletkey_Widget(QWidget):
         self.lineedit_secretkey.setEnabled(True)
     
     def sig_n_slot(self):
-        key = Function_DataIO.load_key()
-        self.lineedit_apikey.setText(key[0])
+        appdata = Function_DataIO.load_AppData()
+        self.lineedit_apikey.setText(appdata["apikey"])
         self.lineedit_apikey.returnPressed.connect(self.lineedit_secretkey.setFocus())
-        self.lineedit_secretkey.setText(key[1])
+        self.lineedit_secretkey.setText(appdata["secret"])
         
-        self.key_remember_ckbox.setChecked(Function_DataIO.load_ckbox_remember_key())
+        self.key_remember_ckbox_istoggled = Function_DataIO.load_local_parameter()["key_save_ckbox"]
+        self.key_remember_ckbox.setChecked(self.key_remember_ckbox_istoggled)
         self.key_remember_ckbox.clicked.connect(self.remember_ckbox_pressed)
-        self.key_remember_ckbox_istoggled = Function_DataIO.load_ckbox_remember_key()
-            
         self.btn_keyenter._on.connect(self.btn_keyenter_on)
         self.btn_keyenter._off.connect(self.btn_keyenter_off)
         

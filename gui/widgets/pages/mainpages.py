@@ -1,7 +1,7 @@
 from module.pyside6_module_import import *
 
 from gui.widgets.pages.page_0.page_0 import Page_0
-from gui.widgets.pages.page_1 import Page_1
+from gui.widgets.pages.page_1.page_1 import Page_1
 from gui.widgets.pages.page_2 import Page_2
 from gui.widgets.pages.page_3 import Page_3
 
@@ -48,9 +48,19 @@ class MainPages(QStackedWidget):
         self.addWidget(self.page_0_frame)
         
         self.page_1_frame = QFrame()
-        self.page_1_frame.setStyleSheet("background-color: lightblue")
         self.page_1_vlayout = QVBoxLayout(self.page_1_frame)
-        self.page_1 = Page_1()
+        self.page_1_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.page_1 = Page_1(
+            app_parent = self._app_parent,
+            bg_one = self.themes["app_color"]["bg_one"],
+            bg_two = self.themes["app_color"]["bg_two"],
+            bg_three = self.themes["app_color"]["bg_three"],
+            
+            color_one = self.themes["app_color"]["color_one"],
+            color_two = self.themes["app_color"]["color_two"],
+            color_three = self.themes["app_color"]["color_three"],
+            color_red = self.themes["app_color"]["color_red2"]
+        )
         self.page_1_vlayout.addWidget(self.page_1)
         self.addWidget(self.page_1_frame)
         

@@ -57,7 +57,6 @@ class Walletstock_Widget(QWidget):
         self.walletstock_table.setHorizontalHeaderItem(0, QTableWidgetItem(""))
         
         df_balance.set_index("Coin", inplace=True)
-        print(df_balance)
         for coin_name in df_balance.index:
             self.walletstock_table.setRowHeight(i, 28)
             self.walletstock_table.insertRow(i) # Insert row
@@ -95,7 +94,9 @@ class Walletstock_Widget(QWidget):
             total_KRW += self.KRW_value
         
         self.walletstock_table.insertRow(i)
-        self.walletstock_table.setItem(i, 3, QTableWidgetItem(str("Total")))
+        self.total_text = QTableWidgetItem(str("Total"))
+        self.total_text.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.walletstock_table.setItem(i, 3, self.total_text)
         self.walletstock_table.setItem(i, 4, QTableWidgetItem("$"+str(round(total_USD, 0))))
         self.walletstock_table.setItem(i, 5, QTableWidgetItem("\\"+str(round(total_KRW, 0))))
             

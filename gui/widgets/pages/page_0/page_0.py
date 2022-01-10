@@ -36,6 +36,7 @@ class Page_0(QWidget):
 
     def sig_n_slot(self):
         self.walletkey_widget.thread_setkey.setkey_donesig.connect(self.walletstock_widget.key_received)
+        self.walletstock_widget.thread_getbalance.getbalance_donesig.connect(self.walletchart_widget.wallet_received)
         pass
         
     def setupUi(self):

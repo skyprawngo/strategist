@@ -14,9 +14,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         
         self.ui = Ui_MainWindow()
+        login = Function_DataIO()
         self.ui.setupUi(self)
         Setup_MainWindow.setup_gui(self)
-        login = Function_DataIO()
         # Setup_MainWindow.login_window_appear(self)
 
 

@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 from module.pyside6_module_import import *
 
-from func.func_ccxt import Function_ccxt
 from func.thread_ccxt import Thread_getHistory
 
 class walletchart_widget(QWidget):
@@ -32,18 +31,22 @@ class walletchart_widget(QWidget):
         self.setup_Ui()
         self.setup_thread()
     
+    
+    def wallet_received(self, coin_names):
+        self.coin_names = coin_names
+        if not self.thread_history_data.isRunning():
+            self.thread_history_data.start()
+
+    def organize_chart(self):
+        pass
+    def sig_n_slot(self):
+        self.thread_history_data.gethistory_donesig.connect(self.organize_chart)
+        pass        
     def setup_thread(self):
         self.thread_history_data = Thread_getHistory(
             parent = self,
             app_parent = self._app_parent
         )
-    
-    def thread_operation(self):
-        self.thread_history_data.pause = not self.thread_history_data.pause 
-        if self.thread_history_data.runtime >= 1:
-            return
-        if not self.thread_history_data.isRunning():
-            self.thread_history_data.start()
         
     def setup_Ui(self):
         self.walletchart_widget_vlayout = QVBoxLayout(self)
@@ -61,8 +64,6 @@ class walletchart_widget(QWidget):
             font: 12px;
         ''')
         self.walletchart_label.setText("Chart")
-        
-        
         
         self.walletchart_vlayout.addWidget(self.walletchart_label)
         
