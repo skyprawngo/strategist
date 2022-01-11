@@ -74,7 +74,7 @@ class Page_0(QWidget):
         ''')
         
         self.scrollarea_glayout = QGridLayout(self.scrollarea_widget)
-        self.scrollarea_glayout.setContentsMargins(5, 2, 5, 0)
+        self.scrollarea_glayout.setContentsMargins(5, 0, 5, 0)
         
         self.walletkey_widget = Walletkey_Widget(
             parent = self,
