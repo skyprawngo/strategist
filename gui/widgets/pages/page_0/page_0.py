@@ -130,6 +130,5 @@ class Page_0(QWidget):
         self.scrollarea_glayout.addWidget(self.frame3, 4, 0)
         self.scrollarea.setWidget(self.scrollarea_widget)
         
-        
         self.vlayout.addWidget(self.scrollarea)
     
