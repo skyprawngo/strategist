@@ -18,7 +18,7 @@ class Setup_MainWindow:
             "icon_file_name" : "home.svg",
             "tooltip_text" : "Home",
             "btn_istoggle" : True,
-            "btn_istoggle_active" : True,
+            "btn_istoggle_active" : False,
             "btn_isactive" : False
         },
         {
@@ -26,7 +26,7 @@ class Setup_MainWindow:
             "icon_file_name" : "chat-arrow-grow.svg",
             "tooltip_text" : "Chart",
             "btn_istoggle" : True,
-            "btn_istoggle_active" : False,
+            "btn_istoggle_active" : True,
             "btn_isactive" : False
             
         },
@@ -79,6 +79,11 @@ class Setup_MainWindow:
     
         self.ui.left_menu.add_menus(Setup_MainWindow.add_left_menus)
         self.ui.left_menu.clicked.connect(self.left_menu_clicked)
+
+        for i in range(len(Setup_MainWindow.add_left_menus)):
+            if Setup_MainWindow.add_left_menus[i]["btn_istoggle_active"]:
+                self.ui.load_pages.setCurrentIndex(i)
+                break
         
     def resize_grips(self):
         self.left_grip.setGeometry(0, 15, 10, self.height()-10)

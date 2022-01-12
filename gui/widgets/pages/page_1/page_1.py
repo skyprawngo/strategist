@@ -32,6 +32,7 @@ class Page_1(QWidget):
         self.setupUi()
         
     def setupUi(self):
+        self.setObjectName("page_1")
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setStyleSheet('''
             border-radius: 15px;
