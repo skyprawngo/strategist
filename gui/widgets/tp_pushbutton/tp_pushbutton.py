@@ -5,6 +5,7 @@ from module.pyside6_module_import import *
 class Tp_PushButton(QPushButton):
     _on = Signal(object)
     _off = Signal(object)
+    btn_clicked = Signal(str)
     
     def __init__(
         self,
@@ -16,6 +17,7 @@ class Tp_PushButton(QPushButton):
         btn_size = [None, None],
         btn_radius = 15,
         
+        icon_visible = True,
         icon_file_path = "",
         icon_size = [50, 50],
         
@@ -47,6 +49,7 @@ class Tp_PushButton(QPushButton):
         self.btn_size = btn_size
         self.btn_radius = btn_radius
         
+        self.icon_visible = icon_visible
         self.icon_file_path = icon_file_path
         self.icon_size = icon_size
         
@@ -85,10 +88,11 @@ class Tp_PushButton(QPushButton):
         elif self.btn_layout == "hlayout":
             self._layout = QHBoxLayout(self)
 
-        self.btn_image = QSvgWidget()
-        self.btn_image.setFixedSize(self.icon_size[0], self.icon_size[1])
-        self.set_icon(self.icon_file_path)
-        self._layout.addWidget(self.btn_image, alignment=Qt.AlignCenter)
+        if self.icon_visible:
+            self.btn_image = QSvgWidget()
+            self.btn_image.setFixedSize(self.icon_size[0], self.icon_size[1])
+            self.set_icon(self.icon_file_path)
+            self._layout.addWidget(self.btn_image, alignment=Qt.AlignCenter)
         
         self.btn_text = QLabel()
         self.btn_text.setText(self.tooltip_text)
@@ -152,13 +156,16 @@ class Tp_PushButton(QPushButton):
     
     def mouseReleaseEvent(self, event):
         self.changeStyle(QEvent.MouseButtonRelease)
+        self.clicked.emit()
+        self.btn_clicked.emit(str(self.tooltip_text))
                 
     def set_icon(self, icon_file_path):
         self.btn_image.load(icon_file_path)
         
     def set_text(self, text_appear):
         if text_appear:
-            self._layout.addWidget(self.btn_image, alignment=Qt.AlignLeft|Qt.AlignVCenter)
+            if self.icon_visible:
+                self._layout.addWidget(self.btn_image, alignment=Qt.AlignLeft|Qt.AlignVCenter)
             self._layout.addWidget(QFrame())
             self._layout.addWidget(self.btn_text)
             self._layout.addWidget(QFrame())

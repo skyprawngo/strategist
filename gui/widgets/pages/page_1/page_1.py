@@ -1,5 +1,6 @@
 from module.pyside6_module_import import *
 from gui.themes.load_item_path import Load_Item_Path
+from gui.widgets.pages.page_1.candlestick_chart import Candlestick_Chart
 
 from gui.widgets.tp_scroll_area.tp_scroll_area import Scroll_Area
 from gui.widgets.tp_pushbutton.tp_pushbutton import Tp_PushButton
@@ -30,7 +31,11 @@ class Page_1(QWidget):
         self.color_red = color_red
         
         self.setupUi()
+    
+    def sig_n_slot(self):
         
+        pass
+    
     def setupUi(self):
         self.setObjectName("page_1")
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -86,10 +91,44 @@ class Page_1(QWidget):
         self.strategy_chart_layout = QHBoxLayout(self.strategy_chart_frame)
         self.strategy_chart_layout.setContentsMargins(0, 0, 0, 0)
         
+        self.chart = Candlestick_Chart(
+            parent = self,
+            app_parent = self._app_parent,
+        )
+        self.strategy_chart_layout.addWidget(self.chart)
+        
         self.market_frame = QFrame()
         self.market_frame.setStyleSheet(f"background-color: {self.bg_three};")
         self.market_vlayout = QVBoxLayout(self.market_frame)
         self.market_vlayout.setContentsMargins(0, 0, 0, 0)
+        self.market_vlayout.setAlignment(Qt.AlignTop)
+        
+        self.btn_btc = Tp_PushButton(
+            parent = self,
+            app_parent = self._app_parent,
+            btn_id = "btn_BTC",
+            btn_layout = "hlayout",
+            btn_radius = 8,
+            
+            icon_visible = False,
+            
+            tooltip_text="BTC/USDT",
+            
+            bg_one = self.bg_one,
+            bg_two = self.bg_two,
+            bg_three = self.bg_three,
+
+            color_one = self.color_one,
+            color_two = self.color_two,
+            color_three = self.color_three,
+            
+            is_toggle_btn = True
+        )
+        self.btn_btc.setFixedHeight(50)
+        self.btn_btc.set_text(True)
+        self.market_vlayout.addWidget(self.btn_btc)
+        
+        self.btn_btc.btn_clicked.connect(self.chart.sig_received)
         
         self.strategy_inform_frame = QFrame()
         self.strategy_inform_frame.setStyleSheet(f"background-color: {self.bg_three};")

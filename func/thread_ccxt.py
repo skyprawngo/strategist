@@ -150,4 +150,27 @@ class Thread_getHistory(QThread):
         self.gethistory_donesig.emit()
         self.runtime +=1
         return
+
+class Thread_getChart(QThread):
+    getchart_donesig = Signal(object)
+    
+    def __init__(
+        self, 
+        parent,
+        app_parent
+    ):
+        QThread.__init__(self, app_parent)
+        self._parent = parent
+        self._app_parent = app_parent
+        self.runtime = 0
+        self.pause = True
+    
+    def run(self):
+        global binance
+        self.symbol = self._parent.symbol
         
+        self.ohlcv = binance.fetch_ohlcv(self.symbol, timeframe="1m", limit=50)
+        self.df = pd.DataFrame(self.ohlcv)
+        
+        self.getchart_donesig.emit(self.df)
+        return
