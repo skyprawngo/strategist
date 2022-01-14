@@ -25,38 +25,48 @@ class Candlestick_Chart(QWidget):
         self._series.setIncreasingColor(Qt.red)
         self._series.setDecreasingColor(Qt.blue)
         
-        self.vol_series = QBarSeries()
-        self.vol_set = QBarSet("volume")
+        self._layout.removeWidget(self.vol_chartview)
+        self.vol_series = QCandlestickSeries()
+        self.vol_series.setIncreasingColor(Qt.red)
+        self.vol_series.setDecreasingColor(Qt.blue)
         for row_num in range(len(df)):
             
             candlestick = QCandlestickSet(df.iloc[row_num][1], df.iloc[row_num][2], df.iloc[row_num][3], df.iloc[row_num][4], float(df.iloc[row_num][0]))
             self._series.append(candlestick)
             
-            self.vol_set.append(df.iloc[row_num][5])
+            if df.iloc[row_num][1] < df.iloc[row_num][4]:
+                vol_candlestick = QCandlestickSet(0, df.iloc[row_num][5], 0, df.iloc[row_num][5], float(df.iloc[row_num][0]))
+            else:
+                vol_candlestick = QCandlestickSet(df.iloc[row_num][5], df.iloc[row_num][5], 0, 0, float(df.iloc[row_num][0]))
+            self.vol_series.append(vol_candlestick)
+                
             
         self.chart = QChart()
         self.chart.legend().hide() 
         self.chart.addSeries(self._series)
         
-        self.vol_series.append(self.vol_set)
         self.vol_chart = QChart()
+        self.vol_chart.legend().hide() 
         self.vol_chart.addSeries(self.vol_series)
         
         # self.vol_chart.legend().hide() 
         axis_x = QDateTimeAxis()
         axis_x.setFormat("yy/MM/dd")
-        axis_x.setLabelsVisible(False)
+        axis_x.setLabelsVisible(True)
         self.chart.addAxis(axis_x, Qt.AlignBottom)
         self._series.attachAxis(axis_x)
         
-        axis_x.setLabelsVisible(True)
-        self.vol_series.attachAxis(axis_x)
-             
+        vol_axis_x = QDateTimeAxis()
+        vol_axis_x.setFormat("yy/MM/dd")
+        vol_axis_x.setLabelsVisible(False)
+        self.vol_chart.addAxis(vol_axis_x, Qt.AlignBottom)
+        self.vol_series.attachAxis(vol_axis_x)
+        
         self.chartview = QChartView(self.chart)
         self._layout.addWidget(self.chartview)
         
         self.vol_chartview = QChartView(self.vol_chart)
-        self.vol_chart.legend().hide()
+        self.vol_chartview.setFixedHeight(100)
         self._layout.addWidget(self.vol_chartview)
     
     def sig_received(self, tooltip_text):
@@ -75,17 +85,13 @@ class Candlestick_Chart(QWidget):
         
     def setup_Ui(self):
         self._layout = QVBoxLayout(self) 
+        self._layout.setContentsMargins(0, 0, 0, 0)
+        self._layout.setSpacing(0)
 
-        self.chart = QChart()
-        self._series = QCandlestickSeries()
-        self._series.setIncreasingColor(Qt.red)
-        self._series.setDecreasingColor(Qt.blue)
-        candlestick = QCandlestickSet()
-        self._series.append(candlestick)
         
-        self.chart.addSeries(self._series)
-        self.chart.createDefaultAxes()
+        self.chart = QChart()
         self.chart.legend().hide()
+        self._series = QCandlestickSeries()
         self.chartview = QChartView(self.chart)
         self._layout.addWidget(self.chartview)
         
