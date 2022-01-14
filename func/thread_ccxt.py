@@ -169,7 +169,7 @@ class Thread_getChart(QThread):
         global binance
         self.symbol = self._parent.symbol
         
-        self.ohlcv = binance.fetch_ohlcv(self.symbol, timeframe="1m", limit=50)
+        self.ohlcv = binance.fetch_ohlcv(self.symbol, timeframe="1d", limit=100)
         self.df = pd.DataFrame(self.ohlcv)
         
         self.getchart_donesig.emit(self.df)
